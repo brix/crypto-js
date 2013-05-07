@@ -125,7 +125,7 @@ exports:
     format-hex:     CryptoJS.format.Hex
 
     enc-latin1: CryptoJS.enc.Latin1
-    enc-utf8:   CryptoJS.enc.Utf1
+    enc-utf8:   CryptoJS.enc.Utf8
     enc-hex:    CryptoJS.enc.Hex
     enc-utf16:  CryptoJS.enc.Utf16
     enc-base64: CryptoJS.enc.Base64
