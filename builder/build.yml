@@ -116,6 +116,7 @@ exports:
     rabbit-legacy: CryptoJS.RabbitLegacy
 
     core: CryptoJS
+    x64-core: CryptoJS
 
     evpkdf: CryptoJS.EvpKDF
 
