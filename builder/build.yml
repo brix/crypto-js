@@ -61,6 +61,7 @@ rollups:
     rabbit-legacy: [core, enc-base64, md5, evpkdf, cipher-core, rabbit-legacy]
 
     core: [core]
+    x64-core: [core, x64-core]
 
     evpkdf: [core, sha1, hmac, evpkdf]
 
@@ -116,6 +117,7 @@ exports:
     rabbit-legacy: CryptoJS.RabbitLegacy
 
     core: CryptoJS
+    x64-core: CryptoJS
 
     evpkdf: CryptoJS.EvpKDF
 
