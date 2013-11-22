@@ -30,11 +30,19 @@ console.log(CryptoJS.HmacSHA1("Message", "Key"));
 
 ## Client (browser)
 
-### USE
+### Usage
 
+Modular include:
 ```javascript
 require(["crypto-js/aes", "crypto-js/sha256"], function (AES, SHA256) {
+    console.log(SHA256("Message"));
+});
+```
 
+Including all libraries, for access to extra methods:
+```javascript
+require("crypto-js", function (CryptoJS) {
+    console.log(CryptoJS.HmacSHA1("Message", "Key"));
 });
 ```
 
