@@ -33,7 +33,7 @@
 
 				dest: paths.dist + "/crypto-js",
 				dest_lib: paths.dist + "/crypto-js",
-				dest_lib_min: paths.dist + "/crypto-js",
+				dest_lib_min: null,
 
 				copy: {
 					"../package.json": "package.json",
@@ -157,13 +157,15 @@
 			.build(function (createdFiles) {
 
 				// Minify modules
-				_.each(createdFiles, function (file) {
-					var minContent = (uglify)
-							.minify(pkg.dest_lib + "/" + file)
-							.code;
+				if (pkg.dest_lib_min) {
+					_.each(createdFiles, function (file) {
+						var minContent = (uglify)
+								.minify(pkg.dest_lib + "/" + file)
+								.code;
 
-					writeFile(pkg.dest_lib_min + "/" + file, minContent);
-				});
+						writeFile(pkg.dest_lib_min + "/" + file, minContent);
+					});
+				}
 
 				// Copy files
 				_.each(pkg.copy, function (to, from) {
@@ -175,6 +177,10 @@
 					.compress(pkg.dest, pkg.archive, function () {
 						// Clear package destination directory
 						fsx.rmrfSync(pkg.dest);
+						fsx.rmrfSync(pkg.dest_lib);
+						if (pkg.dest_lib_min) {
+							fsx.rmrfSync(pkg.dest_lib_min);
+						}
 
 						// Mark package as built
 						pkg._built = true;
