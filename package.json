@@ -2,7 +2,7 @@
 	"name": "crypto-js",
 	"title": "crypto-js",
 	"description": "Modularized port of googlecode project crypto-js.",
-	"version": "3.1.2-4",
+	"version": "3.1.2-5",
 	"homepage": "http://github.com/evanvosberg/crypto-js",
 	"author": {
 		"name": "Evan Vosberg",
@@ -16,8 +16,8 @@
 		"url": "http://github.com/evanvosberg/crypto-js/issues"
 	},
 	"licenses": [{
-		"type": "New BSD",
-		"url": "http://opensource.org/licenses/BSD-3-Clause"
+		"type": "MIT",
+		"url": "http://opensource.org/licenses/MIT"
 	}],
 	"dependencies": {
 
