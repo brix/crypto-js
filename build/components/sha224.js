@@ -1,7 +1,7 @@
 /*
-CryptoJS v3.1.2
+CryptoJS v3.0.2
 code.google.com/p/crypto-js
-(c) 2009-2013 by Jeff Mott. All rights reserved.
+(c) 2009-2012 by Jeff Mott. All rights reserved.
 code.google.com/p/crypto-js/wiki/License
 */
 (function () {
@@ -17,18 +17,16 @@ code.google.com/p/crypto-js/wiki/License
      */
     var SHA224 = C_algo.SHA224 = SHA256.extend({
         _doReset: function () {
-            this._hash = new WordArray.init([
+            this._hash = WordArray.create([
                 0xc1059ed8, 0x367cd507, 0x3070dd17, 0xf70e5939,
                 0xffc00b31, 0x68581511, 0x64f98fa7, 0xbefa4fa4
             ]);
         },
 
         _doFinalize: function () {
-            var hash = SHA256._doFinalize.call(this);
+            SHA256._doFinalize.call(this);
 
-            hash.sigBytes -= 4;
-
-            return hash;
+            this._hash.sigBytes -= 4;
         }
     });
 

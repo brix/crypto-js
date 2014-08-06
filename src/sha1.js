@@ -14,11 +14,7 @@
      */
     var SHA1 = C_algo.SHA1 = Hasher.extend({
         _doReset: function () {
-            this._hash = new WordArray.init([
-                0x67452301, 0xefcdab89,
-                0x98badcfe, 0x10325476,
-                0xc3d2e1f0
-            ]);
+            this._hash = WordArray.create([0x67452301, 0xefcdab89, 0x98badcfe, 0x10325476, 0xc3d2e1f0]);
         },
 
         _doProcessBlock: function (M, offset) {
@@ -77,22 +73,11 @@
 
             // Add padding
             dataWords[nBitsLeft >>> 5] |= 0x80 << (24 - nBitsLeft % 32);
-            dataWords[(((nBitsLeft + 64) >>> 9) << 4) + 14] = Math.floor(nBitsTotal / 0x100000000);
             dataWords[(((nBitsLeft + 64) >>> 9) << 4) + 15] = nBitsTotal;
             data.sigBytes = dataWords.length * 4;
 
             // Hash final blocks
             this._process();
-
-            // Return final computed hash
-            return this._hash;
-        },
-
-        clone: function () {
-            var clone = Hasher.clone.call(this);
-            clone._hash = this._hash.clone();
-
-            return clone;
         }
     });
 

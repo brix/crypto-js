@@ -349,7 +349,7 @@ CryptoJS.lib.Cipher || (function (undefined) {
                 var block = this._prevBlock;
             }
 
-            // XOR blocks
+            // XOR block
             for (var i = 0; i < blockSize; i++) {
                 words[offset + i] ^= block[i];
             }
@@ -429,8 +429,8 @@ CryptoJS.lib.Cipher || (function (undefined) {
         /**
          * Configuration options.
          *
-         * @property {Mode} mode The block mode to use. Default: CBC
-         * @property {Padding} padding The padding strategy to use. Default: Pkcs7
+         * @property {Mode} mode The block mode to use. Default: CryptoJS.mode.CBC
+         * @property {Padding} padding The padding strategy to use. Default: CryptoJS.pad.Pkcs7
          */
         cfg: Cipher.cfg.extend({
             mode: CBC,
@@ -577,8 +577,12 @@ CryptoJS.lib.Cipher || (function (undefined) {
             } else {
                 var wordArray = ciphertext;
             }
+            var openSSLStr = wordArray.toString(Base64);
 
-            return wordArray.toString(Base64);
+            // Limit lines to 64 characters
+            openSSLStr = openSSLStr.replace(/(.{64})/g, '$1\n');
+
+            return openSSLStr;
         },
 
         /**
@@ -622,7 +626,8 @@ CryptoJS.lib.Cipher || (function (undefined) {
         /**
          * Configuration options.
          *
-         * @property {Formatter} format The formatting strategy to convert cipher param objects to and from a string. Default: OpenSSL
+         * @property {Formatter} format The formatting strategy to convert cipher param objects to and from a string.
+         *   Default: CryptoJS.format.OpenSSL
          */
         cfg: Base.extend({
             format: OpenSSLFormatter
@@ -702,7 +707,7 @@ CryptoJS.lib.Cipher || (function (undefined) {
 
         /**
          * Converts serialized ciphertext to CipherParams,
-         * else assumed CipherParams already and returns ciphertext unchanged.
+         * else assumes CipherParams already and returns ciphertext unchanged.
          *
          * @param {CipherParams|string} ciphertext The ciphertext.
          * @param {Formatter} format The formatting strategy to use to parse serialized ciphertext.
@@ -717,7 +722,7 @@ CryptoJS.lib.Cipher || (function (undefined) {
          */
         _parse: function (ciphertext, format) {
             if (typeof ciphertext == 'string') {
-                return format.parse(ciphertext, this);
+                return format.parse(ciphertext);
             } else {
                 return ciphertext;
             }
@@ -747,10 +752,10 @@ CryptoJS.lib.Cipher || (function (undefined) {
          *
          * @example
          *
-         *     var derivedParams = CryptoJS.kdf.OpenSSL.execute('Password', 256/32, 128/32);
-         *     var derivedParams = CryptoJS.kdf.OpenSSL.execute('Password', 256/32, 128/32, 'saltsalt');
+         *     var derivedParams = CryptoJS.kdf.OpenSSL.compute('Password', 256/32, 128/32);
+         *     var derivedParams = CryptoJS.kdf.OpenSSL.compute('Password', 256/32, 128/32, 'saltsalt');
          */
-        execute: function (password, keySize, ivSize, salt) {
+        compute: function (password, keySize, ivSize, salt) {
             // Generate random salt
             if (!salt) {
                 salt = WordArray.random(64/8);
@@ -776,7 +781,8 @@ CryptoJS.lib.Cipher || (function (undefined) {
         /**
          * Configuration options.
          *
-         * @property {KDF} kdf The key derivation function to use to generate a key and IV from a password. Default: OpenSSL
+         * @property {KDF} kdf The key derivation function to use to generate a key and IV from a password.
+         *   Default: CryptoJS.kdf.OpenSSL
          */
         cfg: SerializableCipher.cfg.extend({
             kdf: OpenSSLKdf
@@ -804,7 +810,7 @@ CryptoJS.lib.Cipher || (function (undefined) {
             cfg = this.cfg.extend(cfg);
 
             // Derive key and other params
-            var derivedParams = cfg.kdf.execute(password, cipher.keySize, cipher.ivSize);
+            var derivedParams = cfg.kdf.compute(password, cipher.keySize, cipher.ivSize);
 
             // Add IV to config
             cfg.iv = derivedParams.iv;
@@ -843,7 +849,7 @@ CryptoJS.lib.Cipher || (function (undefined) {
             ciphertext = this._parse(ciphertext, cfg.format);
 
             // Derive key and other params
-            var derivedParams = cfg.kdf.execute(password, cipher.keySize, cipher.ivSize, ciphertext.salt);
+            var derivedParams = cfg.kdf.compute(password, cipher.keySize, cipher.ivSize, ciphertext.salt);
 
             // Add IV to config
             cfg.iv = derivedParams.iv;

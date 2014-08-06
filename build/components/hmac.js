@@ -1,7 +1,7 @@
 /*
-CryptoJS v3.1.2
+CryptoJS v3.0.2
 code.google.com/p/crypto-js
-(c) 2009-2013 by Jeff Mott. All rights reserved.
+(c) 2009-2012 by Jeff Mott. All rights reserved.
 code.google.com/p/crypto-js/wiki/License
 */
 (function () {
@@ -29,7 +29,7 @@ code.google.com/p/crypto-js/wiki/License
          */
         init: function (hasher, key) {
             // Init hasher
-            hasher = this._hasher = new hasher.init();
+            hasher = this._hasher = hasher.create();
 
             // Convert string to WordArray, else assume WordArray already
             if (typeof key == 'string') {
@@ -44,9 +44,6 @@ code.google.com/p/crypto-js/wiki/License
             if (key.sigBytes > hasherBlockSizeBytes) {
                 key = hasher.finalize(key);
             }
-
-            // Clamp excess bits
-            key.clamp();
 
             // Clone key for inner and outer pads
             var oKey = this._oKey = key.clone();

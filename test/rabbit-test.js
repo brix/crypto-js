@@ -9,27 +9,23 @@ YUI.add('algo-rabbit-test', function (Y) {
         },
 
         testVector2: function () {
-            Y.Assert.areEqual('3d02e0c730559112b473b790dee018df', C.Rabbit.encrypt(C.enc.Hex.parse('00000000000000000000000000000000'), C.enc.Hex.parse('c21fcf3881cd5ee8628accb0a9890df8')).ciphertext.toString());
+            Y.Assert.areEqual('9c51e28784c37fe9a127f63ec8f32d3d', C.Rabbit.encrypt(C.enc.Hex.parse('00000000000000000000000000000000'), C.enc.Hex.parse('dc51c3ac3bfc62f12e3d36fe91281329')).ciphertext.toString());
         },
 
         testVector3: function () {
-            Y.Assert.areEqual('a3a97abb80393820b7e50c4abb53823d', C.Rabbit.encrypt(C.enc.Hex.parse('00000000000000000000000000000000'), C.enc.Hex.parse('1d272c6a2d8e3dfcac14056b78d633a0')).ciphertext.toString());
+            Y.Assert.areEqual('9b60d002fd5ceb32accd41a0cd0db10c', C.Rabbit.encrypt(C.enc.Hex.parse('00000000000000000000000000000000'), C.enc.Hex.parse('c09b0043e9e9ab0187e0c73383957415')).ciphertext.toString());
         },
 
         testVector4: function () {
-            Y.Assert.areEqual('75d186d6bc6905c64f1b2dfdd51f7bfc', C.Rabbit.encrypt(C.enc.Hex.parse('00000000000000000000000000000000'), C.enc.Hex.parse('0053a6f94c9ff24598eb3e91e4378add'), { iv: C.enc.Hex.parse('0d74db42a91077de') }).ciphertext.toString());
+            Y.Assert.areEqual('edb70567375dcd7cd89554f85e27a7c6', C.Rabbit.encrypt(C.enc.Hex.parse('00000000000000000000000000000000'), C.enc.Hex.parse('00000000000000000000000000000000'), { iv: C.enc.Hex.parse('0000000000000000') }).ciphertext.toString());
         },
 
         testVector5: function () {
-            Y.Assert.areEqual('476e2750c73856c93563b5f546f56a6a', C.Rabbit.encrypt(C.enc.Hex.parse('00000000000000000000000000000000'), C.enc.Hex.parse('0558abfe51a4f74a9df04396e93c8fe2'), { iv: C.enc.Hex.parse('167de44bb21980e7') }).ciphertext.toString());
+            Y.Assert.areEqual('6d7d012292ccdce0e2120058b94ecd1f', C.Rabbit.encrypt(C.enc.Hex.parse('00000000000000000000000000000000'), C.enc.Hex.parse('00000000000000000000000000000000'), { iv: C.enc.Hex.parse('597e26c175f573c3') }).ciphertext.toString());
         },
 
         testVector6: function () {
-            Y.Assert.areEqual('921fcf4983891365a7dc901924b5e24b', C.Rabbit.encrypt(C.enc.Hex.parse('00000000000000000000000000000000'), C.enc.Hex.parse('0a5db00356a9fc4fa2f5489bee4194e7'), { iv: C.enc.Hex.parse('1f86ed54bb2289f0') }).ciphertext.toString());
-        },
-
-        testVector7: function () {
-            Y.Assert.areEqual('613cb0ba96aff6cacf2a459a102a7f78', C.Rabbit.encrypt(C.enc.Hex.parse('00000000000000000000000000000000'), C.enc.Hex.parse('0f62b5085bae0154a7fa4da0f34699ec'), { iv: C.enc.Hex.parse('288ff65dc42b92f9') }).ciphertext.toString());
+            Y.Assert.areEqual('4d1051a123afb670bf8d8505c8d85a44', C.Rabbit.encrypt(C.enc.Hex.parse('00000000000000000000000000000000'), C.enc.Hex.parse('00000000000000000000000000000000'), { iv: C.enc.Hex.parse('2717f4d21a56eba6') }).ciphertext.toString());
         },
 
         testMultiPart: function () {

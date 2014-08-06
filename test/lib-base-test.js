@@ -50,6 +50,11 @@ YUI.add('lib-base-test', function (Y) {
             Y.Assert.isTrue(this.data.Obj.hasOwnProperty('toString'));
         },
 
+        testCreateInheritanceFromObj: function () {
+            Y.Assert.areEqual(this.data.Obj.init, this.data.obj.init);
+            Y.Assert.isFalse(this.data.obj.hasOwnProperty('init'));
+        },
+
         testCreateInheritanceFromBase: function () {
             Y.Assert.areEqual(C.lib.Base.extend, this.data.obj.extend);
             Y.Assert.isFalse(this.data.obj.hasOwnProperty('extend'));

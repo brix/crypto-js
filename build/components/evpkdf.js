@@ -1,7 +1,7 @@
 /*
-CryptoJS v3.1.2
+CryptoJS v3.0.2
 code.google.com/p/crypto-js
-(c) 2009-2013 by Jeff Mott. All rights reserved.
+(c) 2009-2012 by Jeff Mott. All rights reserved.
 code.google.com/p/crypto-js/wiki/License
 */
 (function () {
@@ -22,7 +22,7 @@ code.google.com/p/crypto-js/wiki/License
          * Configuration options.
          *
          * @property {number} keySize The key size in words to generate. Default: 4 (128 bits)
-         * @property {Hasher} hasher The hash algorithm to use. Default: MD5
+         * @property {Hasher} hasher The hash algorithm to use. Default: CryptoJS.algo.MD5
          * @property {number} iterations The number of iterations to perform. Default: 1
          */
         cfg: Base.extend({

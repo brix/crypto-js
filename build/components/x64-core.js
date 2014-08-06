@@ -1,7 +1,7 @@
 /*
-CryptoJS v3.1.2
+CryptoJS v3.0.2
 code.google.com/p/crypto-js
-(c) 2009-2013 by Jeff Mott. All rights reserved.
+(c) 2009-2012 by Jeff Mott. All rights reserved.
 code.google.com/p/crypto-js/wiki/License
 */
 (function (undefined) {
@@ -18,6 +18,9 @@ code.google.com/p/crypto-js/wiki/License
 
     /**
      * A 64-bit word.
+     *
+     * @property {number} high The high 32 bits.
+     * @property {number} low The low 32 bits.
      */
     var X64Word = C_x64.Word = Base.extend({
         /**

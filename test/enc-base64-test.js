@@ -66,6 +66,10 @@ YUI.add('enc-base64-test', function (Y) {
 
         testParse15: function () {
             Y.Assert.areEqual(C.lib.WordArray.create([0x3e3e3e3f, 0x3f3f3e3e, 0x3e3f3f3f, 0x3d2f2b00], 15).toString(), C.enc.Base64.parse('Pj4+Pz8/Pj4+Pz8/PS8r').toString());
+        },
+
+        testParseNewline: function () {
+            Y.Assert.areEqual(C.lib.WordArray.create([0x3e3e3e3f, 0x3f3f3e3e, 0x3e3f3f3f, 0x3d2f2b00], 15).toString(), C.enc.Base64.parse('Pj4+P\nz8/Pj4+Pz8\n/PS8r').toString());
         }
     }));
 }, '$Rev$');

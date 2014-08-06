@@ -36,16 +36,6 @@ YUI.add('algo-hmac-test', function (Y) {
 
             Y.Assert.areEqual(expectedMessage, message.toString());
             Y.Assert.areEqual(expectedKey, key.toString());
-        },
-
-        testRespectKeySigBytes: function () {
-            var key = C.lib.WordArray.random(8);
-            key.sigBytes = 4;
-
-            var keyClamped = key.clone();
-            keyClamped.clamp();
-
-            Y.Assert.areEqual(CryptoJS.HmacSHA256("Message", keyClamped).toString(), CryptoJS.HmacSHA256("Message", key).toString());
         }
     }));
 }, '$Rev$');

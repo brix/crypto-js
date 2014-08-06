@@ -12,6 +12,9 @@
 
     /**
      * A 64-bit word.
+     *
+     * @property {number} high The high 32 bits.
+     * @property {number} low The low 32 bits.
      */
     var X64Word = C_x64.Word = Base.extend({
         /**

@@ -1,7 +1,7 @@
 /*
-CryptoJS v3.1.2
+CryptoJS v3.0.2
 code.google.com/p/crypto-js
-(c) 2009-2013 by Jeff Mott. All rights reserved.
+(c) 2009-2012 by Jeff Mott. All rights reserved.
 code.google.com/p/crypto-js/wiki/License
 */
 (function () {
@@ -76,6 +76,9 @@ code.google.com/p/crypto-js/wiki/License
          *     var wordArray = CryptoJS.enc.Base64.parse(base64String);
          */
         parse: function (base64Str) {
+            // Ignore whitespaces
+            base64Str = base64Str.replace(/\s/g, '');
+
             // Shortcuts
             var base64StrLength = base64Str.length;
             var map = this._map;
@@ -94,9 +97,9 @@ code.google.com/p/crypto-js/wiki/License
             var nBytes = 0;
             for (var i = 0; i < base64StrLength; i++) {
                 if (i % 4) {
-                    var bits1 = map.indexOf(base64Str.charAt(i - 1)) << ((i % 4) * 2);
-                    var bits2 = map.indexOf(base64Str.charAt(i)) >>> (6 - (i % 4) * 2);
-                    words[nBytes >>> 2] |= (bits1 | bits2) << (24 - (nBytes % 4) * 8);
+                    var bitsHigh = map.indexOf(base64Str.charAt(i - 1)) << ((i % 4) * 2);
+                    var bitsLow  = map.indexOf(base64Str.charAt(i)) >>> (6 - (i % 4) * 2);
+                    words[nBytes >>> 2] |= (bitsHigh | bitsLow) << (24 - (nBytes % 4) * 8);
                     nBytes++;
                 }
             }

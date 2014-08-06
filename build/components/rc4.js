@@ -1,7 +1,7 @@
 /*
-CryptoJS v3.1.2
+CryptoJS v3.0.2
 code.google.com/p/crypto-js
-(c) 2009-2013 by Jeff Mott. All rights reserved.
+(c) 2009-2012 by Jeff Mott. All rights reserved.
 code.google.com/p/crypto-js/wiki/License
 */
 (function () {
@@ -91,7 +91,7 @@ code.google.com/p/crypto-js/wiki/License
     C.RC4 = StreamCipher._createHelper(RC4);
 
     /**
-     * Modified RC4 stream cipher algorithm.
+     * RC4-drop stream cipher algorithm.
      */
     var RC4Drop = C_algo.RC4Drop = RC4.extend({
         /**

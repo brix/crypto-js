@@ -1,7 +1,7 @@
 /*
-CryptoJS v3.1.2
+CryptoJS v3.0.2
 code.google.com/p/crypto-js
-(c) 2009-2013 by Jeff Mott. All rights reserved.
+(c) 2009-2012 by Jeff Mott. All rights reserved.
 code.google.com/p/crypto-js/wiki/License
 */
 (function (Math) {
@@ -57,7 +57,7 @@ code.google.com/p/crypto-js/wiki/License
      */
     var SHA256 = C_algo.SHA256 = Hasher.extend({
         _doReset: function () {
-            this._hash = new WordArray.init(H.slice(0));
+            this._hash = WordArray.create(H.slice(0));
         },
 
         _doProcessBlock: function (M, offset) {
@@ -132,22 +132,11 @@ code.google.com/p/crypto-js/wiki/License
 
             // Add padding
             dataWords[nBitsLeft >>> 5] |= 0x80 << (24 - nBitsLeft % 32);
-            dataWords[(((nBitsLeft + 64) >>> 9) << 4) + 14] = Math.floor(nBitsTotal / 0x100000000);
             dataWords[(((nBitsLeft + 64) >>> 9) << 4) + 15] = nBitsTotal;
             data.sigBytes = dataWords.length * 4;
 
             // Hash final blocks
             this._process();
-
-            // Return final computed hash
-            return this._hash;
-        },
-
-        clone: function () {
-            var clone = Hasher.clone.call(this);
-            clone._hash = this._hash.clone();
-
-            return clone;
         }
     });
 

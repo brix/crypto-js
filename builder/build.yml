@@ -1,7 +1,6 @@
 components:
     - core
     - x64-core
-    - lib-typedarrays
     - enc-utf16
     - enc-base64
     - md5
@@ -10,15 +9,12 @@ components:
     - sha224
     - sha512
     - sha384
-    - sha3
-    - ripemd160
     - hmac
     - pbkdf2
     - evpkdf
     - cipher-core
     - mode-cfb
     - mode-ctr
-    - mode-ctr-gladman
     - mode-ofb
     - mode-ecb
     - pad-ansix923
@@ -26,36 +22,29 @@ components:
     - pad-iso97971
     - pad-zeropadding
     - pad-nopadding
-    - format-hex
     - aes
     - tripledes
     - rc4
     - rabbit
-    - rabbit-legacy
 
 rollups:
-    md5:       [core, md5]
-    sha1:      [core, sha1]
-    sha256:    [core, sha256]
-    sha224:    [core, sha256, sha224]
-    sha512:    [core, x64-core, sha512]
-    sha384:    [core, x64-core, sha512, sha384]
-    sha3:      [core, x64-core, sha3]
-    ripemd160: [core, ripemd160]
+    md5:    [core, md5]
+    sha1:   [core, sha1]
+    sha256: [core, sha256]
+    sha224: [core, sha256, sha224]
+    sha512: [core, x64-core, sha512]
+    sha384: [core, x64-core, sha512, sha384]
 
-    hmac-md5:       [core, md5, hmac]
-    hmac-sha1:      [core, sha1, hmac]
-    hmac-sha256:    [core, sha256, hmac]
-    hmac-sha224:    [core, sha256, sha224, hmac]
-    hmac-sha512:    [core, x64-core, sha512, hmac]
-    hmac-sha384:    [core, x64-core, sha512, sha384, hmac]
-    hmac-sha3:      [core, x64-core, sha3, hmac]
-    hmac-ripemd160: [core, ripemd160, hmac]
+    hmac-md5:    [core, md5, hmac]
+    hmac-sha1:   [core, sha1, hmac]
+    hmac-sha256: [core, sha256, hmac]
+    hmac-sha224: [core, sha256, sha224, hmac]
+    hmac-sha512: [core, x64-core, sha512, hmac]
+    hmac-sha384: [core, x64-core, sha512, sha384, hmac]
 
     pbkdf2: [core, sha1, hmac, pbkdf2]
 
-    aes:           [core, enc-base64, md5, evpkdf, cipher-core, aes]
-    tripledes:     [core, enc-base64, md5, evpkdf, cipher-core, tripledes]
-    rc4:           [core, enc-base64, md5, evpkdf, cipher-core, rc4]
-    rabbit:        [core, enc-base64, md5, evpkdf, cipher-core, rabbit]
-    rabbit-legacy: [core, enc-base64, md5, evpkdf, cipher-core, rabbit-legacy]
+    aes:       [core, enc-base64, md5, evpkdf, cipher-core, aes]
+    tripledes: [core, enc-base64, md5, evpkdf, cipher-core, tripledes]
+    rc4:       [core, enc-base64, md5, evpkdf, cipher-core, rc4]
+    rabbit:    [core, enc-base64, md5, evpkdf, cipher-core, rabbit]
