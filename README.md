@@ -52,6 +52,13 @@ See: https://code.google.com/p/crypto-js
 
 ### List of modules
 
+
+- ```crypto-js/core```
+- ```crypto-js/x64-core```
+- ```crypto-js/lib-typedarrays```
+
+---
+
 - ```crypto-js/md5```
 - ```crypto-js/sha1```
 - ```crypto-js/sha256```
@@ -60,6 +67,8 @@ See: https://code.google.com/p/crypto-js
 - ```crypto-js/sha384```
 - ```crypto-js/sha3```
 - ```crypto-js/ripemd160```
+
+---
 
 - ```crypto-js/hmac-md5```
 - ```crypto-js/hmac-sha1```
@@ -70,23 +79,25 @@ See: https://code.google.com/p/crypto-js
 - ```crypto-js/hmac-sha3```
 - ```crypto-js/hmac-ripemd160```
 
+---
+
 - ```crypto-js/pbkdf2```
+
+---
 
 - ```crypto-js/aes```
 - ```crypto-js/tripledes```
 - ```crypto-js/rc4```
 - ```crypto-js/rabbit```
 - ```crypto-js/rabbit-legacy```
-
-- ```crypto-js/core```
-- ```crypto-js/x64-core```
-
 - ```crypto-js/evpkdf```
 
-- ```crypto-js/lib-typedarrays```
+---
 
 - ```crypto-js/format-openssl```
 - ```crypto-js/format-hex```
+
+---
 
 - ```crypto-js/enc-latin1```
 - ```crypto-js/enc-utf8```
@@ -94,11 +105,15 @@ See: https://code.google.com/p/crypto-js
 - ```crypto-js/enc-utf16```
 - ```crypto-js/enc-base64```
 
+---
+
 - ```crypto-js/mode-cfb```
 - ```crypto-js/mode-ctr```
 - ```crypto-js/mode-ctr-gladman```
 - ```crypto-js/mode-ofb```
 - ```crypto-js/mode-ecb```
+
+---
 
 - ```crypto-js/pad-pkcs7```
 - ```crypto-js/pad-ansix923```
