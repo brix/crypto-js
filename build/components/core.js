@@ -216,14 +216,11 @@ var CryptoJS = CryptoJS || (function (Math, undefined) {
                     var thatByte = (thatWords[i >>> 2] >>> (24 - (i % 4) * 8)) & 0xff;
                     thisWords[(thisSigBytes + i) >>> 2] |= thatByte << (24 - ((thisSigBytes + i) % 4) * 8);
                 }
-            } else if (thatWords.length > 0xffff) {
+            } else {
                 // Copy one word at a time
                 for (var i = 0; i < thatSigBytes; i += 4) {
                     thisWords[(thisSigBytes + i) >>> 2] = thatWords[i >>> 2];
                 }
-            } else {
-                // Copy all words at once
-                thisWords.push.apply(thisWords, thatWords);
             }
             this.sigBytes += thatSigBytes;
 
@@ -279,8 +276,27 @@ var CryptoJS = CryptoJS || (function (Math, undefined) {
          */
         random: function (nBytes) {
             var words = [];
-            for (var i = 0; i < nBytes; i += 4) {
-                words.push((Math.random() * 0x100000000) | 0);
+
+            var r = (function (m_w) {
+                var m_w = m_w;
+                var m_z = 0x3ade68b1;
+                var mask = 0xffffffff;
+
+                return function () {
+                    m_z = (0x9069 * (m_z & 0xFFFF) + (m_z >> 0x10)) & mask;
+                    m_w = (0x4650 * (m_w & 0xFFFF) + (m_w >> 0x10)) & mask;
+                    var result = ((m_z << 0x10) + m_w) & mask;
+                    result /= 0x100000000;
+                    result += 0.5;
+                    return result * (Math.random() > .5 ? 1 : -1);
+                }
+            });
+
+            for (var i = 0, rcache; i < nBytes; i += 4) {
+                var _r = r((rcache || Math.random()) * 0x100000000);
+
+                rcache = _r() * 0x3ade67b7;
+                words.push((_r() * 0x100000000) | 0);
             }
 
             return new WordArray.init(words, nBytes);
