@@ -1,0 +1,5 @@
+bower.json
+build/crypto-js.tar.gz
+build/crypto-js-npm.tar.gz
+builder
+test
