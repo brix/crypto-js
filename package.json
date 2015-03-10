@@ -2,7 +2,7 @@
 	"name": "crypto-js",
 	"title": "crypto-js",
 	"description": "Modularized port of googlecode project crypto-js.",
-	"version": "3.1.2-5",
+	"version": "3.1.2-6",
 	"homepage": "http://github.com/evanvosberg/crypto-js",
 	"author": {
 		"name": "Evan Vosberg",
@@ -31,5 +31,8 @@
 		"tar.gz": "~0.1.1",
 		"fmd": "~0.0.1"
 	},
-	"keywords": ["Hash", "MD5", "SHA1", "SHA-1", "SHA256", "SHA-256", "RC4", "Rabbit", "AES", "DES", "PBKDF2", "HMAC", "OFB", "CFB", "CTR", "CBC", "Base64"]
+	"keywords": ["Hash", "MD5", "SHA1", "SHA-1", "SHA256", "SHA-256", "RC4", "Rabbit", "AES", "DES", "PBKDF2", "HMAC", "OFB", "CFB", "CTR", "CBC", "Base64"],
+	"scripts": {
+		"build": "cd builder && node builder.js"
+	}
 }
