@@ -5,8 +5,9 @@ Modularized port of googlecode project crypto-js.
 ## Node.js (Install)
 
 Requirements:
-* Node.js
-* npm (Node.js package manager)
+
+- Node.js
+- npm (Node.js package manager)
 
 ```bash
 npm install crypto-js
@@ -15,6 +16,7 @@ npm install crypto-js
 ### Usage
 
 Modular include:
+
 ```javascript
 var AES = require("crypto-js/aes");
 var SHA256 = require("crypto-js/sha256");
@@ -23,6 +25,7 @@ console.log(SHA256("Message"));
 ```
 
 Including all libraries, for access to extra methods:
+
 ```javascript
 var CryptoJS = require("crypto-js");
 console.log(CryptoJS.HmacSHA1("Message", "Key"));
@@ -30,21 +33,58 @@ console.log(CryptoJS.HmacSHA1("Message", "Key"));
 
 ## Client (browser)
 
+Requirements:
+
+- Node.js
+- Bower (package manager for frontend)
+
+```bash
+bower install crypto-js
+```
+
 ### Usage
 
 Modular include:
+
 ```javascript
+require.config({
+    packages: [
+        {
+            name: 'crypto-js',
+            location: 'path-to/bower_components/crypto-js',
+            main: 'index'
+        }
+    ]
+});
+
 require(["crypto-js/aes", "crypto-js/sha256"], function (AES, SHA256) {
     console.log(SHA256("Message"));
 });
 ```
 
 Including all libraries, for access to extra methods:
+
 ```javascript
-require("crypto-js", function (CryptoJS) {
+// Above-mentioned will work or use this simple form
+require.config({
+    paths: {
+        'require-js': 'path-to/bower_components/crypto-js/crypto-js'
+    }
+});
+
+require(["crypto-js"], function (CryptoJS) {
     console.log(CryptoJS.HmacSHA1("Message", "Key"));
 });
 ```
+
+### Usage without RequireJS
+
+```html
+<script type="text/javascript" src="path-to/bower_components/crypto-js/crypto-js.js"></script>
+<script type="text/javascript">
+    var encrypted = CryptoJS.AES(...);
+    var encrypted = CryptoJS.SHA256(...);
+</script>
 
 ## API
 
@@ -121,17 +161,6 @@ See: https://code.google.com/p/crypto-js
 - ```crypto-js/pad-iso97971```
 - ```crypto-js/pad-zeropadding```
 - ```crypto-js/pad-nopadding```
-
-## Contribution
-
-### Git Flow 
-
-The crypto-js project uses [git flow](https://github.com/nvie/gitflow) to manage branches. 
-Do your changes on the `develop` or even better on a `feature/*` branch. Don't do any changes on the `master` branch.
-
-### Pull request
-
-Target your pull request on `develop` branch. Other pull request won't be accepted.
 
 ## License
 
