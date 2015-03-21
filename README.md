@@ -50,12 +50,95 @@ require("crypto-js", function (CryptoJS) {
 
 See: https://code.google.com/p/crypto-js
 
+### List of modules
+
+
+- ```crypto-js/core```
+- ```crypto-js/x64-core```
+- ```crypto-js/lib-typedarrays```
+
+---
+
+- ```crypto-js/md5```
+- ```crypto-js/sha1```
+- ```crypto-js/sha256```
+- ```crypto-js/sha224```
+- ```crypto-js/sha512```
+- ```crypto-js/sha384```
+- ```crypto-js/sha3```
+- ```crypto-js/ripemd160```
+
+---
+
+- ```crypto-js/hmac-md5```
+- ```crypto-js/hmac-sha1```
+- ```crypto-js/hmac-sha256```
+- ```crypto-js/hmac-sha224```
+- ```crypto-js/hmac-sha512```
+- ```crypto-js/hmac-sha384```
+- ```crypto-js/hmac-sha3```
+- ```crypto-js/hmac-ripemd160```
+
+---
+
+- ```crypto-js/pbkdf2```
+
+---
+
+- ```crypto-js/aes```
+- ```crypto-js/tripledes```
+- ```crypto-js/rc4```
+- ```crypto-js/rabbit```
+- ```crypto-js/rabbit-legacy```
+- ```crypto-js/evpkdf```
+
+---
+
+- ```crypto-js/format-openssl```
+- ```crypto-js/format-hex```
+
+---
+
+- ```crypto-js/enc-latin1```
+- ```crypto-js/enc-utf8```
+- ```crypto-js/enc-hex```
+- ```crypto-js/enc-utf16```
+- ```crypto-js/enc-base64```
+
+---
+
+- ```crypto-js/mode-cfb```
+- ```crypto-js/mode-ctr```
+- ```crypto-js/mode-ctr-gladman```
+- ```crypto-js/mode-ofb```
+- ```crypto-js/mode-ecb```
+
+---
+
+- ```crypto-js/pad-pkcs7```
+- ```crypto-js/pad-ansix923```
+- ```crypto-js/pad-iso10126```
+- ```crypto-js/pad-iso97971```
+- ```crypto-js/pad-zeropadding```
+- ```crypto-js/pad-nopadding```
+
+## Contribution
+
+### Git Flow 
+
+The crypto-js project uses [git flow](https://github.com/nvie/gitflow) to manage branches. 
+Do your changes on the `develop` or even better on a `feature/*` branch. Don't do any changes on the `master` branch.
+
+### Pull request
+
+Target your pull request on `develop` branch. Other pull request won't be accepted.
+
 ## License
 
 [The MIT License (MIT)](http://opensource.org/licenses/MIT)
 
 Copyright (c) 2009-2013 Jeff Mott  
-Copyright (c) 2013-2014 Evan Vosberg
+Copyright (c) 2013-2015 Evan Vosberg
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
