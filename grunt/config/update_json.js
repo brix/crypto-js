@@ -35,7 +35,8 @@ module.exports = {
             'repository': null,
             'keywords': null,
             'main': null,
-            'dependencies': null
+            'dependencies': null,
+            'ignore': []
         }
     }
 };
