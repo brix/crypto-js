@@ -9,7 +9,8 @@ module.exports = {
             cwd: '<%= meta.cwd %>',
             src: [
                 'README.md',
-                'license.md'
+                'license.md',
+                'docs/**/*'
             ],
             dest: '<%= meta.build %>'
         }]
