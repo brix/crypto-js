@@ -7,7 +7,9 @@ var _ = require("lodash"),
 module.exports = function (grunt) {
 
     grunt.registerMultiTask('modularize', function () {
-        var done = this.async(),
+        var options = this.options(),
+
+            done = this.async(),
 
             modules = {},
 
@@ -20,38 +22,64 @@ module.exports = function (grunt) {
     		};
 
         // Prepare Factory-Module-Definition settings
-        _.each(this.options(), function (conf, module) {
-    		var sources = [],
+        _.each(options, function (conf, name) {
+            var sources = [],
 
-				options = {
+				opts = {
 					depends: {}
-				};
+				},
+
+				deps = [];
 
 			if (conf.exports) {
-				options.exports = conf.exports;
+				opts.exports = conf.exports;
 			}
 
-			if (module === "core" || module === "crypto-js") {
-				options.global = "CryptoJS";
+			if (conf.global) {
+				opts.global = conf.global;
 			}
 
+            // Find and add self as source
             _.each(this.filesSrc, function (source) {
-    			if (grunt.file.exists(source + module + ".js")) {
-    				sources.push(source + module + ".js");
+    			if (grunt.file.exists(source + name + ".js")) {
+    				sources.push(source + name + ".js");
     			}
             }, this);
 
-			// Read dependencies
-			_.each(_.difference(conf.components, [module]), function (value, i) {
-				options.depends['./' + value] = value === "core" ? "CryptoJS" : null;
-			});
-
-            // TODO create a single file including all dependencies
             if (conf.pack) {
-                return;
-            }
+    			// Collect all components
+    			deps = _.chain(conf.components)
+    			    .map(function (depName) {
+        			    return options[depName].components;
+    			    })
+    			    .flatten()
+    			    .unique()
+    			    .without(name)
+    			    .sort(function (a, b) {
+            			return options[a].components.indexOf(b) === -1 ? -1 : 1;
+        			})
+        			.value();
 
-			modules[module] = [sources, options];
+                // Add components as source files -> results a single file
+                _.each(this.filesSrc, function (source) {
+                    _.each(deps, function (depName) {
+            			if (grunt.file.exists(source + depName + ".js")) {
+            				sources.push(source + depName + ".js");
+            			}
+        			});
+                }, this);
+            } else {
+    			// Read components and add them as dependecies
+    			_.each(_.without(conf.components, name), function (value, i) {
+    				opts.depends['./' + value] = value === "core" ? "CryptoJS" : null;
+    			});
+			}
+
+			// Remove duplicates
+			sources = _.unique(sources);
+
+            // Add module settings to fmd definition
+			modules[name] = [sources, opts];
 		}, this);
 
 		// Build packege modules
