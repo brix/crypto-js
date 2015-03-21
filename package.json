@@ -1,35 +1,59 @@
 {
-	"name": "crypto-js",
-	"title": "crypto-js",
-	"description": "Modularized port of googlecode project crypto-js.",
-	"version": "3.1.2-5",
-	"homepage": "http://github.com/evanvosberg/crypto-js",
-	"author": {
-		"name": "Evan Vosberg",
-		"url": "http://github.com/evanvosberg"
-	},
-	"repository": {
-		"type": "git",
-		"url": "http://github.com/evanvosberg/crypto-js.git"
-	},
-	"bugs": {
-		"url": "http://github.com/evanvosberg/crypto-js/issues"
-	},
-	"licenses": [{
-		"type": "MIT",
-		"url": "http://opensource.org/licenses/MIT"
-	}],
-	"dependencies": {
-
-	},
-	"devDependencies": {
-		"underscore": "~1.4.4",
-		"handlebars": "~1.0.10",
-		"uglify-js": "~2.2.5",
-		"js-yaml": "~2.0.4",
-		"fs.extra": "~1.2.0",
-		"tar.gz": "~0.1.1",
-		"fmd": "~0.0.1"
-	},
-	"keywords": ["Hash", "MD5", "SHA1", "SHA-1", "SHA256", "SHA-256", "RC4", "Rabbit", "AES", "DES", "PBKDF2", "HMAC", "OFB", "CFB", "CTR", "CBC", "Base64"]
+  "name": "crypto-js",
+  "title": "crypto-js",
+  "description": "Modularized port of googlecode project crypto-js.",
+  "version": "3.1.2-5",
+  "homepage": "http://github.com/evanvosberg/crypto-js",
+  "author": {
+    "name": "Evan Vosberg",
+    "url": "http://github.com/evanvosberg"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/evanvosberg/crypto-js.git"
+  },
+  "bugs": {
+    "url": "http://github.com/evanvosberg/crypto-js/issues"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://opensource.org/licenses/MIT"
+    }
+  ],
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {
+    "fmd": "~0.0.1",
+    "grunt": "^0.4.5",
+    "grunt-contrib-clean": "^0.6.0",
+    "grunt-contrib-copy": "^0.6.0",
+    "grunt-contrib-jshint": "^0.10.0",
+    "grunt-jsonlint": "^1.0.4",
+    "grunt-update-json": "^0.2.0",
+    "load-grunt-config": "^0.16.0",
+    "lodash": "^3.5.0",
+    "tar.gz": "~0.1.1"
+  },
+  "keywords": [
+    "security",
+    "crypto",
+    "Hash",
+    "MD5",
+    "SHA1",
+    "SHA-1",
+    "SHA256",
+    "SHA-256",
+    "RC4",
+    "Rabbit",
+    "AES",
+    "DES",
+    "PBKDF2",
+    "HMAC",
+    "OFB",
+    "CFB",
+    "CTR",
+    "CBC",
+    "Base64"
+  ]
 }

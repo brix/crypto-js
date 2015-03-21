@@ -122,6 +122,17 @@ See: https://code.google.com/p/crypto-js
 - ```crypto-js/pad-zeropadding```
 - ```crypto-js/pad-nopadding```
 
+## Contribution
+
+### Git Flow 
+
+The crypto-js project uses [git flow](https://github.com/nvie/gitflow) to manage branches. 
+Do your changes on the `develop` or even better on a `feature/*` branch. Don't do any changes on the `master` branch.
+
+### Pull request
+
+Target your pull request on `develop` branch. Other pull request won't be accepted.
+
 ## License
 
 [The MIT License (MIT)](http://opensource.org/licenses/MIT)
