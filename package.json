@@ -21,6 +21,7 @@
       "url": "http://opensource.org/licenses/MIT"
     }
   ],
+  "main": "index.js",
   "dependencies": {},
   "devDependencies": {
     "fmd": "~0.0.1",
