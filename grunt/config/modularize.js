@@ -123,7 +123,8 @@ module.exports = {
             // core
             "core": {
                 "exports": "CryptoJS",
-                "components": ["core"]
+                "components": ["core"],
+                "global": "CryptoJS" 
             },
             "x64-core": {
                 "exports": "CryptoJS",
