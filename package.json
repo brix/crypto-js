@@ -21,6 +21,10 @@
       "url": "http://opensource.org/licenses/MIT"
     }
   ],
+  "scripts": {
+    "build": "grunt build",
+    "check": "grunt default"
+  },
   "main": "index.js",
   "dependencies": {},
   "devDependencies": {
