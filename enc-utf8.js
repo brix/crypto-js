@@ -1,4 +1,4 @@
-;(function (root, factory, undef) {
+;(function (root, factory) {
 	if (typeof exports === "object") {
 		// CommonJS
 		module.exports = exports = factory(require("./core"));
@@ -9,7 +9,7 @@
 	}
 	else {
 		// Global (browser)
-		factory();
+		factory(root.CryptoJS);
 	}
 }(this, function (CryptoJS) {
 

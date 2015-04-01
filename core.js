@@ -9,7 +9,7 @@
 	}
 	else {
 		// Global (browser)
-		factory();
+		root.CryptoJS = factory();
 	}
 }(this, function () {
 
