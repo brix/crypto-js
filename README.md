@@ -1,6 +1,6 @@
 # crypto-js
 
-Modularized port of googlecode project crypto-js.
+JavaScript library of crypto standards.
 
 ## Node.js (Install)
 
