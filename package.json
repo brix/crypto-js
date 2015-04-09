@@ -1,19 +1,19 @@
 {
   "name": "crypto-js",
   "title": "crypto-js",
-  "description": "Modularized port of googlecode project crypto-js.",
+  "description": "JavaScript library of crypto standards.",
   "version": "3.1.4",
-  "homepage": "http://github.com/evanvosberg/crypto-js",
+  "homepage": "http://github.com/brix/crypto-js",
   "author": {
     "name": "Evan Vosberg",
     "url": "http://github.com/evanvosberg"
   },
   "repository": {
     "type": "git",
-    "url": "http://github.com/evanvosberg/crypto-js.git"
+    "url": "http://github.com/brix/crypto-js.git"
   },
   "bugs": {
-    "url": "http://github.com/evanvosberg/crypto-js/issues"
+    "url": "http://github.com/brix/crypto-js/issues"
   },
   "licenses": [
     {
