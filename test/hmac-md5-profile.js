@@ -1,8 +1,8 @@
-YUI.add('algo-hmac-profile', function (Y) {
+YUI.add('algo-hmac-md5-profile', function (Y) {
     var C = CryptoJS;
 
     Y.Profiler.add({
-        name: 'HMAC',
+        name: 'HMAC MD5',
 
         setUp: function () {
             this.data = {
