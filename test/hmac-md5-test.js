@@ -1,8 +1,8 @@
-YUI.add('algo-hmac-test', function (Y) {
+YUI.add('algo-hmac-md5-test', function (Y) {
     var C = CryptoJS;
 
     Y.Test.Runner.add(new Y.Test.Case({
-        name: 'HMAC',
+        name: 'HMAC MD5',
 
         testVector1: function () {
             Y.Assert.areEqual('9294727a3638bb1c13f48ef8158bfc9d', C.HmacMD5('Hi There', C.enc.Hex.parse('0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b')).toString());
@@ -14,6 +14,14 @@ YUI.add('algo-hmac-test', function (Y) {
 
         testVector3: function () {
             Y.Assert.areEqual('56be34521d144c88dbb8c733f0e8b3f6', C.HmacMD5(C.enc.Hex.parse('dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd'), C.enc.Hex.parse('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')).toString());
+        },
+
+        testVector4: function () {
+            Y.Assert.areEqual('7ee2a3cc979ab19865704644ce13355c', C.HmacMD5('ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'A'));
+        },
+
+        testVector5: function () {
+            Y.Assert.areEqual('0e1bd89c43e3e6e3b3f8cf1d5ba4f77a', C.HmacMD5('abcdefghijklmnopqrstuvwxyz', 'A'));
         },
 
         testUpdate: function () {
