@@ -11,6 +11,7 @@
     "type": "git",
     "url": "http://github.com/evanvosberg/crypto-js.git"
   },
+  "license": "MIT",
   "keywords": [
     "security",
     "crypto",
