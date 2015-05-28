@@ -1,6 +1,6 @@
 # crypto-js
 
-Modularized port of googlecode project crypto-js.
+JavaScript library of crypto standards.
 
 ## Node.js (Install)
 
@@ -85,6 +85,7 @@ require(["crypto-js"], function (CryptoJS) {
     var encrypted = CryptoJS.AES(...);
     var encrypted = CryptoJS.SHA256(...);
 </script>
+```
 
 ## API
 
