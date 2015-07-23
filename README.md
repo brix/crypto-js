@@ -108,7 +108,7 @@ var plaintext = bytes.toString(CryptoJS.enc.Utf8);
 console.log(plaintext);
 ```
 
-#### Object Encryption
+#### Object encryption
 
 ```javascript
 var CryptoJS = require("crypto-js");
