@@ -82,7 +82,7 @@ module.exports = {
                 "components": ["core", "x64-core", "sha512", "sha384", "hmac"]
             },
             "hmac-sha3": {
-                "exports": "CryptoJSHmacSHA3",
+                "exports": "CryptoJS.HmacSHA3",
                 "components": ["core", "x64-core", "sha3", "hmac"]
             },
             "hmac-ripemd160": {
