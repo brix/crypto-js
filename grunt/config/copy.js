@@ -10,7 +10,7 @@ module.exports = {
             src: [
                 'README.md',
                 'CONTRIBUTING.md',
-                'license.md',
+                'LICENSE',
                 'docs/**/*'
             ],
             dest: '<%= meta.build %>'
