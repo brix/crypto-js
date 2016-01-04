@@ -91,6 +91,40 @@ require(["crypto-js"], function (CryptoJS) {
 
 See: https://code.google.com/p/crypto-js
 
+### AES Encryption
+
+#### Plain text encryption
+
+```javascript
+var CryptoJS = require("crypto-js");
+
+// Encrypt
+var ciphertext = CryptoJS.AES.encrypt('my message', 'secret key 123');
+
+// Decrypt
+var bytes  = CryptoJS.AES.decrypt(ciphertext.toString(), 'secret key 123');
+var plaintext = bytes.toString(CryptoJS.enc.Utf8);
+
+console.log(plaintext);
+```
+
+#### Object encryption
+
+```javascript
+var CryptoJS = require("crypto-js");
+
+var data = [{id: 1}, {id: 2}]
+
+// Encrypt
+var ciphertext = CryptoJS.AES.encrypt(JSON.stringify(data), 'secret key 123');
+
+// Decrypt
+var bytes  = CryptoJS.AES.decrypt(ciphertext.toString(), 'secret key 123');
+var decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+
+console.log(decryptedData);
+```
+
 ### List of modules
 
 
@@ -162,28 +196,3 @@ See: https://code.google.com/p/crypto-js
 - ```crypto-js/pad-iso97971```
 - ```crypto-js/pad-zeropadding```
 - ```crypto-js/pad-nopadding```
-
-## License
-
-[The MIT License (MIT)](http://opensource.org/licenses/MIT)
-
-Copyright (c) 2009-2013 Jeff Mott  
-Copyright (c) 2013-2015 Evan Vosberg
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.

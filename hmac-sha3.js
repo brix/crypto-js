@@ -13,6 +13,6 @@
 	}
 }(this, function (CryptoJS) {
 
-	return CryptoJSHmacSHA3;
+	return CryptoJS.HmacSHA3;
 
 }));
