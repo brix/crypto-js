@@ -48,7 +48,7 @@ var CryptoJS = CryptoJS || (function (Math, undefined) {
                 }
 
                 // Create default initializer
-                if (!subtype.hasOwnProperty('init')) {
+                if (!subtype.hasOwnProperty('init') || this.init === subtype.init) {
                     subtype.init = function () {
                         subtype.$super.init.apply(this, arguments);
                     };

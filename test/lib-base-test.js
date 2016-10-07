@@ -81,6 +81,12 @@ YUI.add('lib-base-test', function (Y) {
             this.data.obj.initArg = 'newValue';
 
             Y.Assert.areNotEqual(this.data.obj.initArg, this.data.objClone.initArg);
+        },
+
+        testCloneLeavesOriginalInitPrototypeUnchanged: function() {
+            Y.Assert.areEqual(this.data.obj, this.data.obj.init.prototype);
+            Y.Assert.areEqual(this.data.objClone, this.data.objClone.init.prototype);
+            Y.Assert.areNotEqual(this.data.obj.init.prototype, this.data.objClone.init.prototype);
         }
     }));
 }, '$Rev$');
