@@ -16,8 +16,6 @@ var CryptoJS = CryptoJS || (function (Math, undefined) {
      * Base object for prototypal inheritance.
      */
     var Base = C_lib.Base = (function () {
-        function F() {}
-
         return {
             /**
              * Creates a new object that inherits from this object.
@@ -39,8 +37,7 @@ var CryptoJS = CryptoJS || (function (Math, undefined) {
              */
             extend: function (overrides) {
                 // Spawn
-                F.prototype = this;
-                var subtype = new F();
+                var subtype = Object.create(this);
 
                 // Augment
                 if (overrides) {
