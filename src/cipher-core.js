@@ -451,11 +451,15 @@ CryptoJS.lib.Cipher || (function (undefined) {
                 var modeCreator = mode.createEncryptor;
             } else /* if (this._xformMode == this._DEC_XFORM_MODE) */ {
                 var modeCreator = mode.createDecryptor;
-
                 // Keep at least one block in the buffer for unpadding
                 this._minBufferSize = 1;
             }
-            this._mode = modeCreator.call(mode, this, iv && iv.words);
+            if (this._mode && this._modeCreator == modeCreator) {
+                this._mode.init(this, iv && iv.words);
+            } else {
+                this._mode = modeCreator.call(mode, this, iv && iv.words);
+                this._modeCreator = modeCreator;
+            }
         },
 
         _doProcessBlock: function (words, offset) {
