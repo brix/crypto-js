@@ -2,6 +2,25 @@
  * CryptoJS core components.
  */
 var CryptoJS = CryptoJS || (function (Math, undefined) {
+    /*
+     * Local polyfil of Object.create
+     */
+    var create = Object.create || (function () {
+        function F() {};
+
+        return function (obj) {
+            var subtype;
+
+            F.prototype = obj;
+
+            subtype = new F();
+
+            F.prototype = null;
+
+            return subtype;
+        };
+    }())
+
     /**
      * CryptoJS namespace.
      */
@@ -16,7 +35,7 @@ var CryptoJS = CryptoJS || (function (Math, undefined) {
      * Base object for prototypal inheritance.
      */
     var Base = C_lib.Base = (function () {
-        function F() {}
+
 
         return {
             /**
@@ -39,8 +58,7 @@ var CryptoJS = CryptoJS || (function (Math, undefined) {
              */
             extend: function (overrides) {
                 // Spawn
-                F.prototype = this;
-                var subtype = new F();
+                var subtype = create(this);
 
                 // Augment
                 if (overrides) {
