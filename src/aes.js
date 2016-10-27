@@ -76,6 +76,8 @@
      */
     var AES = C_algo.AES = BlockCipher.extend({
         _doReset: function () {
+            if (this._nRounds) return;
+
             // Shortcuts
             var key = this._key;
             var keyWords = key.words;
