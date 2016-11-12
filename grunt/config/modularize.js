@@ -124,7 +124,7 @@ module.exports = {
             "core": {
                 "exports": "CryptoJS",
                 "components": ["core"],
-                "global": "CryptoJS" 
+                "global": "CryptoJS"
             },
             "x64-core": {
                 "exports": "CryptoJS",
@@ -134,7 +134,7 @@ module.exports = {
                 "components": ["core", "hmac"]
             },
             "cipher-core": {
-                "components": ["core", "cipher-core"]
+                "components": ["core", "evpkdf", "cipher-core"]
             },
 
             // lib
