@@ -454,11 +454,12 @@ CryptoJS.lib.Cipher || (function (undefined) {
                 // Keep at least one block in the buffer for unpadding
                 this._minBufferSize = 1;
             }
-            if (this._mode && this._modeCreator == modeCreator) {
+
+            if (this._mode && this._mode.__creator == modeCreator) {
                 this._mode.init(this, iv && iv.words);
             } else {
                 this._mode = modeCreator.call(mode, this, iv && iv.words);
-                this._modeCreator = modeCreator;
+                this._mode.__creator = modeCreator;
             }
         },
 
