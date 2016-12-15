@@ -12,6 +12,7 @@
     "type": "git",
     "url": "http://github.com/brix/crypto-js.git"
   },
+  "license": "MIT",
   "keywords": [
     "security",
     "crypto",
