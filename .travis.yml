@@ -1,0 +1,14 @@
+dist: trusty
+sudo: false
+
+language: node_js
+node_js:
+  - "6"
+  - "7"
+
+before_script:
+  - npm install build
+
+cache:
+  directories:
+    - "node_modules"
