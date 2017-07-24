@@ -106,7 +106,8 @@
           if (i % 4) {
               var bits1 = reverseMap[base64Str.charCodeAt(i - 1)] << ((i % 4) * 2);
               var bits2 = reverseMap[base64Str.charCodeAt(i)] >>> (6 - (i % 4) * 2);
-              words[nBytes >>> 2] |= (bits1 | bits2) << (24 - (nBytes % 4) * 8);
+              var bitsCombined = bits1 | bits2;
+              words[nBytes >>> 2] |= bitsCombined << (24 - (nBytes % 4) * 8);
               nBytes++;
           }
       }
