@@ -11,7 +11,7 @@
     var K = [];
 
     // Compute constants
-    (function () {
+    ( () => {
         function isPrime(n) {
             var sqrtN = Math.sqrt(n);
             for (var factor = 2; factor <= sqrtN; factor++) {
