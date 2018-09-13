@@ -6,7 +6,7 @@ var CryptoJS = CryptoJS || (function (Math, undefined) {
      * Local polyfil of Object.create
      */
     var create = Object.create || (function () {
-        function F() {};
+        function F() {}
 
         return function (obj) {
             var subtype;
@@ -289,7 +289,7 @@ var CryptoJS = CryptoJS || (function (Math, undefined) {
         random: function (nBytes) {
             var words = [];
 
-            var r = (function (m_w) {
+            var r = function (m_w) {
                 var m_w = m_w;
                 var m_z = 0x3ade68b1;
                 var mask = 0xffffffff;
@@ -300,9 +300,9 @@ var CryptoJS = CryptoJS || (function (Math, undefined) {
                     var result = ((m_z << 0x10) + m_w) & mask;
                     result /= 0x100000000;
                     result += 0.5;
-                    return result * (Math.random() > .5 ? 1 : -1);
+                    return result * (Math.random() > 0.5 ? 1 : -1);
                 }
-            });
+            };
 
             for (var i = 0, rcache; i < nBytes; i += 4) {
                 var _r = r((rcache || Math.random()) * 0x100000000);
@@ -539,6 +539,8 @@ var CryptoJS = CryptoJS || (function (Math, undefined) {
          *     var processedData = bufferedBlockAlgorithm._process(!!'flush');
          */
         _process: function (doFlush) {
+            var processedWords;
+            
             // Shortcuts
             var data = this._data;
             var dataWords = data.words;
@@ -571,7 +573,7 @@ var CryptoJS = CryptoJS || (function (Math, undefined) {
                 }
 
                 // Remove processed words
-                var processedWords = dataWords.splice(0, nWordsReady);
+                processedWords = dataWords.splice(0, nWordsReady);
                 data.sigBytes -= nBytesReady;
             }
 

@@ -29,6 +29,8 @@ module.exports = function (grunt) {
             }
         }
     });
+    
+    
 
     // Will load the custom tasks
     grunt.loadTasks('./grunt/tasks');

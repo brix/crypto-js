@@ -34,17 +34,19 @@ CryptoJS.mode.CFB = (function () {
     });
 
     function generateKeystreamAndEncrypt(words, offset, blockSize, cipher) {
+        var keystream;
+
         // Shortcut
         var iv = this._iv;
 
         // Generate keystream
         if (iv) {
-            var keystream = iv.slice(0);
+            keystream = iv.slice(0);
 
             // Remove IV for subsequent blocks
             this._iv = undefined;
         } else {
-            var keystream = this._prevBlock;
+            keystream = this._prevBlock;
         }
         cipher.encryptBlock(keystream, 0);
 

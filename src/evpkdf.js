@@ -53,6 +53,8 @@
          *     var key = kdf.compute(password, salt);
          */
         compute: function (password, salt) {
+            var block;
+
             // Shortcut
             var cfg = this.cfg;
 
@@ -72,7 +74,7 @@
                 if (block) {
                     hasher.update(block);
                 }
-                var block = hasher.update(password).finalize(salt);
+                block = hasher.update(password).finalize(salt);
                 hasher.reset();
 
                 // Iterations

@@ -158,6 +158,9 @@
 
                 // Rho Pi
                 for (var laneIndex = 1; laneIndex < 25; laneIndex++) {
+                    var tMsw;
+                    var tLsw;
+
                     // Shortcuts
                     var lane = state[laneIndex];
                     var laneMsw = lane.high;
@@ -166,11 +169,11 @@
 
                     // Rotate lanes
                     if (rhoOffset < 32) {
-                        var tMsw = (laneMsw << rhoOffset) | (laneLsw >>> (32 - rhoOffset));
-                        var tLsw = (laneLsw << rhoOffset) | (laneMsw >>> (32 - rhoOffset));
+                        tMsw = (laneMsw << rhoOffset) | (laneLsw >>> (32 - rhoOffset));
+                        tLsw = (laneLsw << rhoOffset) | (laneMsw >>> (32 - rhoOffset));
                     } else /* if (rhoOffset >= 32) */ {
-                        var tMsw = (laneLsw << (rhoOffset - 32)) | (laneMsw >>> (64 - rhoOffset));
-                        var tLsw = (laneMsw << (rhoOffset - 32)) | (laneLsw >>> (64 - rhoOffset));
+                        tMsw = (laneLsw << (rhoOffset - 32)) | (laneMsw >>> (64 - rhoOffset));
+                        tLsw = (laneMsw << (rhoOffset - 32)) | (laneLsw >>> (64 - rhoOffset));
                     }
 
                     // Transpose lanes
@@ -205,7 +208,7 @@
                 var lane = state[0];
                 var roundConstant = ROUND_CONSTANTS[round];
                 lane.high ^= roundConstant.high;
-                lane.low  ^= roundConstant.low;;
+                lane.low  ^= roundConstant.low;
             }
         },
 

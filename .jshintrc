@@ -10,7 +10,24 @@
     "strict"    : false,  // Requires all functions to run in ECMAScript 5's strict mode
     "undef"     : true,   // Require non-global variables to be declared (prevents global leaks)
     "asi"       : true,   // Suppresses warnings about missing semicolons
+    "funcscope" : false,
+    "shadow"    : true,
+    "expr"      : true,
+    "-W041"     : true,
+    "-W018"     : true,
     "globals":  {
-        "CryptoJS": true
+        "CryptoJS"          : true,
+        "escape"            : true,
+        "unescape"          : true,
+        "Int8Array"         : true,
+        "Int16Array"        : true,
+        "Int32Array"        : true,
+        "Uint8Array"        : true,
+        "Uint16Array"       : true,
+        "Uint32Array"       : true,
+        "Uint8ClampedArray" : true,
+        "ArrayBuffer"       : true,
+        "Float32Array"      : true,
+        "Float64Array"      : true
     }
 }

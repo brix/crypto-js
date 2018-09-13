@@ -5,7 +5,7 @@
 module.exports = {
     dev: {
         options: {
-            jshintrc: true,
+            jshintrc: process.cwd() + '/.jshintrc',
             reporterOutput: ''
         },
         files: {
