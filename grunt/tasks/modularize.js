@@ -53,7 +53,7 @@ module.exports = function (grunt) {
         			    return options[depName].components;
     			    })
     			    .flatten()
-    			    .unique()
+    			    .uniq()
     			    .without(name)
     			    .sort(function (a, b) {
             			return options[a].components.indexOf(b) === -1 ? -1 : 1;
@@ -76,7 +76,7 @@ module.exports = function (grunt) {
 			}
 
 			// Remove duplicates
-			sources = _.unique(sources);
+			sources = _.uniq(sources);
 
             // Add module settings to fmd definition
 			modules[name] = [sources, opts];
