@@ -18,7 +18,7 @@
   "license": "MIT",
   "scripts": {
     "build": "grunt build",
-    "check": "grunt default"
+    "test": "grunt default"
   },
   "main": "index.js",
   "dependencies": {},
