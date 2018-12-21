@@ -17,11 +17,11 @@ YUI.add('algo-hmac-md5-test', function (Y) {
         },
 
         testVector4: function () {
-            Y.Assert.areEqual('7ee2a3cc979ab19865704644ce13355c', C.HmacMD5('ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'A'));
+            Y.Assert.areEqual('7ee2a3cc979ab19865704644ce13355c', C.HmacMD5('ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'A').toString());
         },
 
         testVector5: function () {
-            Y.Assert.areEqual('0e1bd89c43e3e6e3b3f8cf1d5ba4f77a', C.HmacMD5('abcdefghijklmnopqrstuvwxyz', 'A'));
+            Y.Assert.areEqual('0e1bd89c43e3e6e3b3f8cf1d5ba4f77a', C.HmacMD5('abcdefghijklmnopqrstuvwxyz', 'A').toString());
         },
 
         testUpdate: function () {
