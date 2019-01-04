@@ -17,11 +17,11 @@ YUI.add('algo-hmac-sha512-test', function (Y) {
         },
 
         testVector4: function () {
-            Y.Assert.areEqual('a303979f7c94bb39a8ab6ce05cdbe28f0255da8bb305263e3478ef7e855f0242729bf1d2be55398f14da8e63f0302465a8a3f76c297bd584ad028d18ed7f0195', C.HmacSHA512('ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'A'));
+            Y.Assert.areEqual('a303979f7c94bb39a8ab6ce05cdbe28f0255da8bb305263e3478ef7e855f0242729bf1d2be55398f14da8e63f0302465a8a3f76c297bd584ad028d18ed7f0195', C.HmacSHA512('ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'A').toString());
         },
 
         testVector5: function () {
-            Y.Assert.areEqual('8c2d56f7628325e62124c0a870ad98d101327fc42696899a06ce0d7121454022fae597e42c25ac3a4c380fd514f553702a5b0afaa9b5a22050902f024368e9d9', C.HmacSHA512('abcdefghijklmnopqrstuvwxyz', 'A'));
+            Y.Assert.areEqual('8c2d56f7628325e62124c0a870ad98d101327fc42696899a06ce0d7121454022fae597e42c25ac3a4c380fd514f553702a5b0afaa9b5a22050902f024368e9d9', C.HmacSHA512('abcdefghijklmnopqrstuvwxyz', 'A').toString());
         },
 
         testUpdate: function () {

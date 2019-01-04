@@ -17,11 +17,11 @@ YUI.add('algo-hmac-sha224-test', function (Y) {
         },
 
         testVector4: function () {
-            Y.Assert.areEqual('61bf669da4fdcd8e5c3bd09ebbb4a986d3d1b298d3ca05c511f7aeff', C.HmacSHA224('ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'A'));
+            Y.Assert.areEqual('61bf669da4fdcd8e5c3bd09ebbb4a986d3d1b298d3ca05c511f7aeff', C.HmacSHA224('ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'A').toString());
         },
 
         testVector5: function () {
-            Y.Assert.areEqual('16fc69ada3c3edc1fe9144d6b98d93393833ae442bedf681110a1176', C.HmacSHA224('abcdefghijklmnopqrstuvwxyz', 'A'));
+            Y.Assert.areEqual('16fc69ada3c3edc1fe9144d6b98d93393833ae442bedf681110a1176', C.HmacSHA224('abcdefghijklmnopqrstuvwxyz', 'A').toString());
         },
 
         testUpdate: function () {
