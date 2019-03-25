@@ -56,6 +56,40 @@
             return base64Chars.join('');
         },
 
+        stringifySafeString: function (wordArray) {
+            // Shortcuts
+            var words = wordArray.words;
+            var sigBytes = wordArray.sigBytes;
+            var map = this._safe_map;
+
+            // Clamp excess bits
+            wordArray.clamp();
+            debugger;
+            // Convert
+            var base64Chars = [];
+            for (var i = 0; i < sigBytes; i += 3) {
+                var byte1 = (words[i >>> 2]       >>> (24 - (i % 4) * 8))       & 0xff;
+                var byte2 = (words[(i + 1) >>> 2] >>> (24 - ((i + 1) % 4) * 8)) & 0xff;
+                var byte3 = (words[(i + 2) >>> 2] >>> (24 - ((i + 2) % 4) * 8)) & 0xff;
+
+                var triplet = (byte1 << 16) | (byte2 << 8) | byte3;
+
+                for (var j = 0; (j < 4) && (i + j * 0.75 < sigBytes); j++) {
+                    base64Chars.push(map.charAt((triplet >>> (6 * (3 - j))) & 0x3f));
+                }
+            }
+
+            // Add padding
+            var paddingChar = map.charAt(64);
+            if (paddingChar) {
+                while (base64Chars.length % 4) {
+                    base64Chars.push(paddingChar);
+                }
+            }
+
+            return base64Chars.join('');
+        },
+
         /**
          * Converts a Base64 string to a word array.
          *
@@ -96,7 +130,48 @@
 
         },
 
-        _map: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/='
+        /**
+         * Converts a Base64 string to a word array.
+         *
+         * @param {string} base64Str The Base64 string.
+         *
+         * @return {WordArray} The word array.
+         *
+         * @static
+         *
+         * @example
+         *
+         *     var wordArray = CryptoJS.enc.Base64.parse(base64String);
+         */
+        safeParse: function (base64Str) {
+            // Shortcuts
+            var base64StrLength = base64Str.length;
+            var map = this._safe_map;
+            var reverseMap = this._reverseMap;
+
+            if (!reverseMap) {
+                    reverseMap = this._reverseMap = [];
+                    for (var j = 0; j < map.length; j++) {
+                        reverseMap[map.charCodeAt(j)] = j;
+                    }
+            }
+
+            // Ignore padding
+            var paddingChar = map.charAt(64);
+            if (paddingChar) {
+                var paddingIndex = base64Str.indexOf(paddingChar);
+                if (paddingIndex !== -1) {
+                    base64StrLength = paddingIndex;
+                }
+            }
+
+            // Convert
+            return parseLoop(base64Str, base64StrLength, reverseMap);
+
+        },
+
+        _map: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=',
+        _safe_map: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_=',
     };
 
     function parseLoop(base64Str, base64StrLength, reverseMap) {

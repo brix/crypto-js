@@ -1,0 +1,62 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>CryptoJS Test Suite</title>
+
+        <!-- CryptoJS -->
+        <script src="../src/core.js"></script>
+        <script src="../src/lib-typedarrays.js"></script>
+        <script src="../src/x64-core.js"></script>
+        <script src="../src/enc-utf16.js"></script>
+        <script src="../src/enc-base64.js"></script>
+        <script src="../src/md5.js"></script>
+        <script src="../src/sha1.js"></script>
+        <script src="../src/sha256.js"></script>
+        <script src="../src/sha224.js"></script>
+        <script src="../src/sha512.js"></script>
+        <script src="../src/sha384.js"></script>
+        <script src="../src/sha3.js"></script>
+        <script src="../src/ripemd160.js"></script>
+        <script src="../src/hmac.js"></script>
+        <script src="../src/pbkdf2.js"></script>
+        <script src="../src/evpkdf.js"></script>
+        <script src="../src/cipher-core.js"></script>
+        <script src="../src/mode-cfb.js"></script>
+        <script src="../src/mode-ctr.js"></script>
+        <script src="../src/mode-ofb.js"></script>
+        <script src="../src/mode-ecb.js"></script>
+        <script src="../src/pad-ansix923.js"></script>
+        <script src="../src/pad-iso10126.js"></script>
+        <script src="../src/pad-zeropadding.js"></script>
+        <script src="../src/pad-iso97971.js"></script>
+        <script src="../src/pad-nopadding.js"></script>
+        <script src="../src/rc4.js"></script>
+        <script src="../src/rabbit.js"></script>
+        <script src="../src/rabbit-legacy.js"></script>
+        <script src="../src/aes.js"></script>
+        <script src="../src/tripledes.js"></script>
+
+       
+        <!-- Test runner -->
+        <script>
+            var message = "152999073894506063@http://localhost:3000/protected/index@89effb07-588e-4bf4-ba16-c10b2a136ae9@1553508995647";
+            var key = "u-rXsMB_aegAnzC_CJt27plLGNqOfR2EHI5o2ro1NO";
+            var baseKey = CryptoJS.enc.Base64.safeParse(key);
+            console.log("key："+baseKey.toString());
+            var hash = CryptoJS.HmacSHA256(message, baseKey);
+            var hashInBase64 = CryptoJS.enc.Base64.stringify(hash);
+            document.write(hashInBase64);
+            document.write("\n");
+            var shashInBase64 = CryptoJS.enc.Base64.stringifySafeString(hash);
+            console.log("result："+hash.toString())
+            document.write(shashInBase64);
+            console.log("done："+shashInBase64);
+            var url = 'http://www.ctyun.cn/serviceValidate?service=http://localhost:3000/protected/index&ticket=89effb07-588e-4bf4-ba16-c10b2a136ae9&timestamp=1553508995647&appId=152999073894506063&signature=evvc3Ix87nk-KkuIaQJrLP7Vu76dTsh-BwnC6AHXFfU'
+        </script>
+
+       
+    </head>
+    <body>
+    </body>
+</html>
