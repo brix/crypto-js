@@ -712,11 +712,20 @@
             // Shortcuts
             var key = this._key;
             var keyWords = key.words;
+            // Make sure the key length is valid (64, 128 or >= 192 bit)
+            if (keyWords.length !== 2 && keyWords.length !== 4 && keyWords.length < 6) {
+                throw new Error('Invalid key length - 3DES requires the key length to be 64, 128, 192 or >192.');
+            }
+
+            // Extend the key according to the keying options defined in 3DES standard
+            var key1 = keyWords.slice(0, 2);
+            var key2 = keyWords.length < 4 ? keyWords.slice(0, 2) : keyWords.slice(2, 4);
+            var key3 = keyWords.length < 6 ? keyWords.slice(0, 2) : keyWords.slice(4, 6);
 
             // Create DES instances
-            this._des1 = DES.createEncryptor(WordArray.create(keyWords.slice(0, 2)));
-            this._des2 = DES.createEncryptor(WordArray.create(keyWords.slice(2, 4)));
-            this._des3 = DES.createEncryptor(WordArray.create(keyWords.slice(4, 6)));
+            this._des1 = DES.createEncryptor(WordArray.create(key1));
+            this._des2 = DES.createEncryptor(WordArray.create(key2));
+            this._des3 = DES.createEncryptor(WordArray.create(key3));
         },
 
         encryptBlock: function (M, offset) {
