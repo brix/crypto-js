@@ -13,6 +13,8 @@
          * Converts a word array to a Base64 string.
          *
          * @param {WordArray} wordArray The word array.
+         * 
+         * @param {boolean} urlSafe Whether to use safe url.
          *
          * @return {string} The Base64 string.
          *
@@ -60,6 +62,8 @@
          * Converts a Base64 string to a word array.
          *
          * @param {string} base64Str The Base64 string.
+         * 
+         * @param {boolean} urlSafe Whether to use safe url.
          *
          * @return {WordArray} The word array.
          *
