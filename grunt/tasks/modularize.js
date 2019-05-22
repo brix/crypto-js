@@ -22,7 +22,7 @@ module.exports = function (grunt) {
     		};
 
         // Prepare Factory-Module-Definition settings
-        _.each(options, function (conf, name) {
+        _.each(options, (conf, name)=> {
             var sources = [],
 
 				opts = {
@@ -40,11 +40,11 @@ module.exports = function (grunt) {
 			}
 
             // Find and add self as source
-            _.each(this.filesSrc, function (source) {
+            _.each(this.filesSrc, (source) => {
     			if (grunt.file.exists(source + name + ".js")) {
     				sources.push(source + name + ".js");
     			}
-            }, this);
+            });
 
             if (conf.pack) {
     			// Collect all components
@@ -61,16 +61,16 @@ module.exports = function (grunt) {
         			.value();
 
                 // Add components as source files -> results a single file
-                _.each(this.filesSrc, function (source) {
+                _.each(this.filesSrc, (source) => {
                     _.each(deps, function (depName) {
             			if (grunt.file.exists(source + depName + ".js")) {
             				sources.push(source + depName + ".js");
             			}
         			});
-                }, this);
+                });
             } else {
     			// Read components and add them as dependecies
-    			_.each(_.without(conf.components, name), function (value, i) {
+    			_.each(_.without(conf.components, name), (value, i) => {
     				opts.depends['./' + value] = value === "core" ? "CryptoJS" : null;
     			});
 			}
@@ -80,7 +80,7 @@ module.exports = function (grunt) {
 
             // Add module settings to fmd definition
 			modules[name] = [sources, opts];
-		}, this);
+		});
 
 		// Build packege modules
 		fmd(config)
