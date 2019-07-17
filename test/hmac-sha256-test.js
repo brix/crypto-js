@@ -17,11 +17,11 @@ YUI.add('algo-hmac-sha256-test', function (Y) {
         },
 
         testVector4: function () {
-            Y.Assert.areEqual('a89dc8178c1184a62df87adaa77bf86e93064863d93c5131140b0ae98b866687', C.HmacSHA256('ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'A'));
+            Y.Assert.areEqual('a89dc8178c1184a62df87adaa77bf86e93064863d93c5131140b0ae98b866687', C.HmacSHA256('ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'A').toString());
         },
 
         testVector5: function () {
-            Y.Assert.areEqual('d8cb78419c02fe20b90f8b77427dd9f81817a751d74c2e484e0ac5fc4e6ca986', C.HmacSHA256('abcdefghijklmnopqrstuvwxyz', 'A'));
+            Y.Assert.areEqual('d8cb78419c02fe20b90f8b77427dd9f81817a751d74c2e484e0ac5fc4e6ca986', C.HmacSHA256('abcdefghijklmnopqrstuvwxyz', 'A').toString());
         },
 
         testUpdate: function () {
