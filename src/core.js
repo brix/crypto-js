@@ -3,7 +3,8 @@
  */
 var CryptoJS = CryptoJS || (function (Math, undefined) {
     /*
-     * Local polyfil of Object.create
+     * Local polyfill of Object.create
+
      */
     var create = Object.create || (function () {
         function F() {}
