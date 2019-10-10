@@ -1,9 +1,27 @@
 {
   "name": "crypto-js",
-  "title": "crypto-js",
-  "description": "JavaScript library of crypto standards.",
   "version": "3.1.9",
-  "homepage": "http://github.com/brix/crypto-js",
+  "description": "JavaScript library of crypto standards.",
+  "main": "index.js",
+  "scripts": {
+    "build": "npm run clean && node build/build.js",
+    "clean": "rimraf lib",
+    "test": "jest",
+    "coverage": "jest --coverage",
+    "lint": "eslint src test",
+    "lint-fix": "eslint --fix src test"
+  },
+  "lint-staged": {
+    "*.js": [
+      "eslint --fix",
+      "git add"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
   "author": {
     "name": "Evan Vosberg",
     "url": "http://github.com/evanvosberg"
@@ -15,24 +33,10 @@
   "bugs": {
     "url": "http://github.com/brix/crypto-js/issues"
   },
+  "jest": {
+    "jestRegex": "(/test/.*\\.(test|spec)\\.js)$"
+  },
   "license": "MIT",
-  "scripts": {
-    "build": "grunt build",
-    "test": "grunt default"
-  },
-  "main": "index.js",
-  "dependencies": {},
-  "devDependencies": {
-    "fmd": "~0.0.3",
-    "grunt": "^0.4.5",
-    "grunt-contrib-clean": "^0.6.0",
-    "grunt-contrib-copy": "^0.6.0",
-    "grunt-contrib-jshint": "^0.10.0",
-    "grunt-jsonlint": "^1.0.4",
-    "grunt-update-json": "^0.2.0",
-    "load-grunt-config": "^0.16.0",
-    "lodash": "^4.17.11"
-  },
   "keywords": [
     "security",
     "crypto",
@@ -53,5 +57,26 @@
     "CTR",
     "CBC",
     "Base64"
-  ]
+  ],
+  "devDependencies": {
+    "@babel/core": "^7.6.3",
+    "@babel/plugin-transform-modules-commonjs": "^7.6.0",
+    "@babel/preset-env": "^7.6.3",
+    "babel-eslint": "^10.0.3",
+    "babel-jest": "^24.9.0",
+    "chalk": "^2.4.2",
+    "eslint": "^6.5.1",
+    "husky": "^3.0.8",
+    "jest": "^24.9.0",
+    "lint-staged": "^9.4.2",
+    "ora": "^4.0.2",
+    "pre-commit": "^1.2.2",
+    "rimraf": "^3.0.0",
+    "rollup": "1.22.0",
+    "terser": "^4.3.8",
+    "zlib": "^1.0.5"
+  },
+  "dependencies": {
+    "global": "^4.4.0"
+  }
 }
