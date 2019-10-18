@@ -17,7 +17,7 @@ export class X64Word extends Base {
    *
    * @example
    *
-   *     var x64Word = CryptoJS.x64.Word.create(0x00010203, 0x04050607);
+   *     let x64Word = new X64Word(0x00010203, 0x04050607);
    */
   constructor(high, low) {
     super();
@@ -42,16 +42,16 @@ export class X64WordArray extends Base {
    *
    * @example
    *
-   *     var wordArray = CryptoJS.x64.WordArray.create();
+   *     let wordArray =new X64WordArray();
    *
-   *     var wordArray = CryptoJS.x64.WordArray.create([
-   *         CryptoJS.x64.Word.create(0x00010203, 0x04050607),
-   *         CryptoJS.x64.Word.create(0x18191a1b, 0x1c1d1e1f)
+   *     let wordArray =new X64WordArray([
+   *         new x64Word(0x00010203, 0x04050607),
+   *         new x64Word(0x18191a1b, 0x1c1d1e1f)
    *     ]);
    *
-   *     var wordArray = CryptoJS.x64.WordArray.create([
-   *         CryptoJS.x64.Word.create(0x00010203, 0x04050607),
-   *         CryptoJS.x64.Word.create(0x18191a1b, 0x1c1d1e1f)
+   *     let wordArray =new X64WordArray([
+   *         new x64Word(0x00010203, 0x04050607),
+   *         new x64Word(0x18191a1b, 0x1c1d1e1f)
    *     ], 10);
    */
   constructor(words = [], sigBytes = words.length * 8) {
@@ -68,7 +68,7 @@ export class X64WordArray extends Base {
    *
    * @example
    *
-   *     var x32WordArray = x64WordArray.toX32();
+   *     let x32WordArray = x64WordArray.toX32();
    */
   toX32() {
     // Shortcuts
@@ -83,7 +83,7 @@ export class X64WordArray extends Base {
       x32Words.push(x64Word.low);
     }
 
-    return X32WordArray.create(x32Words, this.sigBytes);
+    return new X32WordArray(x32Words, this.sigBytes);
   }
 
   /**
@@ -93,7 +93,7 @@ export class X64WordArray extends Base {
    *
    * @example
    *
-   *     var clone = x64WordArray.clone();
+   *     let clone = x64WordArray.clone();
    */
   clone() {
     const clone = super.clone.call(this);

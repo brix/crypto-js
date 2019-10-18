@@ -4,21 +4,6 @@
  * Base class for inheritance.
  */
 export class Base {
-  /**
-   * Extends this object and runs the init method.
-   * Arguments to create() will be passed to init().
-   *
-   * @return {Object} The new object.
-   *
-   * @static
-   *
-   * @example
-   *
-   *     var instance = MyType.create();
-   */
-  static create(...args) {
-    return new this(...args);
-  }
 
   /**
    * Copies properties into this object.
@@ -42,7 +27,7 @@ export class Base {
    *
    * @example
    *
-   *     var clone = instance.clone();
+   *     let clone = instance.clone();
    */
   clone() {
     const clone = new this.constructor();
@@ -66,9 +51,9 @@ export class WordArray extends Base {
    *
    * @example
    *
-   *     var wordArray = CryptoJS.lib.WordArray.create();
-   *     var wordArray = CryptoJS.lib.WordArray.create([0x00010203, 0x04050607]);
-   *     var wordArray = CryptoJS.lib.WordArray.create([0x00010203, 0x04050607], 6);
+   *     let wordArray = new WordArray();
+   *     let wordArray = new WordArray([0x00010203, 0x04050607]);
+   *     let wordArray = new WordArray([0x00010203, 0x04050607], 6);
    */
   constructor(words = [], sigBytes = words.length * 4) {
     super();
@@ -125,7 +110,7 @@ export class WordArray extends Base {
    *
    * @example
    *
-   *     var wordArray = CryptoJS.lib.WordArray.random(16);
+   *     let wordArray = CryptoJS.lib.WordArray.random(16);
    */
   static random(nBytes) {
     const words = [];
@@ -164,9 +149,9 @@ export class WordArray extends Base {
    *
    * @example
    *
-   *     var string = wordArray + '';
-   *     var string = wordArray.toString();
-   *     var string = wordArray.toString(CryptoJS.enc.Utf8);
+   *     let string = wordArray + '';
+   *     let string = wordArray.toString();
+   *     let string = wordArray.toString(CryptoJS.enc.Utf8);
    */
   toString(encoder = Hex) {
     return encoder.stringify(this);
@@ -238,7 +223,7 @@ export class WordArray extends Base {
    *
    * @example
    *
-   *     var clone = wordArray.clone();
+   *     let clone = wordArray.clone();
    */
   clone() {
     const clone = super.clone.call(this);
@@ -263,7 +248,7 @@ export const Hex = {
    *
    * @example
    *
-   *     var hexString = CryptoJS.enc.Hex.stringify(wordArray);
+   *     let hexString = CryptoJS.enc.Hex.stringify(wordArray);
    */
   stringify(wordArray) {
     // Shortcuts
@@ -294,7 +279,7 @@ export const Hex = {
    *
    * @example
    *
-   *     var wordArray = CryptoJS.enc.Hex.parse(hexString);
+   *     let wordArray = CryptoJS.enc.Hex.parse(hexString);
    */
   parse(hexStr) {
     // Shortcut
@@ -325,7 +310,7 @@ export const Latin1 = {
    *
    * @example
    *
-   *     var latin1String = CryptoJS.enc.Latin1.stringify(wordArray);
+   *     let latin1String = CryptoJS.enc.Latin1.stringify(wordArray);
    */
   stringify(wordArray) {
     // Shortcuts
@@ -355,7 +340,7 @@ export const Latin1 = {
    *
    * @example
    *
-   *     var wordArray = CryptoJS.enc.Latin1.parse(latin1String);
+   *     let wordArray = CryptoJS.enc.Latin1.parse(latin1String);
    */
   parse(latin1Str) {
     // Shortcut
@@ -386,7 +371,7 @@ export const Utf8 = {
    *
    * @example
    *
-   *     var utf8String = CryptoJS.enc.Utf8.stringify(wordArray);
+   *     let utf8String = CryptoJS.enc.Utf8.stringify(wordArray);
    */
   stringify(wordArray) {
     try {
@@ -407,7 +392,7 @@ export const Utf8 = {
    *
    * @example
    *
-   *     var wordArray = CryptoJS.enc.Utf8.parse(utf8String);
+   *     let wordArray = CryptoJS.enc.Utf8.parse(utf8String);
    */
   parse(utf8Str) {
     return Latin1.parse(unescape(encodeURIComponent(utf8Str)));
@@ -478,8 +463,8 @@ export class BufferedBlockAlgorithm extends Base {
    *
    * @example
    *
-   *     var processedData = bufferedBlockAlgorithm._process();
-   *     var processedData = bufferedBlockAlgorithm._process(!!'flush');
+   *     let processedData = bufferedBlockAlgorithm._process();
+   *     let processedData = bufferedBlockAlgorithm._process(!!'flush');
    */
   _process(doFlush) {
     let processedWords;
@@ -533,7 +518,7 @@ export class BufferedBlockAlgorithm extends Base {
    *
    * @example
    *
-   *     var clone = bufferedBlockAlgorithm.clone();
+   *     let clone = bufferedBlockAlgorithm.clone();
    */
   clone() {
     const clone = super.clone.call(this);
@@ -576,7 +561,7 @@ export class Hasher extends BufferedBlockAlgorithm {
    *
    * @example
    *
-   *     var SHA256 = CryptoJS.lib.Hasher._createHelper(CryptoJS.algo.SHA256);
+   *     let SHA256 = CryptoJS.lib.Hasher._createHelper(CryptoJS.algo.SHA256);
    */
   static _createHelper(SubHasher) {
     return (message, cfg) => new SubHasher(cfg).finalize(message);
@@ -593,7 +578,7 @@ export class Hasher extends BufferedBlockAlgorithm {
    *
    * @example
    *
-   *     var HmacSHA256 = CryptoJS.lib.Hasher._createHmacHelper(CryptoJS.algo.SHA256);
+   *     let HmacSHA256 = CryptoJS.lib.Hasher._createHmacHelper(CryptoJS.algo.SHA256);
    */
   static _createHmacHelper(SubHasher) {
     return (message, key) => new HMAC(SubHasher, key).finalize(message);
@@ -647,9 +632,9 @@ export class Hasher extends BufferedBlockAlgorithm {
    *
    * @example
    *
-   *     var hash = hasher.finalize();
-   *     var hash = hasher.finalize('message');
-   *     var hash = hasher.finalize(wordArray);
+   *     let hash = hasher.finalize();
+   *     let hash = hasher.finalize('message');
+   *     let hash = hasher.finalize(wordArray);
    */
   finalize(messageUpdate) {
     // Final message update
@@ -676,7 +661,7 @@ export class HMAC extends Base {
    *
    * @example
    *
-   *     var hmacHasher = CryptoJS.algo.HMAC.create(CryptoJS.algo.SHA256, key);
+   *     let hmacHasher =new HMAC(CryptoJS.algo.SHA256, key);
    */
   constructor(SubHasher, key) {
     super();
@@ -769,9 +754,9 @@ export class HMAC extends Base {
    *
    * @example
    *
-   *     var hmac = hmacHasher.finalize();
-   *     var hmac = hmacHasher.finalize('message');
-   *     var hmac = hmacHasher.finalize(wordArray);
+   *     let hmac = hmacHasher.finalize();
+   *     let hmac = hmacHasher.finalize('message');
+   *     let hmac = hmacHasher.finalize(wordArray);
    */
   finalize(messageUpdate) {
     // Shortcut

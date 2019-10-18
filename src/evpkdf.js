@@ -16,9 +16,9 @@ export class EvpKDFAlgo extends Base {
    *
    * @example
    *
-   *     const kdf = CryptoJS.algo.EvpKDF.create();
-   *     const kdf = CryptoJS.algo.EvpKDF.create({ keySize: 8 });
-   *     const kdf = CryptoJS.algo.EvpKDF.create({ keySize: 8, iterations: 1000 });
+   *     const kdf = new EvpKDF();
+   *     const kdf = new EvpKDF({ keySize: 8 });
+   *     const kdf = new EvpKDF({ keySize: 8, iterations: 1000 });
    */
   constructor(cfg) {
     super();
@@ -60,10 +60,10 @@ export class EvpKDFAlgo extends Base {
     const { cfg } = this;
 
     // Init hasher
-    const hasher = cfg.hasher.create();
+    const hasher =new cfg.hasher();
 
     // Initial values
-    const derivedKey = WordArray.create();
+    const derivedKey =new WordArray();
 
     // Shortcuts
     const derivedKeyWords = derivedKey.words;
@@ -104,8 +104,8 @@ export class EvpKDFAlgo extends Base {
  *
  * @example
  *
- *     var key = CryptoJS.EvpKDF(password, salt);
- *     var key = CryptoJS.EvpKDF(password, salt, { keySize: 8 });
- *     var key = CryptoJS.EvpKDF(password, salt, { keySize: 8, iterations: 1000 });
+ *     let key = CryptoJS.EvpKDF(password, salt);
+ *     let key = CryptoJS.EvpKDF(password, salt, { keySize: 8 });
+ *     let key = CryptoJS.EvpKDF(password, salt, { keySize: 8, iterations: 1000 });
  */
-export const EvpKDF = (password, salt, cfg) => EvpKDFAlgo.create(cfg).compute(password, salt);
+export const EvpKDF = (password, salt, cfg) => new EvpKDFAlgo(cfg).compute(password, salt);

@@ -14,7 +14,7 @@ const parseLoop = (base64Str, base64StrLength, reverseMap) => {
       nBytes += 1;
     }
   }
-  return WordArray.create(words, nBytes);
+  return new WordArray(words, nBytes);
 };
 
 /**

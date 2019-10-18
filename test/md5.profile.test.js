@@ -12,12 +12,12 @@ describe('algo-md5-profile', () => {
       singlePartMessage += '12345678901234567890123456789012345678901234567890';
       i++;
     }
-    expect(C.algo.MD5.create().finalize(singlePartMessage)).toMatchObject(WORD_ARRAY_TEST);
+    expect(new C.algo.MD5().finalize(singlePartMessage)).toMatchObject(WORD_ARRAY_TEST);
   });
 
   test('profileMultiPartMessage', () => {
     let i = 0;
-    const  md5 = C.algo.MD5.create();
+    const  md5 =new C.algo.MD5();
     while (i < 500) {
       md5.update('12345678901234567890123456789012345678901234567890');
       i++;

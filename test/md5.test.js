@@ -1,4 +1,4 @@
-import C from '../lib/index.js';
+import C from '../src/index.js';
 
 const VECTOR_TEST_CONFIG = [
   [1, '', 'd41d8cd98f00b204e9800998ecf8427e'],
@@ -27,7 +27,7 @@ describe('algo-md5-test', () => {
   );
 
   describe('testClone', () => {
-    const md5 = C.algo.MD5.create();
+    const md5 =new C.algo.MD5();
     test.each(CLONE_TEST_CONFIG)(
       'return %s, %s',
       (a, expected) => {
@@ -38,7 +38,7 @@ describe('algo-md5-test', () => {
 
   test('testUpdateAndLongMessage', () => {
     let i = 0;
-    const md5 = C.algo.MD5.create();
+    const md5 =new C.algo.MD5();
     while (i < 100) {
       md5.update('12345678901234567890123456789012345678901234567890');
       i++;
@@ -47,17 +47,17 @@ describe('algo-md5-test', () => {
   });
 
   test('testInputIntegrity', () => {
-    const message = C.lib.WordArray.create([0x12345678]);
+    const message =new C.lib.WordArray([0x12345678]);
     const expected = message.toString();
     C.MD5(message);
     expect(message.toString()).toBe(expected);
   });
 
   test('testHelper', () => {
-    expect(C.MD5('').toString()).toBe(C.algo.MD5.create().finalize('').toString());
+    expect(C.MD5('').toString()).toBe(new C.algo.MD5().finalize('').toString());
   });
 
   test('testHmacHelper', () => {
-    expect(C.HmacMD5('Hi There', C.enc.Hex.parse('0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b')).toString()).toBe(C.algo.HMAC.create(C.algo.MD5, C.enc.Hex.parse('0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b')).finalize('Hi There').toString());
+    expect(C.HmacMD5('Hi There', C.enc.Hex.parse('0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b')).toString()).toBe(new C.algo.HMAC(C.algo.MD5, C.enc.Hex.parse('0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b')).finalize('Hi There').toString());
   });
 });
