@@ -1,4 +1,4 @@
-import C from '../src/index.js';
+import C from '../src/index';
 
 const VECTOR_TEST_CONFIG = [
   [1, '', 'd41d8cd98f00b204e9800998ecf8427e'],
@@ -17,17 +17,15 @@ const CLONE_TEST_CONFIG = [
 ];
 
 describe('algo-md5-test', () => {
-  describe.each(VECTOR_TEST_CONFIG)(
+  test.each(VECTOR_TEST_CONFIG)(
     'testVector%i',
-    (a, b, expected) => {
-      test(`return ${expected}`, () => {
-        expect(C.MD5(b).toString()).toBe(expected);
-      });
+    (a,b, expected) => {
+      expect(C.MD5(b).toString()).toBe(expected);
     }
   );
 
   describe('testClone', () => {
-    const md5 =new C.algo.MD5();
+    const md5 = new C.algo.MD5();
     test.each(CLONE_TEST_CONFIG)(
       'return %s, %s',
       (a, expected) => {
@@ -38,7 +36,7 @@ describe('algo-md5-test', () => {
 
   test('testUpdateAndLongMessage', () => {
     let i = 0;
-    const md5 =new C.algo.MD5();
+    const md5 = new C.algo.MD5();
     while (i < 100) {
       md5.update('12345678901234567890123456789012345678901234567890');
       i++;
@@ -47,7 +45,7 @@ describe('algo-md5-test', () => {
   });
 
   test('testInputIntegrity', () => {
-    const message =new C.lib.WordArray([0x12345678]);
+    const message = new C.lib.WordArray([0x12345678]);
     const expected = message.toString();
     C.MD5(message);
     expect(message.toString()).toBe(expected);

@@ -1,7 +1,7 @@
 import {
   Base,
   WordArray
-} from './core.js';
+} from '../core/core.js';
 
 const X32WordArray = WordArray;
 
@@ -42,14 +42,14 @@ export class X64WordArray extends Base {
    *
    * @example
    *
-   *     let wordArray =new X64WordArray();
+   *     let wordArray = new X64WordArray();
    *
-   *     let wordArray =new X64WordArray([
+   *     let wordArray = new X64WordArray([
    *         new x64Word(0x00010203, 0x04050607),
    *         new x64Word(0x18191a1b, 0x1c1d1e1f)
    *     ]);
    *
-   *     let wordArray =new X64WordArray([
+   *     let wordArray = new X64WordArray([
    *         new x64Word(0x00010203, 0x04050607),
    *         new x64Word(0x18191a1b, 0x1c1d1e1f)
    *     ], 10);
@@ -77,7 +77,7 @@ export class X64WordArray extends Base {
 
     // Convert
     const x32Words = [];
-    for (let i = 0; i < x64WordsLength; i += 1) {
+    for (let i = 0; i < x64WordsLength; i++) {
       const x64Word = x64Words[i];
       x32Words.push(x64Word.high);
       x32Words.push(x64Word.low);
@@ -104,7 +104,7 @@ export class X64WordArray extends Base {
 
     // Clone each X64Word object
     const wordsLength = words.length;
-    for (let i = 0; i < wordsLength; i += 1) {
+    for (let i = 0; i < wordsLength; i++) {
       words[i] = words[i].clone();
     }
 

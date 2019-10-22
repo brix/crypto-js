@@ -1,8 +1,8 @@
 import {
   Base,
   WordArray
-} from './core.js';
-import { MD5Algo } from './md5.js';
+} from '../core/core.js';
+import { MD5Algo } from '../algo/hash/md5.js';
 
 /**
  * This key derivation function is meant to conform with EVP_BytesToKey.
@@ -37,7 +37,7 @@ export class EvpKDFAlgo extends Base {
         hasher: MD5Algo,
         iterations: 1
       },
-      cfg,
+      cfg
     );
   }
 
@@ -60,10 +60,10 @@ export class EvpKDFAlgo extends Base {
     const { cfg } = this;
 
     // Init hasher
-    const hasher =new cfg.hasher();
+    const hasher = new cfg.hasher();
 
     // Initial values
-    const derivedKey =new WordArray();
+    const derivedKey = new WordArray();
 
     // Shortcuts
     const derivedKeyWords = derivedKey.words;
@@ -78,7 +78,7 @@ export class EvpKDFAlgo extends Base {
       hasher.reset();
 
       // Iterations
-      for (let i = 1; i < iterations; i += 1) {
+      for (let i = 1; i < iterations; i++) {
         block = hasher.finalize(block);
         hasher.reset();
       }

@@ -1,17 +1,17 @@
 import {
   WordArray
-} from './core.js';
+} from '../core/core.js';
 
 const parseLoop = (base64Str, base64StrLength, reverseMap) => {
   const words = [];
   let nBytes = 0;
-  for (let i = 0; i < base64StrLength; i += 1) {
+  for (let i = 0; i < base64StrLength; i++) {
     if (i % 4) {
       const bits1 = reverseMap[base64Str.charCodeAt(i - 1)] << ((i % 4) * 2);
       const bits2 = reverseMap[base64Str.charCodeAt(i)] >>> (6 - (i % 4) * 2);
       const bitsCombined = bits1 | bits2;
       words[nBytes >>> 2] |= bitsCombined << (24 - (nBytes % 4) * 8);
-      nBytes += 1;
+      nBytes++;
     }
   }
   return new WordArray(words, nBytes);
@@ -36,7 +36,10 @@ export const Base64 = {
    */
   stringify(wordArray) {
     // Shortcuts
-    const { words, sigBytes } = wordArray;
+    const {
+      words,
+      sigBytes
+    } = wordArray;
     const map = this._map;
 
     // Clamp excess bits
@@ -51,7 +54,7 @@ export const Base64 = {
 
       const triplet = (byte1 << 16) | (byte2 << 8) | byte3;
 
-      for (let j = 0; (j < 4) && (i + j * 0.75 < sigBytes); j += 1) {
+      for (let j = 0; (j < 4) && (i + j * 0.75 < sigBytes); j++) {
         base64Chars.push(map.charAt((triplet >>> (6 * (3 - j))) & 0x3f));
       }
     }
@@ -89,7 +92,7 @@ export const Base64 = {
     if (!reverseMap) {
       this._reverseMap = [];
       reverseMap = this._reverseMap;
-      for (let j = 0; j < map.length; j += 1) {
+      for (let j = 0; j < map.length; j++) {
         reverseMap[map.charCodeAt(j)] = j;
       }
     }

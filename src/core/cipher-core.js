@@ -4,13 +4,16 @@ import {
   Base,
   WordArray,
   BufferedBlockAlgorithm
-} from './core.js';
+} from '../core/core.js';
 import {
   Base64
-} from './enc-base64.js';
+} from '../encoding/enc-base64.js';
 import {
   EvpKDFAlgo
-} from './evpkdf.js';
+} from '../encryption/evpkdf.js';
+import { isString } from '../utils';
+import { Pkcs7 } from '../pad/pad-pkcs7';
+
 
 /**
  * Abstract base cipher template.
@@ -106,7 +109,7 @@ export class Cipher extends BufferedBlockAlgorithm {
    */
   static _createHelper(SubCipher) {
     const selectCipherStrategy = (key) => {
-      if (typeof key === 'string') {
+      if (isString(key)) {
         return PasswordBasedCipher;
       }
       return SerializableCipher;
@@ -281,7 +284,7 @@ function xorBlock(words, offset, blockSize) {
   }
 
   // XOR blocks
-  for (let i = 0; i < blockSize; i += 1) {
+  for (let i = 0; i < blockSize; i++) {
     _words[offset + i] ^= block[i];
   }
 }
@@ -293,7 +296,7 @@ function xorBlock(words, offset, blockSize) {
 /**
  * Abstract base CBC mode.
  */
-export class CBC extends BlockCipherMode {}
+export class CBC extends BlockCipherMode { }
 /**
  * CBC encryptor.
  */
@@ -357,68 +360,6 @@ CBC.Decryptor = class extends CBC {
 };
 
 /**
- * PKCS #5/7 padding strategy.
- */
-export const Pkcs7 = {
-  /**
-   * Pads data using the algorithm defined in PKCS #5/7.
-   *
-   * @param {WordArray} data The data to pad.
-   * @param {number} blockSize The multiple that the data should be padded to.
-   *
-   * @static
-   *
-   * @example
-   *
-   *     CryptoJS.pad.Pkcs7.pad(wordArray, 4);
-   */
-  pad(data, blockSize) {
-    // Shortcut
-    const blockSizeBytes = blockSize * 4;
-
-    // Count padding bytes
-    const nPaddingBytes = blockSizeBytes - (data.sigBytes % blockSizeBytes);
-
-    // Create padding word
-    const paddingWord = (nPaddingBytes << 24) |
-      (nPaddingBytes << 16) |
-      (nPaddingBytes << 8) |
-      nPaddingBytes;
-
-    // Create padding
-    const paddingWords = [];
-    for (let i = 0; i < nPaddingBytes; i += 4) {
-      paddingWords.push(paddingWord);
-    }
-    const padding =new WordArray(paddingWords, nPaddingBytes);
-
-    // Add padding
-    data.concat(padding);
-  },
-
-  /**
-   * Unpads data that had been padded using the algorithm defined in PKCS #5/7.
-   *
-   * @param {WordArray} data The data to unpad.
-   *
-   * @static
-   *
-   * @example
-   *
-   *     CryptoJS.pad.Pkcs7.unpad(wordArray);
-   */
-  unpad(data) {
-    const _data = data;
-
-    // Get number of padding bytes from last byte
-    const nPaddingBytes = _data.words[(_data.sigBytes - 1) >>> 2] & 0xff;
-
-    // Remove padding
-    _data.sigBytes -= nPaddingBytes;
-  }
-};
-
-/**
  * Abstract base block cipher template.
  *
  * @property {number} blockSize
@@ -437,7 +378,7 @@ export class BlockCipher extends Cipher {
       mode: CBC,
       padding: Pkcs7
     },
-    cfg,
+      cfg,
     ));
 
     this.blockSize = 128 / 32;
@@ -524,7 +465,7 @@ export class CipherParams extends Base {
    *
    * @example
    *
-   *     let cipherParams =new CipherParams({
+   *     let cipherParams = new CipherParams({
    *         ciphertext: ciphertextWordArray,
    *         key: keyWordArray,
    *         iv: ivWordArray,
@@ -590,7 +531,7 @@ export const OpenSSLFormatter = {
 
     // Format
     if (salt) {
-      wordArray =new WordArray([0x53616c74, 0x65645f5f]).concat(salt).concat(ciphertext);
+      wordArray = new WordArray([0x53616c74, 0x65645f5f]).concat(salt).concat(ciphertext);
     } else {
       wordArray = ciphertext;
     }
@@ -623,7 +564,7 @@ export const OpenSSLFormatter = {
     // Test for salt
     if (ciphertextWords[0] === 0x53616c74 && ciphertextWords[1] === 0x65645f5f) {
       // Extract salt
-      salt =new WordArray(ciphertextWords.slice(2, 4));
+      salt = new WordArray(ciphertextWords.slice(2, 4));
 
       // Remove salt from ciphertext
       ciphertextWords.splice(0, 4);
@@ -739,7 +680,7 @@ export class SerializableCipher extends Base {
    *       ._parse(ciphertextStringOrParams, format);
    */
   static _parse(ciphertext, format) {
-    if (typeof ciphertext === 'string') {
+    if (isString(ciphertext)) {
       return format.parse(ciphertext, this);
     }
     return ciphertext;
@@ -755,8 +696,8 @@ export class SerializableCipher extends Base {
  */
 SerializableCipher.cfg = Object.assign(
   new Base(), {
-    format: OpenSSLFormatter
-  },
+  format: OpenSSLFormatter
+},
 );
 
 /**
@@ -790,12 +731,12 @@ export const OpenSSLKdf = {
     }
 
     // Derive key and IV
-    const key =new EvpKDFAlgo({
+    const key = new EvpKDFAlgo({
       keySize: keySize + ivSize
     }).compute(password, _salt);
 
     // Separate key and IV
-    const iv =new WordArray(key.words.slice(keySize), ivSize * 4);
+    const iv = new WordArray(key.words.slice(keySize), ivSize * 4);
     key.sigBytes = keySize * 4;
 
     // Return params

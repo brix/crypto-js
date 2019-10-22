@@ -1,13 +1,13 @@
 import {
-  WordArray,
-  Hasher
-} from './core.js';
+  WordArray
+} from '../../core/core.js';
+import { Hasher } from '../../core/hasher';
 
 // Constants table
 const T = [];
 
 // Compute constants
-for (let i = 0; i < 64; i += 1) {
+for (let i = 0; i < 64; i++) {
   T[i] = (Math.abs(Math.sin(i + 1)) * 0x100000000) | 0;
 }
 
@@ -48,14 +48,14 @@ export class MD5Algo extends Hasher {
     const _M = M;
 
     // Swap endian
-    for (let i = 0; i < 16; i += 1) {
+    for (let i = 0; i < 16; i++) {
       // Shortcuts
       const offset_i = offset + i;
       const M_offset_i = M[offset_i];
 
       _M[offset_i] = (
         (((M_offset_i << 8) | (M_offset_i >>> 24)) & 0x00ff00ff)
-          | (((M_offset_i << 24) | (M_offset_i >>> 8)) & 0xff00ff00)
+        | (((M_offset_i << 24) | (M_offset_i >>> 8)) & 0xff00ff00)
       );
     }
 
@@ -79,7 +79,7 @@ export class MD5Algo extends Hasher {
     const M_offset_14 = _M[offset + 14];
     const M_offset_15 = _M[offset + 15];
 
-    // Working varialbes
+    // Working variables
     let a = H[0];
     let b = H[1];
     let c = H[2];
@@ -177,11 +177,11 @@ export class MD5Algo extends Hasher {
     const nBitsTotalL = nBitsTotal;
     dataWords[(((nBitsLeft + 64) >>> 9) << 4) + 15] = (
       (((nBitsTotalH << 8) | (nBitsTotalH >>> 24)) & 0x00ff00ff)
-        | (((nBitsTotalH << 24) | (nBitsTotalH >>> 8)) & 0xff00ff00)
+      | (((nBitsTotalH << 24) | (nBitsTotalH >>> 8)) & 0xff00ff00)
     );
     dataWords[(((nBitsLeft + 64) >>> 9) << 4) + 14] = (
       (((nBitsTotalL << 8) | (nBitsTotalL >>> 24)) & 0x00ff00ff)
-        | (((nBitsTotalL << 24) | (nBitsTotalL >>> 8)) & 0xff00ff00)
+      | (((nBitsTotalL << 24) | (nBitsTotalL >>> 8)) & 0xff00ff00)
     );
 
     data.sigBytes = (dataWords.length + 1) * 4;
@@ -194,7 +194,7 @@ export class MD5Algo extends Hasher {
     const H = hash.words;
 
     // Swap endian
-    for (let i = 0; i < 4; i += 1) {
+    for (let i = 0; i < 4; i++) {
       // Shortcut
       const H_i = H[i];
 

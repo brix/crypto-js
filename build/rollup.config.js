@@ -1,9 +1,6 @@
 const path = require('path');
 const pkg = require('../package.json');
-const resolve = require('rollup-plugin-node-resolve');
-// const commonjs = require('rollup-plugin-commonjs');
-// const babel = require('rollup-plugin-babel');
-// const json = require('rollup-plugin-json');
+
 
 const banner = `/*
     @license
@@ -23,7 +20,7 @@ module.exports = {
     output: {
         file: uniqResolve('../lib/index.js'),
         format: 'umd',
-        name: 'crypto',
+        name: 'CryptoJS',
         banner
     }
 }
