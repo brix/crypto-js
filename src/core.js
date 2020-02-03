@@ -221,6 +221,11 @@ var CryptoJS = CryptoJS || (function (Math, undefined) {
             // Clamp excess bits
             this.clamp();
 
+            // Set array length first to fix array length allocation issue
+            if (thisWords.length < Math.ceil((thisSigBytes + thatSigBytes) / 4)) {
+                thisWords.length = Math.ceil((thisSigBytes + thatSigBytes) / 4);
+            }
+
             // Concat
             if (thisSigBytes % 4) {
                 // Copy one byte at a time

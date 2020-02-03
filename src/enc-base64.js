@@ -100,7 +100,7 @@
     };
 
     function parseLoop(base64Str, base64StrLength, reverseMap) {
-      var words = [];
+      var words = new Array((base64StrLength - (base64StrLength >>> 2) + 2) >>> 2);
       var nBytes = 0;
       for (var i = 0; i < base64StrLength; i++) {
           if (i % 4) {
