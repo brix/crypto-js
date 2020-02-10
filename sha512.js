@@ -142,13 +142,16 @@
 
 	            // Rounds
 	            for (var i = 0; i < 80; i++) {
+	                var Wil;
+	                var Wih;
+
 	                // Shortcut
 	                var Wi = W[i];
 
 	                // Extend message
 	                if (i < 16) {
-	                    var Wih = Wi.high = M[offset + i * 2]     | 0;
-	                    var Wil = Wi.low  = M[offset + i * 2 + 1] | 0;
+	                    Wih = Wi.high = M[offset + i * 2]     | 0;
+	                    Wil = Wi.low  = M[offset + i * 2 + 1] | 0;
 	                } else {
 	                    // Gamma0
 	                    var gamma0x  = W[i - 15];
@@ -173,12 +176,12 @@
 	                    var Wi16h = Wi16.high;
 	                    var Wi16l = Wi16.low;
 
-	                    var Wil = gamma0l + Wi7l;
-	                    var Wih = gamma0h + Wi7h + ((Wil >>> 0) < (gamma0l >>> 0) ? 1 : 0);
-	                    var Wil = Wil + gamma1l;
-	                    var Wih = Wih + gamma1h + ((Wil >>> 0) < (gamma1l >>> 0) ? 1 : 0);
-	                    var Wil = Wil + Wi16l;
-	                    var Wih = Wih + Wi16h + ((Wil >>> 0) < (Wi16l >>> 0) ? 1 : 0);
+	                    Wil = gamma0l + Wi7l;
+	                    Wih = gamma0h + Wi7h + ((Wil >>> 0) < (gamma0l >>> 0) ? 1 : 0);
+	                    Wil = Wil + gamma1l;
+	                    Wih = Wih + gamma1h + ((Wil >>> 0) < (gamma1l >>> 0) ? 1 : 0);
+	                    Wil = Wil + Wi16l;
+	                    Wih = Wih + Wi16h + ((Wil >>> 0) < (Wi16l >>> 0) ? 1 : 0);
 
 	                    Wi.high = Wih;
 	                    Wi.low  = Wil;
