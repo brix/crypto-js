@@ -1,3 +1,5 @@
+/*globals window, global*/
+
 /**
  * CryptoJS core components.
  */
