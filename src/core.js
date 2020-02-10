@@ -2,6 +2,34 @@
  * CryptoJS core components.
  */
 var CryptoJS = CryptoJS || (function (Math, undefined) {
+
+    /*
+     * Cryptographically secure pseudorandom number generator
+     *
+     * As Math.random() is cryptographically not safe to use
+     */
+    var secureRandom = function () {
+        // Native crypto module on NodeJS environment
+        try {
+            // Crypto from global object
+            var crypto = global.crypto;
+
+            // Create a random float number between 0 and 1
+            return Number('0.' + crypto.randomBytes(3).readUIntBE(0, 3));
+        } catch (err) {}
+
+        // Native crypto module in Browser environment
+        try {
+            // Support experimental crypto module in IE 11
+            var crypto = window.crypto || window.msCrypto;
+
+            // Create a random float number between 0 and 1
+            return Number('0.' + window.crypto.getRandomValues(new Uint32Array(1))[0]);
+        } catch (err) {}
+
+        throw new Error('Native crypto module could not be used to get secure random number.');
+    };
+
     /*
      * Local polyfil of Object.create
      */
@@ -289,26 +317,8 @@ var CryptoJS = CryptoJS || (function (Math, undefined) {
         random: function (nBytes) {
             var words = [];
 
-            var r = function (m_w) {
-                var m_w = m_w;
-                var m_z = 0x3ade68b1;
-                var mask = 0xffffffff;
-
-                return function () {
-                    m_z = (0x9069 * (m_z & 0xFFFF) + (m_z >> 0x10)) & mask;
-                    m_w = (0x4650 * (m_w & 0xFFFF) + (m_w >> 0x10)) & mask;
-                    var result = ((m_z << 0x10) + m_w) & mask;
-                    result /= 0x100000000;
-                    result += 0.5;
-                    return result * (Math.random() > 0.5 ? 1 : -1);
-                }
-            };
-
-            for (var i = 0, rcache; i < nBytes; i += 4) {
-                var _r = r((rcache || Math.random()) * 0x100000000);
-
-                rcache = _r() * 0x3ade67b7;
-                words.push((_r() * 0x100000000) | 0);
+            for (var i = 0; i < nBytes; i += 4) {
+                words.push((secureRandom() * 0x100000000) | 0);
             }
 
             return new WordArray.init(words, nBytes);
@@ -540,7 +550,7 @@ var CryptoJS = CryptoJS || (function (Math, undefined) {
          */
         _process: function (doFlush) {
             var processedWords;
-            
+
             // Shortcuts
             var data = this._data;
             var dataWords = data.words;
