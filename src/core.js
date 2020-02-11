@@ -11,21 +11,46 @@ var CryptoJS = CryptoJS || (function (Math, undefined) {
      * As Math.random() is cryptographically not safe to use
      */
     var cryptoSecureRandomInt = function () {
-        // Native crypto module on NodeJS environment
-        try {
-            // Native crypto from global object or import via require
-            var crypto = global.crypto || require('crypto');
-
-            return crypto.randomBytes(4).readInt32LE();
-        } catch (err) {}
+        var crypto;
 
         // Native crypto module in Browser environment
         try {
-            // Support experimental crypto module in IE 11
-            var crypto = window.crypto || window.msCrypto;
-
-            return crypto.getRandomValues(new Uint32Array(1))[0];
+            if (typeof window !== 'undefined') {
+                if (window.crypto) {
+                    // Support experimental crypto module in IE 11
+                    crypto = window.crypto;
+                } else if (window.msCrypto) {
+                    // Support experimental crypto module in IE 11
+                    crypto = window.msCrypto;
+                }
+            }
         } catch (err) {}
+
+        // Native crypto module on NodeJS environment
+        try {
+            if (typeof global !== 'undefined' && global.crypto) {
+                // Native crypto from global
+                crypto = global.crypto;
+            } else if (typeof require === 'function') {
+                // Native crypto import via require
+                crypto = require('crypto');
+            }
+
+        } catch (err) {}
+
+        // Use getRandomValues method
+        if (crypto && typeof crypto.getRandomValues === 'function') {
+            try {
+                return crypto.getRandomValues(new Uint32Array(1))[0];
+            } catch (err) {}
+        }
+
+        // Use randomBytes method
+        if (crypto && typeof crypto.randomBytes === 'function') {
+            try {
+                return crypto.randomBytes(4).readInt32LE();
+            } catch (err) {}
+        }
 
         throw new Error('Native crypto module could not be used to get secure random number.');
     };
