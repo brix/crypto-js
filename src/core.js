@@ -37,18 +37,20 @@ var CryptoJS = CryptoJS || (function (Math, undefined) {
             }
         } catch (err) {}
 
-        // Use getRandomValues method
-        if (crypto && typeof crypto.getRandomValues === 'function') {
-            try {
-                return crypto.getRandomValues(new Uint32Array(1))[0];
-            } catch (err) {}
-        }
+        if (crypto) {
+            // Use getRandomValues method
+            if (typeof crypto.getRandomValues === 'function') {
+                try {
+                    return crypto.getRandomValues(new Uint32Array(1))[0];
+                } catch (err) {}
+            }
 
-        // Use randomBytes method
-        if (crypto && typeof crypto.randomBytes === 'function') {
-            try {
-                return crypto.randomBytes(4).readInt32LE();
-            } catch (err) {}
+            // Use randomBytes method
+            if (typeof crypto.randomBytes === 'function') {
+                try {
+                    return crypto.randomBytes(4).readInt32LE();
+                } catch (err) {}
+            }
         }
 
         throw new Error('Native crypto module could not be used to get secure random number.');
