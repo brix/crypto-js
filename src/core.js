@@ -24,7 +24,7 @@ var CryptoJS = CryptoJS || (function (Math, undefined) {
             // Support experimental crypto module in IE 11
             var crypto = window.crypto || window.msCrypto;
 
-            return (crypto.getRandomValues(new Uint32Array(1))[0]) | 1;
+            return crypto.getRandomValues(new Uint32Array(1))[0];
         } catch (err) {}
 
         throw new Error('Native crypto module could not be used to get secure random number.');
