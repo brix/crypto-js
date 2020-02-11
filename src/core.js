@@ -1,4 +1,4 @@
-/*globals window, global*/
+/*globals window, global, require*/
 
 /**
  * CryptoJS core components.
@@ -13,39 +13,37 @@ var CryptoJS = CryptoJS || (function (Math, undefined) {
     var cryptoSecureRandomInt = function () {
         var crypto;
 
-        // Native crypto module in Browser environment
-        try {
-            if (typeof window !== 'undefined') {
-                if (window.crypto) {
-                    // Use global crypto module
-                    crypto = window.crypto;
-                } else if (window.msCrypto) {
-                    // Support experimental crypto module in IE 11
-                    crypto = window.msCrypto;
-                }
-            }
-        } catch (err) {}
+        // Native crypto from window (Browser)
+        if (typeof window !== 'undefined' && window.crypto) {
+            crypto = window.crypto;
+        }
 
-        // Native crypto module on NodeJS environment
-        try {
-            if (typeof global !== 'undefined' && global.crypto) {
-                // Native crypto from global
-                crypto = global.crypto;
-            } else if (typeof require === 'function') {
-                // Native crypto import via require
+        // Native (experimental IE 11) crypto from window (Browser)
+        if (!crypto && typeof window !== 'undefined' && window.msCrypto) {
+            crypto = window.msCrypto;
+        }
+
+        // Native crypto from global (NodeJS)
+        if (!crypto && typeof global !== 'undefined' && global.crypto) {
+            crypto = global.crypto;
+        }
+
+        // Native crypto import via require (NodeJS)
+        if (!crypto && typeof require === 'function') {
+            try {
                 crypto = require('crypto');
-            }
-        } catch (err) {}
+            } catch (err) {}
+        }
 
         if (crypto) {
-            // Use getRandomValues method
+            // Use getRandomValues method (Browser)
             if (typeof crypto.getRandomValues === 'function') {
                 try {
                     return crypto.getRandomValues(new Uint32Array(1))[0];
                 } catch (err) {}
             }
 
-            // Use randomBytes method
+            // Use randomBytes method (NodeJS)
             if (typeof crypto.randomBytes === 'function') {
                 try {
                     return crypto.randomBytes(4).readInt32LE();
