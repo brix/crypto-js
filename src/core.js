@@ -13,7 +13,7 @@ var CryptoJS = CryptoJS || (function (Math, undefined) {
     var cryptoSecureRandomInt = function () {
         // Native crypto module on NodeJS environment
         try {
-            // Native rypto from global object or import via require
+            // Native crypto from global object or import via require
             var crypto = global.crypto || require('crypto');
 
             return crypto.randomBytes(4).readInt32LE();
