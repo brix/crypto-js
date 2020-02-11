@@ -17,7 +17,7 @@ var CryptoJS = CryptoJS || (function (Math, undefined) {
         try {
             if (typeof window !== 'undefined') {
                 if (window.crypto) {
-                    // Support experimental crypto module in IE 11
+                    // Use global crypto module
                     crypto = window.crypto;
                 } else if (window.msCrypto) {
                     // Support experimental crypto module in IE 11
@@ -35,7 +35,6 @@ var CryptoJS = CryptoJS || (function (Math, undefined) {
                 // Native crypto import via require
                 crypto = require('crypto');
             }
-
         } catch (err) {}
 
         // Use getRandomValues method
