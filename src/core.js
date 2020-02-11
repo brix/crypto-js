@@ -5,36 +5,36 @@
  */
 var CryptoJS = CryptoJS || (function (Math, undefined) {
 
+    var crypto;
+
+    // Native crypto from window (Browser)
+    if (typeof window !== 'undefined' && window.crypto) {
+        crypto = window.crypto;
+    }
+
+    // Native (experimental IE 11) crypto from window (Browser)
+    if (!crypto && typeof window !== 'undefined' && window.msCrypto) {
+        crypto = window.msCrypto;
+    }
+
+    // Native crypto from global (NodeJS)
+    if (!crypto && typeof global !== 'undefined' && global.crypto) {
+        crypto = global.crypto;
+    }
+
+    // Native crypto import via require (NodeJS)
+    if (!crypto && typeof require === 'function') {
+        try {
+            crypto = require('crypto');
+        } catch (err) {}
+    }
+
     /*
      * Cryptographically secure pseudorandom number generator
      *
      * As Math.random() is cryptographically not safe to use
      */
     var cryptoSecureRandomInt = function () {
-        var crypto;
-
-        // Native crypto from window (Browser)
-        if (typeof window !== 'undefined' && window.crypto) {
-            crypto = window.crypto;
-        }
-
-        // Native (experimental IE 11) crypto from window (Browser)
-        if (!crypto && typeof window !== 'undefined' && window.msCrypto) {
-            crypto = window.msCrypto;
-        }
-
-        // Native crypto from global (NodeJS)
-        if (!crypto && typeof global !== 'undefined' && global.crypto) {
-            crypto = global.crypto;
-        }
-
-        // Native crypto import via require (NodeJS)
-        if (!crypto && typeof require === 'function') {
-            try {
-                crypto = require('crypto');
-            } catch (err) {}
-        }
-
         if (crypto) {
             // Use getRandomValues method (Browser)
             if (typeof crypto.getRandomValues === 'function') {
