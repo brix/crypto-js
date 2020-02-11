@@ -319,7 +319,7 @@ var CryptoJS = CryptoJS || (function (Math, undefined) {
             var words = [];
 
             for (var i = 0; i < nBytes; i += 4) {
-                words.push((cryptoSecureRandomInt());
+                words.push(cryptoSecureRandomInt());
             }
 
             return new WordArray.init(words, nBytes);
