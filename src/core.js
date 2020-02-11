@@ -1,33 +1,55 @@
-/*globals window, global*/
+/*globals window, global, require*/
 
 /**
  * CryptoJS core components.
  */
 var CryptoJS = CryptoJS || (function (Math, undefined) {
 
+    var crypto;
+
+    // Native crypto from window (Browser)
+    if (typeof window !== 'undefined' && window.crypto) {
+        crypto = window.crypto;
+    }
+
+    // Native (experimental IE 11) crypto from window (Browser)
+    if (!crypto && typeof window !== 'undefined' && window.msCrypto) {
+        crypto = window.msCrypto;
+    }
+
+    // Native crypto from global (NodeJS)
+    if (!crypto && typeof global !== 'undefined' && global.crypto) {
+        crypto = global.crypto;
+    }
+
+    // Native crypto import via require (NodeJS)
+    if (!crypto && typeof require === 'function') {
+        try {
+            crypto = require('crypto');
+        } catch (err) {}
+    }
+
     /*
      * Cryptographically secure pseudorandom number generator
      *
      * As Math.random() is cryptographically not safe to use
      */
-    var secureRandom = function () {
-        // Native crypto module on NodeJS environment
-        try {
-            // Crypto from global object
-            var crypto = global.crypto;
+    var cryptoSecureRandomInt = function () {
+        if (crypto) {
+            // Use getRandomValues method (Browser)
+            if (typeof crypto.getRandomValues === 'function') {
+                try {
+                    return crypto.getRandomValues(new Uint32Array(1))[0];
+                } catch (err) {}
+            }
 
-            // Create a random float number between 0 and 1
-            return Number('0.' + crypto.randomBytes(3).readUIntBE(0, 3));
-        } catch (err) {}
-
-        // Native crypto module in Browser environment
-        try {
-            // Support experimental crypto module in IE 11
-            var crypto = window.crypto || window.msCrypto;
-
-            // Create a random float number between 0 and 1
-            return Number('0.' + window.crypto.getRandomValues(new Uint32Array(1))[0]);
-        } catch (err) {}
+            // Use randomBytes method (NodeJS)
+            if (typeof crypto.randomBytes === 'function') {
+                try {
+                    return crypto.randomBytes(4).readInt32LE();
+                } catch (err) {}
+            }
+        }
 
         throw new Error('Native crypto module could not be used to get secure random number.');
     };
@@ -321,7 +343,7 @@ var CryptoJS = CryptoJS || (function (Math, undefined) {
             var words = [];
 
             for (var i = 0; i < nBytes; i += 4) {
-                words.push((secureRandom() * 0x100000000) | 0);
+                words.push(cryptoSecureRandomInt());
             }
 
             return new WordArray.init(words, nBytes);
