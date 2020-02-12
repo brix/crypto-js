@@ -2,7 +2,7 @@
   "name": "crypto-js",
   "title": "crypto-js",
   "description": "JavaScript library of crypto standards.",
-  "version": "3.3.0",
+  "version": "4.0.0",
   "homepage": "http://github.com/brix/crypto-js",
   "author": {
     "name": "Evan Vosberg",
