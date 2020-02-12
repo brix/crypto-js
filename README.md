@@ -212,6 +212,14 @@ console.log(decryptedData); // [{id: 1}, {id: 2}]
 
 ## Release notes
 
+### 4.0.0
+
+This is an update including breaking changes for some environments.
+
+In this version `Math.random()` has been replaced by the random methods of the native crypto module.
+
+For this reason CryptoJS might does not run in some JavaScript environments without native crypto module. Such as IE 10 or before or React Native.
+
 ### 3.3.0
 
 Rollback, `3.3.0` is the same as `3.1.9-1`.
