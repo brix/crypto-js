@@ -29,6 +29,13 @@ var CryptoJS = CryptoJS || (function (Math, undefined) {
         } catch (err) {}
     }
 
+    // React native crypto import via require (React Native)
+    if (!crypto && typeof require === 'function') {
+        try {
+            crypto = require('react-native-crypto');
+        } catch (err) {}
+    }
+
     /*
      * Cryptographically secure pseudorandom number generator
      *
