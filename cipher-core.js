@@ -351,19 +351,17 @@
 	        });
 
 	        function xorBlock(words, offset, blockSize) {
-	            var block;
-
 	            // Shortcut
 	            var iv = this._iv;
 
 	            // Choose mixing block
 	            if (iv) {
-	                block = iv;
+	                var block = iv;
 
 	                // Remove IV for subsequent blocks
 	                this._iv = undefined;
 	            } else {
-	                block = this._prevBlock;
+	                var block = this._prevBlock;
 	            }
 
 	            // XOR blocks
@@ -455,8 +453,6 @@
 	        }),
 
 	        reset: function () {
-	            var modeCreator;
-
 	            // Reset cipher
 	            Cipher.reset.call(this);
 
@@ -467,9 +463,9 @@
 
 	            // Reset block mode
 	            if (this._xformMode == this._ENC_XFORM_MODE) {
-	                modeCreator = mode.createEncryptor;
+	                var modeCreator = mode.createEncryptor;
 	            } else /* if (this._xformMode == this._DEC_XFORM_MODE) */ {
-	                modeCreator = mode.createDecryptor;
+	                var modeCreator = mode.createDecryptor;
 	                // Keep at least one block in the buffer for unpadding
 	                this._minBufferSize = 1;
 	            }
@@ -487,8 +483,6 @@
 	        },
 
 	        _doFinalize: function () {
-	            var finalProcessedBlocks;
-
 	            // Shortcut
 	            var padding = this.cfg.padding;
 
@@ -498,10 +492,10 @@
 	                padding.pad(this._data, this.blockSize);
 
 	                // Process final blocks
-	                finalProcessedBlocks = this._process(!!'flush');
+	                var finalProcessedBlocks = this._process(!!'flush');
 	            } else /* if (this._xformMode == this._DEC_XFORM_MODE) */ {
 	                // Process final blocks
-	                finalProcessedBlocks = this._process(!!'flush');
+	                var finalProcessedBlocks = this._process(!!'flush');
 
 	                // Unpad data
 	                padding.unpad(finalProcessedBlocks);
@@ -593,17 +587,15 @@
 	         *     var openSSLString = CryptoJS.format.OpenSSL.stringify(cipherParams);
 	         */
 	        stringify: function (cipherParams) {
-	            var wordArray;
-
 	            // Shortcuts
 	            var ciphertext = cipherParams.ciphertext;
 	            var salt = cipherParams.salt;
 
 	            // Format
 	            if (salt) {
-	                wordArray = WordArray.create([0x53616c74, 0x65645f5f]).concat(salt).concat(ciphertext);
+	                var wordArray = WordArray.create([0x53616c74, 0x65645f5f]).concat(salt).concat(ciphertext);
 	            } else {
-	                wordArray = ciphertext;
+	                var wordArray = ciphertext;
 	            }
 
 	            return wordArray.toString(Base64);
@@ -623,8 +615,6 @@
 	         *     var cipherParams = CryptoJS.format.OpenSSL.parse(openSSLString);
 	         */
 	        parse: function (openSSLStr) {
-	            var salt;
-
 	            // Parse base64
 	            var ciphertext = Base64.parse(openSSLStr);
 
@@ -634,7 +624,7 @@
 	            // Test for salt
 	            if (ciphertextWords[0] == 0x53616c74 && ciphertextWords[1] == 0x65645f5f) {
 	                // Extract salt
-	                salt = WordArray.create(ciphertextWords.slice(2, 4));
+	                var salt = WordArray.create(ciphertextWords.slice(2, 4));
 
 	                // Remove salt from ciphertext
 	                ciphertextWords.splice(0, 4);

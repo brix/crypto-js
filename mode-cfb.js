@@ -49,19 +49,17 @@
 	    });
 
 	    function generateKeystreamAndEncrypt(words, offset, blockSize, cipher) {
-	        var keystream;
-
 	        // Shortcut
 	        var iv = this._iv;
 
 	        // Generate keystream
 	        if (iv) {
-	            keystream = iv.slice(0);
+	            var keystream = iv.slice(0);
 
 	            // Remove IV for subsequent blocks
 	            this._iv = undefined;
 	        } else {
-	            keystream = this._prevBlock;
+	            var keystream = this._prevBlock;
 	        }
 	        cipher.encryptBlock(keystream, 0);
 

@@ -13,68 +13,15 @@
 	}
 }(this, function () {
 
-	/*globals window, global, require*/
-
 	/**
 	 * CryptoJS core components.
 	 */
 	var CryptoJS = CryptoJS || (function (Math, undefined) {
-
-	    var crypto;
-
-	    // Native crypto from window (Browser)
-	    if (typeof window !== 'undefined' && window.crypto) {
-	        crypto = window.crypto;
-	    }
-
-	    // Native (experimental IE 11) crypto from window (Browser)
-	    if (!crypto && typeof window !== 'undefined' && window.msCrypto) {
-	        crypto = window.msCrypto;
-	    }
-
-	    // Native crypto from global (NodeJS)
-	    if (!crypto && typeof global !== 'undefined' && global.crypto) {
-	        crypto = global.crypto;
-	    }
-
-	    // Native crypto import via require (NodeJS)
-	    if (!crypto && typeof require === 'function') {
-	        try {
-	            crypto = require('crypto');
-	        } catch (err) {}
-	    }
-
 	    /*
-	     * Cryptographically secure pseudorandom number generator
-	     *
-	     * As Math.random() is cryptographically not safe to use
-	     */
-	    var cryptoSecureRandomInt = function () {
-	        if (crypto) {
-	            // Use getRandomValues method (Browser)
-	            if (typeof crypto.getRandomValues === 'function') {
-	                try {
-	                    return crypto.getRandomValues(new Uint32Array(1))[0];
-	                } catch (err) {}
-	            }
-
-	            // Use randomBytes method (NodeJS)
-	            if (typeof crypto.randomBytes === 'function') {
-	                try {
-	                    return crypto.randomBytes(4).readInt32LE();
-	                } catch (err) {}
-	            }
-	        }
-
-	        throw new Error('Native crypto module could not be used to get secure random number.');
-	    };
-
-	    /*
-	     * Local polyfill of Object.create
-
+	     * Local polyfil of Object.create
 	     */
 	    var create = Object.create || (function () {
-	        function F() {}
+	        function F() {};
 
 	        return function (obj) {
 	            var subtype;
@@ -357,8 +304,26 @@
 	        random: function (nBytes) {
 	            var words = [];
 
-	            for (var i = 0; i < nBytes; i += 4) {
-	                words.push(cryptoSecureRandomInt());
+	            var r = (function (m_w) {
+	                var m_w = m_w;
+	                var m_z = 0x3ade68b1;
+	                var mask = 0xffffffff;
+
+	                return function () {
+	                    m_z = (0x9069 * (m_z & 0xFFFF) + (m_z >> 0x10)) & mask;
+	                    m_w = (0x4650 * (m_w & 0xFFFF) + (m_w >> 0x10)) & mask;
+	                    var result = ((m_z << 0x10) + m_w) & mask;
+	                    result /= 0x100000000;
+	                    result += 0.5;
+	                    return result * (Math.random() > .5 ? 1 : -1);
+	                }
+	            });
+
+	            for (var i = 0, rcache; i < nBytes; i += 4) {
+	                var _r = r((rcache || Math.random()) * 0x100000000);
+
+	                rcache = _r() * 0x3ade67b7;
+	                words.push((_r() * 0x100000000) | 0);
 	            }
 
 	            return new WordArray.init(words, nBytes);
@@ -589,8 +554,6 @@
 	         *     var processedData = bufferedBlockAlgorithm._process(!!'flush');
 	         */
 	        _process: function (doFlush) {
-	            var processedWords;
-
 	            // Shortcuts
 	            var data = this._data;
 	            var dataWords = data.words;
@@ -623,7 +586,7 @@
 	                }
 
 	                // Remove processed words
-	                processedWords = dataWords.splice(0, nWordsReady);
+	                var processedWords = dataWords.splice(0, nWordsReady);
 	                data.sigBytes -= nBytesReady;
 	            }
 
@@ -900,8 +863,7 @@
 	          if (i % 4) {
 	              var bits1 = reverseMap[base64Str.charCodeAt(i - 1)] << ((i % 4) * 2);
 	              var bits2 = reverseMap[base64Str.charCodeAt(i)] >>> (6 - (i % 4) * 2);
-	              var bitsCombined = bits1 | bits2;
-	              words[nBytes >>> 2] |= bitsCombined << (24 - (nBytes % 4) * 8);
+	              words[nBytes >>> 2] |= (bits1 | bits2) << (24 - (nBytes % 4) * 8);
 	              nBytes++;
 	          }
 	      }
@@ -2220,8 +2182,6 @@
 	         *     var key = kdf.compute(password, salt);
 	         */
 	        compute: function (password, salt) {
-	            var block;
-
 	            // Shortcut
 	            var cfg = this.cfg;
 
@@ -2241,7 +2201,7 @@
 	                if (block) {
 	                    hasher.update(block);
 	                }
-	                block = hasher.update(password).finalize(salt);
+	                var block = hasher.update(password).finalize(salt);
 	                hasher.reset();
 
 	                // Iterations
@@ -2789,9 +2749,6 @@
 
 	                // Rho Pi
 	                for (var laneIndex = 1; laneIndex < 25; laneIndex++) {
-	                    var tMsw;
-	                    var tLsw;
-
 	                    // Shortcuts
 	                    var lane = state[laneIndex];
 	                    var laneMsw = lane.high;
@@ -2800,11 +2757,11 @@
 
 	                    // Rotate lanes
 	                    if (rhoOffset < 32) {
-	                        tMsw = (laneMsw << rhoOffset) | (laneLsw >>> (32 - rhoOffset));
-	                        tLsw = (laneLsw << rhoOffset) | (laneMsw >>> (32 - rhoOffset));
+	                        var tMsw = (laneMsw << rhoOffset) | (laneLsw >>> (32 - rhoOffset));
+	                        var tLsw = (laneLsw << rhoOffset) | (laneMsw >>> (32 - rhoOffset));
 	                    } else /* if (rhoOffset >= 32) */ {
-	                        tMsw = (laneLsw << (rhoOffset - 32)) | (laneMsw >>> (64 - rhoOffset));
-	                        tLsw = (laneMsw << (rhoOffset - 32)) | (laneLsw >>> (64 - rhoOffset));
+	                        var tMsw = (laneLsw << (rhoOffset - 32)) | (laneMsw >>> (64 - rhoOffset));
+	                        var tLsw = (laneMsw << (rhoOffset - 32)) | (laneLsw >>> (64 - rhoOffset));
 	                    }
 
 	                    // Transpose lanes
@@ -2839,7 +2796,7 @@
 	                var lane = state[0];
 	                var roundConstant = ROUND_CONSTANTS[round];
 	                lane.high ^= roundConstant.high;
-	                lane.low  ^= roundConstant.low;
+	                lane.low  ^= roundConstant.low;;
 	            }
 	        },
 
@@ -3066,16 +3023,13 @@
 
 	            // Rounds
 	            for (var i = 0; i < 80; i++) {
-	                var Wil;
-	                var Wih;
-
 	                // Shortcut
 	                var Wi = W[i];
 
 	                // Extend message
 	                if (i < 16) {
-	                    Wih = Wi.high = M[offset + i * 2]     | 0;
-	                    Wil = Wi.low  = M[offset + i * 2 + 1] | 0;
+	                    var Wih = Wi.high = M[offset + i * 2]     | 0;
+	                    var Wil = Wi.low  = M[offset + i * 2 + 1] | 0;
 	                } else {
 	                    // Gamma0
 	                    var gamma0x  = W[i - 15];
@@ -3100,12 +3054,12 @@
 	                    var Wi16h = Wi16.high;
 	                    var Wi16l = Wi16.low;
 
-	                    Wil = gamma0l + Wi7l;
-	                    Wih = gamma0h + Wi7h + ((Wil >>> 0) < (gamma0l >>> 0) ? 1 : 0);
-	                    Wil = Wil + gamma1l;
-	                    Wih = Wih + gamma1h + ((Wil >>> 0) < (gamma1l >>> 0) ? 1 : 0);
-	                    Wil = Wil + Wi16l;
-	                    Wih = Wih + Wi16h + ((Wil >>> 0) < (Wi16l >>> 0) ? 1 : 0);
+	                    var Wil = gamma0l + Wi7l;
+	                    var Wih = gamma0h + Wi7h + ((Wil >>> 0) < (gamma0l >>> 0) ? 1 : 0);
+	                    var Wil = Wil + gamma1l;
+	                    var Wih = Wih + gamma1h + ((Wil >>> 0) < (gamma1l >>> 0) ? 1 : 0);
+	                    var Wil = Wil + Wi16l;
+	                    var Wih = Wih + Wi16h + ((Wil >>> 0) < (Wi16l >>> 0) ? 1 : 0);
 
 	                    Wi.high = Wih;
 	                    Wi.low  = Wil;
@@ -3648,19 +3602,17 @@
 	        });
 
 	        function xorBlock(words, offset, blockSize) {
-	            var block;
-
 	            // Shortcut
 	            var iv = this._iv;
 
 	            // Choose mixing block
 	            if (iv) {
-	                block = iv;
+	                var block = iv;
 
 	                // Remove IV for subsequent blocks
 	                this._iv = undefined;
 	            } else {
-	                block = this._prevBlock;
+	                var block = this._prevBlock;
 	            }
 
 	            // XOR blocks
@@ -3752,8 +3704,6 @@
 	        }),
 
 	        reset: function () {
-	            var modeCreator;
-
 	            // Reset cipher
 	            Cipher.reset.call(this);
 
@@ -3764,9 +3714,9 @@
 
 	            // Reset block mode
 	            if (this._xformMode == this._ENC_XFORM_MODE) {
-	                modeCreator = mode.createEncryptor;
+	                var modeCreator = mode.createEncryptor;
 	            } else /* if (this._xformMode == this._DEC_XFORM_MODE) */ {
-	                modeCreator = mode.createDecryptor;
+	                var modeCreator = mode.createDecryptor;
 	                // Keep at least one block in the buffer for unpadding
 	                this._minBufferSize = 1;
 	            }
@@ -3784,8 +3734,6 @@
 	        },
 
 	        _doFinalize: function () {
-	            var finalProcessedBlocks;
-
 	            // Shortcut
 	            var padding = this.cfg.padding;
 
@@ -3795,10 +3743,10 @@
 	                padding.pad(this._data, this.blockSize);
 
 	                // Process final blocks
-	                finalProcessedBlocks = this._process(!!'flush');
+	                var finalProcessedBlocks = this._process(!!'flush');
 	            } else /* if (this._xformMode == this._DEC_XFORM_MODE) */ {
 	                // Process final blocks
-	                finalProcessedBlocks = this._process(!!'flush');
+	                var finalProcessedBlocks = this._process(!!'flush');
 
 	                // Unpad data
 	                padding.unpad(finalProcessedBlocks);
@@ -3890,17 +3838,15 @@
 	         *     var openSSLString = CryptoJS.format.OpenSSL.stringify(cipherParams);
 	         */
 	        stringify: function (cipherParams) {
-	            var wordArray;
-
 	            // Shortcuts
 	            var ciphertext = cipherParams.ciphertext;
 	            var salt = cipherParams.salt;
 
 	            // Format
 	            if (salt) {
-	                wordArray = WordArray.create([0x53616c74, 0x65645f5f]).concat(salt).concat(ciphertext);
+	                var wordArray = WordArray.create([0x53616c74, 0x65645f5f]).concat(salt).concat(ciphertext);
 	            } else {
-	                wordArray = ciphertext;
+	                var wordArray = ciphertext;
 	            }
 
 	            return wordArray.toString(Base64);
@@ -3920,8 +3866,6 @@
 	         *     var cipherParams = CryptoJS.format.OpenSSL.parse(openSSLString);
 	         */
 	        parse: function (openSSLStr) {
-	            var salt;
-
 	            // Parse base64
 	            var ciphertext = Base64.parse(openSSLStr);
 
@@ -3931,7 +3875,7 @@
 	            // Test for salt
 	            if (ciphertextWords[0] == 0x53616c74 && ciphertextWords[1] == 0x65645f5f) {
 	                // Extract salt
-	                salt = WordArray.create(ciphertextWords.slice(2, 4));
+	                var salt = WordArray.create(ciphertextWords.slice(2, 4));
 
 	                // Remove salt from ciphertext
 	                ciphertextWords.splice(0, 4);
@@ -4220,19 +4164,17 @@
 	    });
 
 	    function generateKeystreamAndEncrypt(words, offset, blockSize, cipher) {
-	        var keystream;
-
 	        // Shortcut
 	        var iv = this._iv;
 
 	        // Generate keystream
 	        if (iv) {
-	            keystream = iv.slice(0);
+	            var keystream = iv.slice(0);
 
 	            // Remove IV for subsequent blocks
 	            this._iv = undefined;
 	        } else {
-	            keystream = this._prevBlock;
+	            var keystream = this._prevBlock;
 	        }
 	        cipher.encryptBlock(keystream, 0);
 
@@ -4521,8 +4463,6 @@
 	     */
 	    var AES = C_algo.AES = BlockCipher.extend({
 	        _doReset: function () {
-	            var t;
-
 	            // Skip reset of nRounds has been set before and key did not change
 	            if (this._nRounds && this._keyPriorReset === this._key) {
 	                return;
@@ -4545,7 +4485,7 @@
 	                if (ksRow < keySize) {
 	                    keySchedule[ksRow] = keyWords[ksRow];
 	                } else {
-	                    t = keySchedule[ksRow - 1];
+	                    var t = keySchedule[ksRow - 1];
 
 	                    if (!(ksRow % keySize)) {
 	                        // Rot word
@@ -5373,20 +5313,11 @@
 	            // Shortcuts
 	            var key = this._key;
 	            var keyWords = key.words;
-	            // Make sure the key length is valid (64, 128 or >= 192 bit)
-	            if (keyWords.length !== 2 && keyWords.length !== 4 && keyWords.length < 6) {
-	                throw new Error('Invalid key length - 3DES requires the key length to be 64, 128, 192 or >192.');
-	            }
-
-	            // Extend the key according to the keying options defined in 3DES standard
-	            var key1 = keyWords.slice(0, 2);
-	            var key2 = keyWords.length < 4 ? keyWords.slice(0, 2) : keyWords.slice(2, 4);
-	            var key3 = keyWords.length < 6 ? keyWords.slice(0, 2) : keyWords.slice(4, 6);
 
 	            // Create DES instances
-	            this._des1 = DES.createEncryptor(WordArray.create(key1));
-	            this._des2 = DES.createEncryptor(WordArray.create(key2));
-	            this._des3 = DES.createEncryptor(WordArray.create(key3));
+	            this._des1 = DES.createEncryptor(WordArray.create(keyWords.slice(0, 2)));
+	            this._des2 = DES.createEncryptor(WordArray.create(keyWords.slice(2, 4)));
+	            this._des3 = DES.createEncryptor(WordArray.create(keyWords.slice(4, 6)));
 	        },
 
 	        encryptBlock: function (M, offset) {
@@ -6044,12 +5975,10 @@
 
 	        // Unpad
 	        var i = data.sigBytes - 1;
-	        for (var i = data.sigBytes - 1; i >= 0; i--) {
-	            if (((dataWords[i >>> 2] >>> (24 - (i % 4) * 8)) & 0xff)) {
-	                data.sigBytes = i + 1;
-	                break;
-	            }
+	        while (!((dataWords[i >>> 2] >>> (24 - (i % 4) * 8)) & 0xff)) {
+	            i--;
 	        }
+	        data.sigBytes = i + 1;
 	    }
 	};
 

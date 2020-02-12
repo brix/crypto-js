@@ -32,12 +32,10 @@
 
 	        // Unpad
 	        var i = data.sigBytes - 1;
-	        for (var i = data.sigBytes - 1; i >= 0; i--) {
-	            if (((dataWords[i >>> 2] >>> (24 - (i % 4) * 8)) & 0xff)) {
-	                data.sigBytes = i + 1;
-	                break;
-	            }
+	        while (!((dataWords[i >>> 2] >>> (24 - (i % 4) * 8)) & 0xff)) {
+	            i--;
 	        }
+	        data.sigBytes = i + 1;
 	    }
 	};
 
