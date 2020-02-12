@@ -91,8 +91,6 @@
 	     */
 	    var AES = C_algo.AES = BlockCipher.extend({
 	        _doReset: function () {
-	            var t;
-
 	            // Skip reset of nRounds has been set before and key did not change
 	            if (this._nRounds && this._keyPriorReset === this._key) {
 	                return;
@@ -115,7 +113,7 @@
 	                if (ksRow < keySize) {
 	                    keySchedule[ksRow] = keyWords[ksRow];
 	                } else {
-	                    t = keySchedule[ksRow - 1];
+	                    var t = keySchedule[ksRow - 1];
 
 	                    if (!(ksRow % keySize)) {
 	                        // Rot word

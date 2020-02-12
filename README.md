@@ -212,6 +212,12 @@ console.log(decryptedData); // [{id: 1}, {id: 2}]
 
 ## Release notes
 
+### 3.3.0
+
+Rollback, `3.3.0` is the same as `3.1.9-1`.
+
+The move of using native secure crypto module will be shifted to a new `4.x.x` version. As it is a breaking change the impact is too big for a minor release.
+
 ### 3.2.1
 
 The usage of the native crypto module has been fixed. The import and access of the native crypto module has been improved.
