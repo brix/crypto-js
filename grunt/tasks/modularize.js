@@ -7,16 +7,14 @@ var _ = require("lodash"),
 
 module.exports = function (grunt) {
 
-	grunt.registerMultiTask('modularize', function () {
-		var self = this,
-			
-			options = this.options(),
+    grunt.registerMultiTask('modularize', function () {
+        var options = this.options(),
 
-			done = this.async(),
+            done = this.async(),
 
-			modules = {},
+            modules = {},
 
-           config = {
+            config = {
                 target: this.target + '/',
                 factories: ["commonjs", "amd", "global"],
                 trim_whitespace: true,
@@ -42,7 +40,7 @@ module.exports = function (grunt) {
                 opts.global = conf.global;
             }
 
-           // Find and add self as source
+            // Find and add self as source
             _.each(this.filesSrc, (source) => {
                 if (grunt.file.exists(source + name + ".js")) {
                     sources.push(source + name + ".js");
@@ -79,7 +77,7 @@ module.exports = function (grunt) {
             // Remove duplicates
             sources = _.uniq(sources);
 
-           // Add module settings to fmd definition
+            // Add module settings to fmd definition
             modules[name] = [sources, opts];
         });
 
@@ -88,9 +86,9 @@ module.exports = function (grunt) {
             .define(modules)
             .build(() => {
 
-				done();
-			});
+                done();
+            });
 
-	});
+    });
 
 };
