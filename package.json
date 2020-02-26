@@ -2,7 +2,7 @@
   "name": "crypto-js",
   "title": "crypto-js",
   "description": "JavaScript library of crypto standards.",
-  "version": "3.1.9",
+  "version": "4.0.0",
   "homepage": "http://github.com/brix/crypto-js",
   "author": {
     "name": "Evan Vosberg",
@@ -28,7 +28,7 @@
     "grunt-cli": "^1.3.2",
     "grunt-contrib-clean": "^0.6.0",
     "grunt-contrib-copy": "^0.6.0",
-    "grunt-contrib-jshint": "^0.10.0",
+    "grunt-contrib-jshint": "^2.1.0",
     "grunt-jsonlint": "^1.0.4",
     "grunt-update-json": "^0.2.0",
     "load-grunt-config": "^0.16.0",

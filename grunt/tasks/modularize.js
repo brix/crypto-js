@@ -1,8 +1,9 @@
 /*jshint node: true*/
+/*jshint esversion: 6*/
 
 var _ = require("lodash"),
 
-	fmd = require("fmd");
+    fmd = require("fmd");
 
 module.exports = function (grunt) {
 
@@ -15,79 +16,77 @@ module.exports = function (grunt) {
 
 			modules = {},
 
-			config = {
-				target: this.target + '/',
-				factories: ["commonjs", "amd", "global"],
-				trim_whitespace: true,
-				new_line: "unix",
-				indent: "\t"
-			};
+           config = {
+                target: this.target + '/',
+                factories: ["commonjs", "amd", "global"],
+                trim_whitespace: true,
+                new_line: "unix",
+                indent: "\t"
+            };
 
-		// Prepare Factory-Module-Definition settings
-		_.each(options, function (conf, name) {
-			var sources = [],
+        // Prepare Factory-Module-Definition settings
+        _.each(options, (conf, name) => {
+            var sources = [],
 
-				opts = {
-					depends: {}
-				},
+                opts = {
+                    depends: {}
+                },
 
-				deps = [];
+                deps = [];
 
-			if (conf.exports) {
-				opts.exports = conf.exports;
-			}
+            if (conf.exports) {
+                opts.exports = conf.exports;
+            }
 
-			if (conf.global) {
-				opts.global = conf.global;
-			}
+            if (conf.global) {
+                opts.global = conf.global;
+            }
 
-			// Find and add self as source
-			_.each(self.filesSrc, function (source) {
-				if (grunt.file.exists(source + name + ".js")) {
-					sources.push(source + name + ".js");
-				}
-			});
+           // Find and add self as source
+            _.each(this.filesSrc, (source) => {
+                if (grunt.file.exists(source + name + ".js")) {
+                    sources.push(source + name + ".js");
+                }
+            });
 
-			if (conf.pack) {
-				// Collect all components
-				deps = _.chain(conf.components)
-					.map(function (depName) {
-						return options[depName].components;
-					})
-					.flatten()
-					.uniq()
-					.without(name)
-					.sort(function (a, b) {
-						return options[a].components.indexOf(b) === -1 ? -1 : 1;
-					})
-					.value();
+            if (conf.pack) {
+                // Collect all components
+                deps = _.chain(conf.components)
+                    .map(depName => options[depName].components)
+                    .flatten()
+                    .uniq()
+                    .without(name)
+                    .sort((a, b) => {
+                        return options[a].components.indexOf(b) === -1 ? -1 : 1;
+                    })
+                    .value();
 
-				// Add components as source files -> results a single file
-				_.each(self.filesSrc, function (source) {
-					_.each(deps, function (depName) {
-						if (grunt.file.exists(source + depName + ".js")) {
-							sources.push(source + depName + ".js");
-						}
-					});
-				});
-			} else {
-				// Read components and add them as dependecies
-				_.each(_.without(conf.components, name), function (value, i) {
-					opts.depends['./' + value] = value === "core" ? "CryptoJS" : null;
-				});
-			}
+                // Add components as source files -> results a single file
+                _.each(this.filesSrc, (source) => {
+                    _.each(deps, (depName) => {
+                        if (grunt.file.exists(source + depName + ".js")) {
+                            sources.push(source + depName + ".js");
+                        }
+                    });
+                });
+            } else {
+                // Read components and add them as dependecies
+                _.each(_.without(conf.components, name), (value, i) => {
+                    opts.depends['./' + value] = value === "core" ? "CryptoJS" : null;
+                });
+            }
 
-			// Remove duplicates
-			sources = _.uniq(sources);
+            // Remove duplicates
+            sources = _.uniq(sources);
 
-			// Add module settings to fmd definition
-			modules[name] = [sources, opts];
-		});
+           // Add module settings to fmd definition
+            modules[name] = [sources, opts];
+        });
 
-		// Build packege modules
-		fmd(config)
-			.define(modules)
-			.build(function (createdFiles) {
+        // Build packege modules
+        fmd(config)
+            .define(modules)
+            .build(() => {
 
 				done();
 			});

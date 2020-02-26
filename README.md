@@ -208,3 +208,42 @@ console.log(decryptedData); // [{id: 1}, {id: 2}]
 - ```crypto-js/pad-iso97971```
 - ```crypto-js/pad-zeropadding```
 - ```crypto-js/pad-nopadding```
+
+
+## Release notes
+
+### 4.0.0
+
+This is an update including breaking changes for some environments.
+
+In this version `Math.random()` has been replaced by the random methods of the native crypto module.
+
+For this reason CryptoJS might not run in some JavaScript environments without native crypto module. Such as IE 10 or before or React Native.
+
+### 3.3.0
+
+Rollback, `3.3.0` is the same as `3.1.9-1`.
+
+The move of using native secure crypto module will be shifted to a new `4.x.x` version. As it is a breaking change the impact is too big for a minor release.
+
+### 3.2.1
+
+The usage of the native crypto module has been fixed. The import and access of the native crypto module has been improved.
+
+### 3.2.0
+
+In this version `Math.random()` has been replaced by the random methods of the native crypto module.
+
+For this reason CryptoJS might does not run in some JavaScript environments without native crypto module. Such as IE 10 or before.
+
+If it's absolute required to run CryptoJS in such an environment, stay with `3.1.x` version. Encrypting and decrypting stays compatible. But keep in mind `3.1.x` versions still use `Math.random()` which is cryptographically not secure, as it's not random enough. 
+
+This version came along with `CRITICAL` `BUG`. 
+
+DO NOT USE THIS VERSION! Please, go for a newer version!
+
+### 3.1.x
+
+The `3.1.x` are based on the original CryptoJS, wrapped in CommonJS modules.
+
+
