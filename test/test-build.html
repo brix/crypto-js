@@ -1,0 +1,105 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>CryptoJS Test Suite</title>
+
+        <!-- CryptoJS -->
+        <script src="../build/crypto-js.js"></script>
+
+        <!-- YUI -->
+        <script src="http://yui.yahooapis.com/3.5.1/build/yui/yui-min.js"></script>
+
+        <!-- Tests -->
+        <script src="lib-base-test.js"></script>
+        <script src="lib-wordarray-test.js"></script>
+        <script src="lib-typedarrays-test.js"></script>
+        <script src="x64-word-test.js"></script>
+        <script src="x64-wordarray-test.js"></script>
+        <script src="enc-hex-test.js"></script>
+        <script src="enc-latin1-test.js"></script>
+        <script src="enc-utf8-test.js"></script>
+        <script src="enc-utf16-test.js"></script>
+        <script src="enc-base64-test.js"></script>
+        <script src="md5-test.js"></script>
+        <script src="sha1-test.js"></script>
+        <script src="sha256-test.js"></script>
+        <script src="sha224-test.js"></script>
+        <script src="sha512-test.js"></script>
+        <script src="sha384-test.js"></script>
+        <script src="sha3-test.js"></script>
+        <script src="ripemd160-test.js"></script>
+        <script src="hmac-md5-test.js"></script>
+        <script src="hmac-sha224-test.js"></script>
+        <script src="hmac-sha256-test.js"></script>
+        <script src="hmac-sha384-test.js"></script>
+        <script src="hmac-sha512-test.js"></script>
+        <script src="pbkdf2-test.js"></script>
+        <script src="evpkdf-test.js"></script>
+        <script src="mode-cbc-test.js"></script>
+        <script src="mode-cfb-test.js"></script>
+        <script src="mode-ctr-test.js"></script>
+        <script src="mode-ofb-test.js"></script>
+        <script src="mode-ecb-test.js"></script>
+        <script src="pad-pkcs7-test.js"></script>
+        <script src="pad-ansix923-test.js"></script>
+        <script src="pad-iso10126-test.js"></script>
+        <script src="pad-zeropadding-test.js"></script>
+        <script src="pad-iso97971-test.js"></script>
+        <script src="lib-cipherparams-test.js"></script>
+        <script src="format-openssl-test.js"></script>
+        <script src="lib-serializablecipher-test.js"></script>
+        <script src="kdf-openssl-test.js"></script>
+        <script src="lib-passwordbasedcipher-test.js"></script>
+        <script src="rc4-test.js"></script>
+        <script src="rabbit-test.js"></script>
+        <script src="rabbit-legacy-test.js"></script>
+        <script src="cipher-test.js"></script>
+        <script src="aes-test.js"></script>
+        <script src="des-test.js"></script>
+        <script src="tripledes-test.js"></script>
+
+        <!-- Test runner -->
+        <script>
+            YUI().use('test', 'console', function (Y) {
+                Y.use('*', function (Y) {
+                    new Y.Console({
+                        style: 'block',
+                        width: '600px',
+                        height: '600px',
+                        entryTemplate:
+                          '<div class="{entry_class} {cat_class} {src_class}">' +
+                          '    <p class="{entry_meta_class}">' +
+                          '        <span class="{entry_cat_class}">{category}</span>' +
+                          '    </p>' +
+                          '    <pre class="{entry_content_class}">{message}</pre>' +
+                          '</div>',
+                        newestOnTop: false,
+                        consoleLimit: 500,
+                        render: true
+                    });
+
+                    Y.Test.Runner.run();
+                });
+            });
+        </script>
+
+        <style>
+            body.yui3-skin-sam .yui3-console-entry-meta,
+            body.yui3-skin-sam .yui3-console-entry-content {
+                display: inline-block;
+                vertical-align: top;
+            }
+            body.yui3-skin-sam .yui3-console-entry-cat {
+                display: inline-block;
+                width: 35px;
+                text-align: center;
+            }
+            body.yui3-skin-sam .yui3-console-entry {
+                min-height: 0;
+            }
+        </style>
+    </head>
+    <body class="yui3-skin-sam">
+    </body>
+</html>
