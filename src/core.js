@@ -411,7 +411,7 @@ var CryptoJS = CryptoJS || (function (Math, undefined) {
             var hexStrLength = hexStr.length;
 
             // Convert
-            var words = [];
+            var words = new Array((hexStrLength + 7) >>> 3);
             for (var i = 0; i < hexStrLength; i += 2) {
                 words[i >>> 3] |= parseInt(hexStr.substr(i, 2), 16) << (24 - (i % 8) * 4);
             }
@@ -470,7 +470,7 @@ var CryptoJS = CryptoJS || (function (Math, undefined) {
             var latin1StrLength = latin1Str.length;
 
             // Convert
-            var words = [];
+            var words = new Array((latin1StrLength + 3) >>> 2);
             for (var i = 0; i < latin1StrLength; i++) {
                 words[i >>> 2] |= (latin1Str.charCodeAt(i) & 0xff) << (24 - (i % 4) * 8);
             }
@@ -607,6 +607,10 @@ var CryptoJS = CryptoJS || (function (Math, undefined) {
 
             // Process blocks
             if (nWordsReady) {
+                if (dataWords.length < nWordsReady) {
+                    data.words = dataWords.concat(new Array(nWordsReady - dataWords.length));
+                    dataWords = data.words;
+                }
                 for (var offset = 0; offset < nWordsReady; offset += blockSize) {
                     // Perform concrete-algorithm logic
                     this._doProcessBlock(dataWords, offset);
