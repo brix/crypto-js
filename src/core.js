@@ -17,6 +17,11 @@ var CryptoJS = CryptoJS || (function (Math, undefined) {
         crypto = self.crypto;
     }
 
+    // Native crypto from worker
+    if (typeof globalThis !== 'undefined' && globalThis.crypto) {
+        crypto = globalThis.crypto;
+    }
+
     // Native (experimental IE 11) crypto from window (Browser)
     if (!crypto && typeof window !== 'undefined' && window.msCrypto) {
         crypto = window.msCrypto;
