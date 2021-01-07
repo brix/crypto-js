@@ -414,6 +414,10 @@ var CryptoJS = CryptoJS || (function (Math, undefined) {
         parse: function (hexStr) {
             // Shortcut
             var hexStrLength = hexStr.length;
+            if( hexStrLength % 2 === 1 ){
+                hexStr = '0' + hexStr
+                hexStrLength = hexStrLength + 1
+            }
 
             // Convert
             var words = [];
