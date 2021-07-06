@@ -21,6 +21,9 @@
     "test": "grunt default"
   },
   "main": "index.js",
+  "browser": {
+    "crypto": false
+  },
   "dependencies": {},
   "devDependencies": {
     "fmd": "~0.0.3",
