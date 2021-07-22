@@ -19,6 +19,7 @@ module.exports = {
             'repository': null,
             'keywords': null,
             'main': null,
+            'browser': null,
             'dependencies': null
         }
     },
@@ -35,6 +36,7 @@ module.exports = {
             'repository': null,
             'keywords': null,
             'main': null,
+            'browser': null,
             'dependencies': null,
             'ignore': []
         }
