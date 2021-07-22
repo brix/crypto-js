@@ -212,6 +212,12 @@ console.log(decryptedData); // [{id: 1}, {id: 2}]
 
 ## Release notes
 
+### 4.1.0
+
+Added url safe variant of base64 encoding. [357](https://github.com/brix/crypto-js/pull/357)
+
+Avoid webpack to add crypto-browser package. [364](https://github.com/brix/crypto-js/pull/364)
+
 ### 4.0.0
 
 This is an update including breaking changes for some environments.
