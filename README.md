@@ -212,13 +212,19 @@ console.log(decryptedData); // [{id: 1}, {id: 2}]
 
 ## Release notes
 
+### 4.1.0
+
+Added url safe variant of base64 encoding. [357](https://github.com/brix/crypto-js/pull/357)
+
+Avoid webpack to add crypto-browser package. [364](https://github.com/brix/crypto-js/pull/364)
+
 ### 4.0.0
 
 This is an update including breaking changes for some environments.
 
 In this version `Math.random()` has been replaced by the random methods of the native crypto module.
 
-For this reason CryptoJS might does not run in some JavaScript environments without native crypto module. Such as IE 10 or before or React Native.
+For this reason CryptoJS might not run in some JavaScript environments without native crypto module. Such as IE 10 or before or React Native.
 
 ### 3.3.0
 

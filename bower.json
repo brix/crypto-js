@@ -1,6 +1,6 @@
 {
   "name": "crypto-js",
-  "version": "4.0.0",
+  "version": "4.1.0",
   "description": "JavaScript library of crypto standards.",
   "license": "MIT",
   "homepage": "http://github.com/brix/crypto-js",
@@ -27,7 +27,8 @@
     "CFB",
     "CTR",
     "CBC",
-    "Base64"
+    "Base64",
+    "Base64url"
   ],
   "main": "index.js",
   "dependencies": {},
