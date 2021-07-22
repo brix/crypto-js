@@ -1,6 +1,6 @@
 {
   "name": "crypto-js",
-  "version": "4.1.0",
+  "version": "4.1.1",
   "description": "JavaScript library of crypto standards.",
   "license": "MIT",
   "author": {
@@ -35,5 +35,8 @@
     "Base64url"
   ],
   "main": "index.js",
-  "dependencies": {}
+  "dependencies": {},
+  "browser": {
+    "crypto": false
+  }
 }
