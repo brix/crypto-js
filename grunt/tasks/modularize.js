@@ -55,7 +55,15 @@ module.exports = function (grunt) {
                     .uniq()
                     .without(name)
                     .sort((a, b) => {
-                        return options[a].components.indexOf(b) === -1 ? -1 : 1;
+                        if (options[a].components.includes(b)) {
+                            return 1
+                        }
+
+                        if (options[b].components.includes(a)) {
+                            return -1
+                        }
+
+                        return 0;
                     })
                     .value();
 
