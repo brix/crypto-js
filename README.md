@@ -212,6 +212,12 @@ console.log(decryptedData); // [{id: 1}, {id: 2}]
 
 ## Release notes
 
+### 4.1.1
+
+Fix module order in bundled release.
+
+Include the browser field in the released package.json.
+
 ### 4.1.0
 
 Added url safe variant of base64 encoding. [357](https://github.com/brix/crypto-js/pull/357)
