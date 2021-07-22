@@ -19,7 +19,8 @@ module.exports = {
             'repository': null,
             'keywords': null,
             'main': null,
-            'dependencies': null
+            'dependencies': null,
+            'optionalDependencies': null
         }
     },
     bower: {

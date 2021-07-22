@@ -37,6 +37,9 @@
     "load-grunt-config": "^0.16.0",
     "lodash": "^4.17.11"
   },
+  "optionalDependencies": {
+    "react-native-crypto": "^2.2.0"
+  },
   "keywords": [
     "security",
     "crypto",
