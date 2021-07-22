@@ -19,7 +19,8 @@ module.exports = {
             'repository': null,
             'keywords': null,
             'main': null,
-            'dependencies': null
+            'dependencies': null,
+            'browser': null
         }
     },
     bower: {
@@ -36,6 +37,7 @@ module.exports = {
             'keywords': null,
             'main': null,
             'dependencies': null,
+            'browser': null,
             'ignore': []
         }
     }
