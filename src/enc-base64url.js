@@ -24,11 +24,11 @@
          *
          *     var base64String = CryptoJS.enc.Base64url.stringify(wordArray);
          */
-        stringify: function (wordArray, urlSafe=true) {
+        stringify: function (wordArray, urlSafe) {
             // Shortcuts
             var words = wordArray.words;
             var sigBytes = wordArray.sigBytes;
-            var map = urlSafe ? this._safe_map : this._map;
+            var map = urlSafe === undefined ? this._map : this._safe_map;
 
             // Clamp excess bits
             wordArray.clamp();
@@ -73,10 +73,10 @@
          *
          *     var wordArray = CryptoJS.enc.Base64url.parse(base64String);
          */
-        parse: function (base64Str, urlSafe=true) {
+        parse: function (base64Str, urlSafe) {
             // Shortcuts
             var base64StrLength = base64Str.length;
-            var map = urlSafe ? this._safe_map : this._map;
+            var map = urlSafe === undefined ? this._map : this._safe_map;
             var reverseMap = this._reverseMap;
 
             if (!reverseMap) {
