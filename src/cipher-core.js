@@ -819,7 +819,7 @@ CryptoJS.lib.Cipher || (function (undefined) {
             cfg = this.cfg.extend(cfg);
 
             // Derive key and other params
-            var derivedParams = cfg.kdf.execute(password, cipher.keySize, cipher.ivSize);
+            var derivedParams = cfg.kdf.execute(password, cipher.keySize, cipher.ivSize, cfg.salt);
 
             // Add IV to config
             cfg.iv = derivedParams.iv;
