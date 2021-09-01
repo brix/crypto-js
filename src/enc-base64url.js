@@ -28,7 +28,7 @@
             // Shortcuts
             var words = wordArray.words;
             var sigBytes = wordArray.sigBytes;
-            var map = urlSafe === undefined ? this._map : this._safe_map;
+            var map = urlSafe ? this._safe_map : this._map;
 
             // Clamp excess bits
             wordArray.clamp();
@@ -76,7 +76,7 @@
         parse: function (base64Str, urlSafe) {
             // Shortcuts
             var base64StrLength = base64Str.length;
-            var map = urlSafe === undefined ? this._map : this._safe_map;
+            var map = urlSafe ? this._safe_map : this._map;
             var reverseMap = this._reverseMap;
 
             if (!reverseMap) {
