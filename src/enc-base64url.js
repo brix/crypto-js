@@ -24,7 +24,10 @@
          *
          *     var base64String = CryptoJS.enc.Base64url.stringify(wordArray);
          */
-        stringify: function (wordArray, urlSafe=true) {
+        stringify: function (wordArray, urlSafe) {
+            if (urlSafe === undefined) {
+                urlSafe = true
+            }
             // Shortcuts
             var words = wordArray.words;
             var sigBytes = wordArray.sigBytes;
