@@ -1,4 +1,4 @@
-# crypto-js [![Build Status](https://travis-ci.org/brix/crypto-js.svg?branch=develop)](https://travis-ci.org/brix/crypto-js)
+# crypto-js
 
 JavaScript library of crypto standards.
 
