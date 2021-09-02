@@ -76,7 +76,11 @@
          *
          *     var wordArray = CryptoJS.enc.Base64url.parse(base64String);
          */
-        parse: function (base64Str, urlSafe=true) {
+        parse: function (base64Str, urlSafe) {
+            if (urlSafe === undefined) {
+                urlSafe = true
+            }
+
             // Shortcuts
             var base64StrLength = base64Str.length;
             var map = urlSafe ? this._safe_map : this._map;
