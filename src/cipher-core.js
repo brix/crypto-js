@@ -765,14 +765,19 @@ CryptoJS.lib.Cipher || (function (undefined) {
          *     var derivedParams = CryptoJS.kdf.OpenSSL.execute('Password', 256/32, 128/32);
          *     var derivedParams = CryptoJS.kdf.OpenSSL.execute('Password', 256/32, 128/32, 'saltsalt');
          */
-        execute: function (password, keySize, ivSize, salt) {
+        execute: function (password, keySize, ivSize, salt, hasher) {
             // Generate random salt
             if (!salt) {
                 salt = WordArray.random(64/8);
             }
 
             // Derive key and IV
-            var key = EvpKDF.create({ keySize: keySize + ivSize }).compute(password, salt);
+            if (!hasher) {
+                var key = EvpKDF.create({ keySize: keySize + ivSize }).compute(password, salt);
+            } else {
+                var key = EvpKDF.create({ keySize: keySize + ivSize, hasher: hasher }).compute(password, salt);
+            }
+            
 
             // Separate key and IV
             var iv = WordArray.create(key.words.slice(keySize), ivSize * 4);
@@ -819,7 +824,7 @@ CryptoJS.lib.Cipher || (function (undefined) {
             cfg = this.cfg.extend(cfg);
 
             // Derive key and other params
-            var derivedParams = cfg.kdf.execute(password, cipher.keySize, cipher.ivSize, cfg.salt);
+            var derivedParams = cfg.kdf.execute(password, cipher.keySize, cipher.ivSize, cfg.salt, cfg.hasher);
 
             // Add IV to config
             cfg.iv = derivedParams.iv;
@@ -858,7 +863,7 @@ CryptoJS.lib.Cipher || (function (undefined) {
             ciphertext = this._parse(ciphertext, cfg.format);
 
             // Derive key and other params
-            var derivedParams = cfg.kdf.execute(password, cipher.keySize, cipher.ivSize, ciphertext.salt);
+            var derivedParams = cfg.kdf.execute(password, cipher.keySize, cipher.ivSize, ciphertext.salt, cfg.hasher);
 
             // Add IV to config
             cfg.iv = derivedParams.iv;
