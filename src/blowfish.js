@@ -402,9 +402,9 @@
     }
 
     /**
-     * BF block cipher algorithm.
+     * Blowfish block cipher algorithm.
      */
-    var BF = C_algo.BF = BlockCipher.extend({
+    var Blowfish = C_algo.Blowfish = BlockCipher.extend({
         _doReset: function () {
             // Skip reset of nRounds has been set before and key did not change
             if (this._keyPriorReset === this._key) {
@@ -444,8 +444,8 @@
      *
      * @example
      *
-     *     var ciphertext = CryptoJS.BF.encrypt(message, key, cfg);
-     *     var plaintext  = CryptoJS.BF.decrypt(ciphertext, key, cfg);
+     *     var ciphertext = CryptoJS.Blowfish.encrypt(message, key, cfg);
+     *     var plaintext  = CryptoJS.Blowfish.decrypt(ciphertext, key, cfg);
      */
-    C.BF = BlockCipher._createHelper(BF);
+    C.Blowfish = BlockCipher._createHelper(Blowfish);
 }());
