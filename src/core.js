@@ -472,12 +472,25 @@ var CryptoJS = CryptoJS || (function (Math, undefined) {
          */
         parse: function (latin1Str) {
             // Shortcut
-            var latin1StrLength = latin1Str.length;
+            var latin1StrLength = latin1Str.length + (16 - (latin1Str.length) % 16);
 
             // Convert
             var words = [];
             for (var i = 0; i < latin1StrLength; i++) {
                 words[i >>> 2] |= (latin1Str.charCodeAt(i) & 0xff) << (24 - (i % 4) * 8);
+            }
+
+            // 평문을 만들때, 평문의 길이를 16byte 배수로 맞추고 빈공간은 00으로 처리함(패딩처리)
+            var BLOCK_SIZE_SEED = 16;
+            var value = BLOCK_SIZE_SEED - (latin1Str.length % BLOCK_SIZE_SEED)
+            var b_offset = BLOCK_SIZE_SEED - value;
+
+            for (var i = b_offset; i < BLOCK_SIZE_SEED; i++) {
+                var shift_value = (3 - i % 4) * 8;
+                var mask_value = 0x0ff << shift_value;
+                var mask_value2 = ~mask_value;
+                var value2 = (value & 0x0ff) << shift_value;
+                words[(words.length - 4) + parseInt(i / 4)] = (words[(words.length - 4) + parseInt(i / 4)] & mask_value2) | (value2 & mask_value);
             }
 
             return new WordArray.init(words, latin1StrLength);
