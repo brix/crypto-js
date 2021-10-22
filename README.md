@@ -113,6 +113,11 @@ var CryptoJS = require("crypto-js");
 // Encrypt
 var ciphertext = CryptoJS.AES.encrypt('my message', 'secret key 123').toString();
 
+// Keep in mind that the object returned by CryptoJS.AES.encrypt includes the decryption key. If you intend to store the ciphertext, remove this beforehand:
+var encrypted = CryptoJS.AES.encrypt('my message', 'secret key 123');
+delete encrypted.key;
+var ciphertext = encrypted.toString();
+
 // Decrypt
 var bytes  = CryptoJS.AES.decrypt(ciphertext, 'secret key 123');
 var originalText = bytes.toString(CryptoJS.enc.Utf8);
@@ -129,6 +134,11 @@ var data = [{id: 1}, {id: 2}]
 
 // Encrypt
 var ciphertext = CryptoJS.AES.encrypt(JSON.stringify(data), 'secret key 123').toString();
+
+// Keep in mind that the object returned by CryptoJS.AES.encrypt includes the decryption key. If you intend to store the ciphertext, remove this beforehand:
+var encrypted = CryptoJS.AES.encrypt('my message', 'secret key 123');
+delete encrypted.key;
+var ciphertext = encrypted.toString();
 
 // Decrypt
 var bytes  = CryptoJS.AES.decrypt(ciphertext, 'secret key 123');
