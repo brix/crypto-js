@@ -110,7 +110,7 @@ See: https://cryptojs.gitbook.io/docs/
 ```javascript
 var CryptoJS = require("crypto-js");
 
-// Encrypt
+// Encrypt - Note that CryptoJS.AES.encrypt returns an object that contains the decryption keys. The .toString() method of this library specifically ensures that the output is safe to be stored and cannot be decrypted. Storing the resulting object or encoding it isn't safe as it'd contain the decryption key.
 var ciphertext = CryptoJS.AES.encrypt('my message', 'secret key 123').toString();
 
 // Decrypt
@@ -127,7 +127,7 @@ var CryptoJS = require("crypto-js");
 
 var data = [{id: 1}, {id: 2}]
 
-// Encrypt
+// Encrypt - Note that CryptoJS.AES.encrypt returns an object that contains the decryption keys. The .toString() method of this library specifically ensures that the output is safe to be stored and cannot be decrypted. Storing the resulting object or encoding it isn't safe as it'd contain the decryption key.
 var ciphertext = CryptoJS.AES.encrypt(JSON.stringify(data), 'secret key 123').toString();
 
 // Decrypt
