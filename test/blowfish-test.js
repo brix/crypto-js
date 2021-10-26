@@ -2,7 +2,7 @@ YUI.add('algo-aes-test', function (Y) {
     var C = CryptoJS;
 
     Y.Test.Runner.add(new Y.Test.Case({
-        name: 'BF',
+        name: 'Blowfish',
 
         setUp: function () {
             this.data = {
@@ -11,7 +11,7 @@ YUI.add('algo-aes-test', function (Y) {
         },
 
         testEncrypt: function () {
-            let encryptedA = C.BF.encrypt('Test',
+            let encryptedA = C.Blowfish.encrypt('Test',
             'pass',
             {
                 salt: this.data.saltA,
@@ -21,13 +21,13 @@ YUI.add('algo-aes-test', function (Y) {
         },
 
         testDecrypt: function () {
-            let encryptedA = C.BF.encrypt('Test',
+            let encryptedA = C.Blowfish.encrypt('Test',
             'pass',
             {
                 salt: this.data.saltA,
                 hasher: CryptoJS.algo.SHA256
             }).toString();
-            Y.Assert.areEqual('Test', C.BF.decrypt(encryptedA, 'pass', {hasher: CryptoJS.algo.SHA256}).toString(C.enc.Utf8));
+            Y.Assert.areEqual('Test', C.Blowfish.decrypt(encryptedA, 'pass', {hasher: CryptoJS.algo.SHA256}).toString(C.enc.Utf8));
         }
     }));
 }, '$Rev$');

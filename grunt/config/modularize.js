@@ -104,7 +104,7 @@ module.exports = {
                 "components": ["core", "enc-base64", "md5", "evpkdf", "cipher-core", "aes"]
             },
             "blowfish": {
-                "exports": "CryptoJS.BF",
+                "exports": "CryptoJS.Blowfish",
                 "components": ["core", "enc-base64", "md5", "evpkdf", "cipher-core", "blowfish"]
             },
             "tripledes": {
