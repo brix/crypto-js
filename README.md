@@ -99,6 +99,22 @@ require(["crypto-js"], function (CryptoJS) {
 </script>
 ```
 
+### Usage in React Native (>= [crypto-js 4.0.0](https://github.com/1Jesper1/crypto-js/edit/develop/README.md#400))
+
+```javascript
+import 'react-native-get-random-values';
+import crypto from 'crypto-js';
+```
+
+1. Check inlineRequires: true in metro.config.js
+2. ``npm i crypto-js``
+3. ``npm i react-native-get-random-values``
+4. ``cd ios/ && pod install``
+5. Rebuild app
+6. Add import 'react-native-get-random-values'; before crypto-js import. For example at the top of App.js.
+
+See https://www.npmjs.com/package/react-native-get-random-values
+
 ## API
 
 See: https://cryptojs.gitbook.io/docs/
