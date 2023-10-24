@@ -5,7 +5,7 @@
     var Base = C_lib.Base;
     var WordArray = C_lib.WordArray;
     var C_algo = C.algo;
-    var SHA1 = C_algo.SHA1;
+    var SHA256 = C_algo.SHA256;
     var HMAC = C_algo.HMAC;
 
     /**
@@ -16,13 +16,13 @@
          * Configuration options.
          *
          * @property {number} keySize The key size in words to generate. Default: 4 (128 bits)
-         * @property {Hasher} hasher The hasher to use. Default: SHA1
-         * @property {number} iterations The number of iterations to perform. Default: 1
+         * @property {Hasher} hasher The hasher to use. Default: SHA256
+         * @property {number} iterations The number of iterations to perform. Default: 250000
          */
         cfg: Base.extend({
             keySize: 128/32,
-            hasher: SHA1,
-            iterations: 1
+            hasher: SHA256,
+            iterations: 250000
         }),
 
         /**

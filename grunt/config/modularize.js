@@ -91,7 +91,7 @@ module.exports = {
             },
             "pbkdf2": {
                 "exports": "CryptoJS.PBKDF2",
-                "components": ["core", "sha1", "hmac", "pbkdf2"]
+                "components": ["core", "sha256", "hmac", "pbkdf2"]
             },
             "evpkdf": {
                 "exports": "CryptoJS.EvpKDF",
