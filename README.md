@@ -218,6 +218,14 @@ console.log(decryptedData); // [{id: 1}, {id: 2}]
 
 ## Release notes
 
+### 4.2.0
+
+Change default hash algorithm and iteration's for PBKDF2 to prevent weak security by using the default configuration.
+
+Custom KDF Hasher
+
+Blowfish support
+
 ### 4.1.1
 
 Fix module order in bundled release.
