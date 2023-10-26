@@ -14,7 +14,7 @@ YUI.add('algo-rc4-test', function (Y) {
 
         testDrop: function () {
             Y.Assert.areEqual(
-                C.RC4.encrypt(C.enc.Hex.parse('00000000000000000000000000000000'), C.enc.Hex.parse('0123456789abcdef')).ciphertext.toString().substr(16),
+                C.RC4.encrypt(C.enc.Hex.parse('00000000000000000000000000000000'), C.enc.Hex.parse('0123456789abcdef')).ciphertext.toString().slice(16),
                 C.RC4Drop.encrypt(C.enc.Hex.parse('0000000000000000'), C.enc.Hex.parse('0123456789abcdef'), { drop: 2 }).ciphertext.toString()
             );
         },

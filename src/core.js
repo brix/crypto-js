@@ -418,7 +418,7 @@ var CryptoJS = CryptoJS || (function (Math, undefined) {
             // Convert
             var words = [];
             for (var i = 0; i < hexStrLength; i += 2) {
-                words[i >>> 3] |= parseInt(hexStr.substr(i, 2), 16) << (24 - (i % 8) * 4);
+                words[i >>> 3] |= parseInt(hexStr.slice(i, i + 2), 16) << (24 - (i % 8) * 4);
             }
 
             return new WordArray.init(words, hexStrLength / 2);
