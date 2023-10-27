@@ -560,8 +560,11 @@ var CryptoJS = CryptoJS || (function (Math, undefined) {
          */
         _append: function (data) {
             // Convert string to WordArray, else assume WordArray already
-            if (typeof data == 'string') {
+            var dataType = typeof data;
+            if (dataType == 'string') {
                 data = Utf8.parse(data);
+            } else {
+                throw new TypeError('The "data" argument must be string. Received type ' + dataType);
             }
 
             // Append
