@@ -221,7 +221,7 @@
             var blockSizeBits = this.blockSize * 32;
 
             // Add padding
-            dataWords[nBitsLeft >>> 5] |= 0x1 << (24 - nBitsLeft % 32);
+            dataWords[nBitsLeft >>> 5] |= 0x6 << (24 - nBitsLeft % 32);
             dataWords[((Math.ceil((nBitsLeft + 1) / blockSizeBits) * blockSizeBits) >>> 5) - 1] |= 0x80;
             data.sigBytes = dataWords.length * 4;
 
