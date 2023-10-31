@@ -114,7 +114,7 @@
             var utf16StrLength = utf16Str.length;
 
             // Convert
-            var words = [];
+            var words = new Array((utf16StrLength + 1) >>> 1);
             for (var i = 0; i < utf16StrLength; i++) {
                 words[i >>> 1] |= swapEndian(utf16Str.charCodeAt(i) << (16 - (i % 2) * 16));
             }

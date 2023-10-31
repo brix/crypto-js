@@ -75,6 +75,12 @@
             var nBitsTotal = this._nDataBytes * 8;
             var nBitsLeft = data.sigBytes * 8;
 
+            var newLength = Math.max((nBitsLeft >>> 5) + 1, (((nBitsLeft + 64) >>> 9) << 4) + 16);
+            if (dataWords.length < newLength) {
+                data.words = dataWords.concat(new Array(newLength - dataWords.length));
+                dataWords = data.words;
+            }
+
             // Add padding
             dataWords[nBitsLeft >>> 5] |= 0x80 << (24 - nBitsLeft % 32);
             dataWords[(((nBitsLeft + 64) >>> 9) << 4) + 14] = Math.floor(nBitsTotal / 0x100000000);

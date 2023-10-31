@@ -220,6 +220,12 @@
             var nBitsLeft = data.sigBytes * 8;
             var blockSizeBits = this.blockSize * 32;
 
+            var newLength = Math.max((nBitsLeft >>> 5) + 1, (Math.ceil((nBitsLeft + 1) / blockSizeBits) * blockSizeBits) >>> 5);
+            if (dataWords.length < newLength) {
+                data.words = dataWords.concat(new Array(newLength - dataWords.length));
+                dataWords = data.words;
+            }
+
             // Add padding
             dataWords[nBitsLeft >>> 5] |= 0x1 << (24 - nBitsLeft % 32);
             dataWords[((Math.ceil((nBitsLeft + 1) / blockSizeBits) * blockSizeBits) >>> 5) - 1] |= 0x80;
