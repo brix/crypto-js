@@ -75,6 +75,11 @@ YUI.add('algo-aes-test', function (Y) {
 
             // Restore random method
             C.lib.WordArray.random = random;
-        }
+        },
+
+        testWithoutCfg: function () {
+            Y.Assert.areEqual('69c4e0d86a7b0430d8cdb78070b4c55a9e978e6d16b086570ef794ef97984232', C.AES.encrypt(C.enc.Hex.parse('00112233445566778899aabbccddeeff'), C.enc.Hex.parse('000102030405060708090a0b0c0d0e0f')).ciphertext.toString());
+            Y.Assert.areEqual('00112233445566778899aabbccddeeff', C.AES.decrypt(C.lib.CipherParams.create({ ciphertext: C.enc.Hex.parse('69c4e0d86a7b0430d8cdb78070b4c55a9e978e6d16b086570ef794ef97984232') }), C.enc.Hex.parse('000102030405060708090a0b0c0d0e0f')).toString());
+        },
     }));
 }, '$Rev$');

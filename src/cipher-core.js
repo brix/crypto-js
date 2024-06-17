@@ -28,7 +28,7 @@ CryptoJS.lib.Cipher || (function (undefined) {
          *
          * @property {WordArray} iv The IV to use for this operation.
          */
-        cfg: Base.extend(),
+        cfg: Base.extend({iv: WordArray.create()}),
 
         /**
          * Creates this cipher in encryption mode.
