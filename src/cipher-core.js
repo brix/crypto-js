@@ -772,15 +772,16 @@ CryptoJS.lib.Cipher || (function (undefined) {
             }
 
             // Derive key and IV
+            let key;
             if (!hasher) {
-                var key = EvpKDF.create({ keySize: keySize + ivSize }).compute(password, salt);
+                key = EvpKDF.create({ keySize: keySize + ivSize }).compute(password, salt);
             } else {
-                var key = EvpKDF.create({ keySize: keySize + ivSize, hasher: hasher }).compute(password, salt);
+                key = EvpKDF.create({ keySize: keySize + ivSize, hasher: hasher }).compute(password, salt);
             }
             
 
             // Separate key and IV
-            var iv = WordArray.create(key.words.slice(keySize), ivSize * 4);
+            const iv = WordArray.create(key.words.slice(keySize), ivSize * 4);
             key.sigBytes = keySize * 4;
 
             // Return params

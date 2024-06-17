@@ -1,4 +1,5 @@
 {
+  "esversion": 6,
   "bitwise": false, // Prohibits the use of bitwise operators (not confuse & with &&)
   "curly": true, // Requires to always put curly braces around blocks in loops and conditionals
   "eqeqeq": false, // Prohibits the use of == and != in favor of === and !==
@@ -28,6 +29,8 @@
     "Uint8ClampedArray": true,
     "ArrayBuffer": true,
     "Float32Array": true,
-    "Float64Array": true
+    "Float64Array": true,
+    "self": false,
+    "globalThis": false
   }
 }
