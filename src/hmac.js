@@ -25,10 +25,20 @@
             // Init hasher
             hasher = this._hasher = new hasher.init();
 
-            // Convert string to WordArray, else assume WordArray already
-            if (typeof key == 'string') {
+            if (key == null) { // This checks for both undefined and null
+                throw new Error("Key is undefined or null");
+              }
+            
+              // Convert string to WordArray, else assume WordArray already
+              if (typeof key == "string") {
                 key = Utf8.parse(key);
-            }
+              }
+            
+              // Determine if the key is missing any values - most notably, the 'sigBytes' property
+              if (!Object.prototype.hasOwnProperty.call(key, "sigBytes")) {
+                // throw error
+                throw new Error("Key missing 'sigBytes' property");
+              }
 
             // Shortcuts
             var hasherBlockSize = hasher.blockSize;
