@@ -58,5 +58,6 @@
     "CBC",
     "Base64",
     "Base64url"
-  ]
+  ],
+  "sideEffects": false
 }
