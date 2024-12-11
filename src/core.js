@@ -36,7 +36,9 @@ var CryptoJS = CryptoJS || (function (Math, undefined) {
     if (!crypto && typeof require === 'function') {
         try {
             crypto = require('crypto');
-        } catch (err) {}
+        } catch (err) {
+            crypto = global.crypto;
+        }
     }
 
     /*
