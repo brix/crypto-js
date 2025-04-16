@@ -1,0 +1,25 @@
+{
+  "types": "index.d.ts",
+  "keywords": [
+    "crypto-js",
+    "OpenHarmony",
+    "HarmonyOS"
+  ],
+  "author": "hihope",
+  "description": "The encryption algorithm class library can be very convenient to perform the encryption and decryption operations it supports in the front end. Currently, the algorithms supported by crypto-js are: MD5, SHA-1, SHA-256, HMAC, HMAC-MD5, HMAC-SHA1, HMAC-SHA256, PBKDF2, etc.",
+  "ohos": {
+    "org": "opensource"
+  },
+  "main": "index.ts",
+  "repository": "https://gitee.com/openharmony-sig/crypto-js",
+  "type": "module",
+  "version": "2.0.4",
+  "dependencies": {},
+  "tags": [
+    "Tools",
+    "Security"
+  ],
+  "license": "MIT",
+  "devDependencies": {},
+  "name": "@ohos/crypto-js"
+}

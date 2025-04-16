@@ -1,0 +1,137 @@
+diff --git a/core.js b/core.js
+index e3a498b..c298ecc 100644
+--- a/core.js
++++ b/core.js
+@@ -1,3 +1,23 @@
++const buffer = require("@ohos.buffer");
++const unhexTable = new Int8Array([
++    -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, // 0 - 15
++    -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, // 16 - 31
++    -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, // 32 - 47
++    +0, +1, +2, +3, +4, +5, +6, +7, +8, +9, -1, -1, -1, -1, -1, -1, // 48 - 63
++    -1, 10, 11, 12, 13, 14, 15, -1, -1, -1, -1, -1, -1, -1, -1, -1, // 64 - 79
++    -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, // 80 - 95
++    -1, 10, 11, 12, 13, 14, 15, -1, -1, -1, -1, -1, -1, -1, -1, -1, // 96 - 111
++    -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, // 112 - 127
++    -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, // 128 ...
++    -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 
++    -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
++    -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
++    -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
++    -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
++    -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
++    -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, // ... 255
++]);
++
+ ;(function (root, factory) {
+     if (typeof exports === "object") {
+         // CommonJS
+@@ -12,7 +32,57 @@
+         root.CryptoJS = factory();
+     }
+ }(this, function () {
+-
++    /*
++     *A safe fast alternative to decodeURIComponent
++     *@param {string} s
++     *@param {boolean} decodeSpaces
++     *@returns {string}
++     */
++     function unescapeBuffer(s, decodeSpaces) {
++         const out = buffer.alloc(s.length);
++         let index = 0;
++         let outIndex = 0;
++         let currentChar;
++         let nextChar;
++         let hexHigh;
++         let hexLow;
++         const maxLength = s.length - 2;
++         // Flag to know if some hex chars have been decoded
++         let hasHex = false;
++         while (index < s.length) {
++             currentChar = s.charCodeAt(index)
++             if (currentChar === 43 /* '+' */
++             && decodeSpaces) {
++                 out[outIndex++] = 32; // ' '
++                 index++;
++                 continue;
++             }
++         if (currentChar === 37 /* '%' */ 
++         && index < maxLength) {
++             currentChar = s.charCodeAt(++index);
++             hexHigh = unhexTable[currentChar];
++             if (!(hexHigh >= 0)){
++                 out[outIndex++] = 37; // '%'
++                 continue;
++             } else {
++                 nextChar = s.charCodeAt(++index);
++                 hexLow = unhexTable[nextChar];
++                 if (!(hexLow >= 0)){
++                     out[outIndex++] = 37; // '%'
++                     index--;
++                 } else {
++                     hasHex = true;
++                     currentChar = hexHigh * 16 + hexLow;
++                 }
++             }
++         }
++         out[outIndex++] = currentChar;
++         index++;
++     }
++     
++     return hasHex ? out.subarray(0, outIndex) : out;  
++    }
++    
+     /*globals window, global, require*/
+ 
+     /**
+@@ -366,12 +436,25 @@
+              */
+             random: function (nBytes) {
+                 var words = [];
+-
+-                for (var i = 0; i < nBytes; i += 4) {
+-                    words.push(cryptoSecureRandomInt());
+-                }
+-
+-                return new WordArray.init(words, nBytes);
++                var m_w;
++                var r = (function(m_w){
++                    var m_z = 0x3ade68b1;
++                    var mask = 0xffffffff;
++                    return function(){
++                        m_z = (0x9069 * (m_z & 0xFFFF) + (m_z >> 0x10)) & mask;
++                        m_w = (0x4650 * (m_w & 0xFFFF) + (m_w >> 0x10)) & mask;
++                        var result = ((m_z << 0x10) + m_w) & mask;
++                        result /= 0x100000000;
++                        result += 0.5;
++                        return result * (Math.random() > .5 ? 1 : -1);
++                    }
++                });
++                for(var i = 0, rcache; i < nBytes; i += 4){
++                    var _r = r((rcache || Math.random()) * 0x100000000);
++                    rcache = _r() * 0x3ade67b7;
++                    words.push((_r() * 0x100000000) | 0);
++                }
++                return CryptoJS.lib.WordArray.create(words, nBytes);
+             }
+         });
+ 
+@@ -518,7 +601,7 @@
+              */
+             stringify: function (wordArray) {
+                 try {
+-                    return decodeURIComponent(escape(Latin1.stringify(wordArray)));
++                    return buffer.from(Latin1.stringify(wordArray), "latin1").toString("utf-8");
+                 } catch (e) {
+                     throw new Error('Malformed UTF-8 data');
+                 }
+@@ -538,7 +621,7 @@
+              *     var wordArray = CryptoJS.enc.Utf8.parse(utf8String);
+              */
+             parse: function (utf8Str) {
+-                return Latin1.parse(unescape(encodeURIComponent(utf8Str)));
++                return Latin1.parse(unescapeBuffer(encodeURIComponent(utf8Str), false).toString("binary"));
+             }
+         };
+ 

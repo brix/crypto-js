@@ -1,0 +1,11 @@
+{
+  "license": "MIT",
+  "devDependencies": {
+    "@ohos/hypium": "1.0.6"
+  },
+  "name": "lottie",
+  "description": "example description",
+  "repository": {},
+  "version": "2.0.4",
+  "dependencies": {}
+}

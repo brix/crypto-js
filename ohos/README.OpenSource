@@ -1,0 +1,21 @@
+[
+    {
+        "Name": "crypto-js",
+        "License": "MIT",
+        "License File": " LICENSE ",
+        "Version Number": "4.1.1",
+        "Owner" : "xiafeng@huawei.com",
+        "Upstream URL": "https://github.com/brix/crypto-js",
+        "Description": "JavaScript library of crypto standards"
+    },
+
+    {
+        "Name": "DefinitelyTyped",
+        "License": "MIT",
+        "License File": " LICENSE ",
+        "Version Number": "4.2.2",
+        "Owner" : "xiafeng@huawei.com",
+        "Upstream URL": "https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/crypto-js",
+        "Description": "The repository for high quality TypeScript type definitions."
+    },
+]

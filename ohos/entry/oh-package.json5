@@ -1,0 +1,11 @@
+{
+  "license": "MIT",
+  "devDependencies": {},
+  "name": "entry",
+  "description": "example description",
+  "repository": {},
+  "version": "2.0.4",
+  "dependencies": {
+    "@ohos/crypto-js": "file:../library"
+  }
+}
