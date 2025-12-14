@@ -211,7 +211,7 @@ module.exports = {
                 "components": ["core", "cipher-core", "pad-pkcs7"]
             },
             "pad-ansix923": {
-                "exports": "CryptoJS.pad.Ansix923",
+                "exports": "CryptoJS.pad.AnsiX923",
                 "components": ["core", "cipher-core", "pad-ansix923"]
             },
             "pad-iso10126": {
