@@ -16,6 +16,20 @@ CryptoJS.mode.CTR = (function () {
             if (iv) {
                 counter = this._counter = iv.slice(0);
 
+                // Zero-pad a short IV (e.g. a 12-byte/3-word nonce) up to
+                // the cipher's full block size. Without this, counter[blockSize - 1]
+                // is `undefined` after the first block, and `undefined + 1 | 0`
+                // evaluates to 0 - the same value implicitly used (via bitwise
+                // coercion) as the missing word during that first block's
+                // keystream generation. That makes the counter appear
+                // unchanged for one extra block, so blocks 1 and 2 are
+                // encrypted with an identical keystream (a critical CTR-mode
+                // keystream-reuse break) before incrementing correctly from
+                // block 3 onward.
+                for (var i = counter.length; i < blockSize; i++) {
+                    counter[i] = 0;
+                }
+
                 // Remove IV for subsequent blocks
                 this._iv = undefined;
             }
