@@ -84,12 +84,17 @@
             // Shortcuts
             var base64StrLength = base64Str.length;
             var map = urlSafe ? this._safe_map : this._map;
-            var reverseMap = this._reverseMap;
+            var reverseMap = urlSafe ? this._safeReverseMap : this._reverseMap;
 
             if (!reverseMap) {
-                reverseMap = this._reverseMap = [];
+                reverseMap = [];
                 for (var j = 0; j < map.length; j++) {
                     reverseMap[map.charCodeAt(j)] = j;
+                }
+                if (urlSafe) {
+                    this._safeReverseMap = reverseMap;
+                } else {
+                    this._reverseMap = reverseMap;
                 }
             }
 
