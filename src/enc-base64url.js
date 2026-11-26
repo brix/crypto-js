@@ -84,22 +84,29 @@
             // Shortcuts
             var base64StrLength = base64Str.length;
             var map = urlSafe ? this._safe_map : this._map;
-            var reverseMap = this._reverseMap;
+            // Keep a separate reverse map per alphabet: building one map and
+            // reusing it for the other alphabet leaves - and _ (or + and /)
+            // unmapped and corrupts the result of later calls.
+            var reverseMap = urlSafe ? this._safe_reverseMap : this._reverseMap;
 
             if (!reverseMap) {
-                reverseMap = this._reverseMap = [];
+                reverseMap = [];
+                if (urlSafe) {
+                    this._safe_reverseMap = reverseMap;
+                } else {
+                    this._reverseMap = reverseMap;
+                }
                 for (var j = 0; j < map.length; j++) {
                     reverseMap[map.charCodeAt(j)] = j;
                 }
             }
 
-            // Ignore padding
-            var paddingChar = map.charAt(64);
-            if (paddingChar) {
-                var paddingIndex = base64Str.indexOf(paddingChar);
-                if (paddingIndex !== -1) {
-                    base64StrLength = paddingIndex;
-                }
+            // Ignore padding. Base64url padding is optional and is not part
+            // of either alphabet, so strip it for both url safe and non url
+            // safe input.
+            var paddingIndex = base64Str.indexOf('=');
+            if (paddingIndex !== -1) {
+                base64StrLength = paddingIndex;
             }
 
             // Convert
